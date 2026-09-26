@@ -62,7 +62,7 @@ export default function DriverView({ frame, nav, offRoute, overlay, lanes }: Pro
   // No target lane means no highlight, tag or badge: that is the whole "standard GPS" view.
   const target =
     overlay && nav && nav.preferredLane !== null && navCount
-      ? laneTarget(nav.preferredLane, navCount, polygons, nav.laneSide).index
+      ? laneTarget(nav.preferredLane, navCount, polygons, nav.laneSide, nav.lanes).index
       : null;
   const imminent = nav ? nav.distanceM < 120 : false;
 

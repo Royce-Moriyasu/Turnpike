@@ -222,7 +222,7 @@ export default function CvReview() {
   const cvLanes = Math.max(0, (det?.boundaries.length ?? 0) - 1);
   const { index: target, excluded } =
     det && nav && nav.preferredLane !== null && navCount && cvLanes
-      ? laneTarget(nav.preferredLane, navCount, lanesFromLines(det.boundaries, rows), nav.laneSide)
+      ? laneTarget(nav.preferredLane, navCount, lanesFromLines(det.boundaries, rows), nav.laneSide, nav.lanes)
       : { index: null, excluded: new Set<number>() };
   const cmp = det && traced ? compare(traced, det.boundaries) : null;
 

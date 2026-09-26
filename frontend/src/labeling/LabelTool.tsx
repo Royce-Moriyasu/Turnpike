@@ -177,7 +177,7 @@ export default function LabelTool() {
   const navCount = nav?.lanes?.length ?? 0;
   const { index: target, excluded } =
     nav && nav.preferredLane !== null && navCount && visibleLanes
-      ? laneTarget(nav.preferredLane, navCount, lanesFromLines(order.map((i) => lines[i]), ROWS), nav.laneSide)
+      ? laneTarget(nav.preferredLane, navCount, lanesFromLines(order.map((i) => lines[i]), ROWS), nav.laneSide, nav.lanes)
       : { index: null, excluded: new Set<number>() };
   const labeledCount = frames.filter((f) => file.frames[f.id]).length;
 

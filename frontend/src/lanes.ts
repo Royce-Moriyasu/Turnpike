@@ -85,18 +85,36 @@ function widthsByRow(poly: Point[]): Map<number, number> {
   return widths;
 }
 
+const TURN_ARROWS = {
+  right: ["right", "slight right", "sharp right"],
+  left: ["left", "slight left", "sharp left", "uturn"],
+};
+
 /**
  * Outer lanes that look like a bike lane or shoulder rather than a travel lane: narrower than
  * BIKE_LANE_RATIO x their neighbor at every row both span. Mapbox only counts travel lanes, so
- * these must not be counted when matching. Only applied while we see MORE lanes than Mapbox has:
- * with lanes out of frame, a narrow outer lane is as likely a real lane squeezed by perspective
- * (e.g. the right-turn lane at the Crossroads signal), and dropping it would shift the highlight.
+ * these must not be counted when matching.
+ *
+ * A narrow outer lane is excluded when either
+ *  - we see MORE lanes than Mapbox has (there's an extra lane to explain), or
+ *  - Mapbox's lane on that edge has no turn arrow. Mapbox lists turn lanes but never bike lanes,
+ *    so if its edge lane goes straight, a narrow extra lane beyond it can't be a turn lane.
+ * Otherwise it's kept: with lanes out of frame, a narrow edge lane next to a Mapbox turn lane is
+ * likely that turn lane squeezed by perspective (e.g. the right-turn lane at the Crossroads signal).
  * The right side is checked first (bike lanes run on the right in the US).
  */
-export function bikeLikeLanes(lanes: Point[][], navCount: number): Set<number> {
+export function bikeLikeLanes(
+  lanes: Point[][],
+  navCount: number,
+  navLanes?: { indications: string[] }[] | null,
+): Set<number> {
   const out = new Set<number>();
+  if (lanes.length < 2) return out;
   let extra = lanes.length - navCount;
-  if (lanes.length < 2 || extra <= 0) return out;
+  const noTurnLane = (side: "left" | "right") => {
+    const edge = navLanes?.length ? navLanes[side === "right" ? navLanes.length - 1 : 0] : null;
+    return !!edge && !edge.indications.some((a) => TURN_ARROWS[side].includes(a));
+  };
   const narrow = (i: number, neighbor: number) => {
     const a = widthsByRow(lanes[i]);
     const b = widthsByRow(lanes[neighbor]);
@@ -104,11 +122,11 @@ export function bikeLikeLanes(lanes: Point[][], navCount: number): Set<number> {
     return shared.length > 0 && shared.every((k) => a.get(k)! < BIKE_LANE_RATIO * b.get(k)!);
   };
   const last = lanes.length - 1;
-  if (extra > 0 && narrow(last, last - 1)) {
+  if ((extra > 0 || noTurnLane("right")) && narrow(last, last - 1)) {
     out.add(last);
     extra--;
   }
-  if (extra > 0 && lanes.length - out.size >= 2 && narrow(0, 1)) out.add(0);
+  if ((extra > 0 || noTurnLane("left")) && lanes.length - out.size >= 2 && narrow(0, 1)) out.add(0);
   return out;
 }
 
@@ -121,8 +139,9 @@ export function laneTarget(
   navCount: number,
   lanes: Point[][],
   side: "left" | "right" | null,
+  navLanes?: { indications: string[] }[] | null,
 ): { index: number | null; excluded: Set<number> } {
-  const excluded = bikeLikeLanes(lanes, navCount);
+  const excluded = bikeLikeLanes(lanes, navCount, navLanes);
   const travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i));
   const t = polygonIndexFor(navIndex, navCount, travel.length, side);
   return { index: t === null ? null : travel[t], excluded };
