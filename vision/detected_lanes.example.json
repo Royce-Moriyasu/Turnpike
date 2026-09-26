@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-26T18:00:00Z",
+  "method": "opencv-hough-v1",
+  "imageSize": [2048, 1152],
+  "rows": [1.0, 0.95, 0.9, 0.86, 0.83],
+  "frames": {
+    "337539458390495": {
+      "confidence": 0.86,
+      "boundaries": [
+        { "x": [0.191, 0.245, 0.299, 0.342, 0.374], "type": "solid", "color": "yellow", "confidence": 0.92 },
+        { "x": [0.605, 0.578, 0.552, 0.531, 0.515], "type": "solid", "color": "white", "confidence": 0.88 },
+        { "x": [1.03, 0.95, 0.84, 0.735, 0.67], "type": "solid", "color": "white", "confidence": 0.86 }
+      ]
+    },
+    "172160751802378": {
+      "confidence": 0.71,
+      "boundaries": [
+        { "x": [null, null, 0.014, 0.160, 0.270], "type": "dashed", "color": "white", "confidence": 0.55 },
+        { "x": [0.180, 0.244, 0.309, 0.360, 0.399], "type": "dashed", "color": "white", "confidence": 0.81 },
+        { "x": [0.720, 0.665, 0.609, 0.565, 0.531], "type": "dashed", "color": "white", "confidence": 0.78 },
+        { "x": [1.25, 1.077, 0.904, 0.765, 0.660], "type": "solid", "color": "white", "confidence": 0.71 }
+      ],
+      "debug": { "segments": 47, "vanishingPoint": [0.47, 0.775] }
+    },
+    "132173049325117": {
+      "confidence": 0.18,
+      "boundaries": [
+        { "x": [0.612, 0.581, 0.553, 0.529, 0.512], "type": "solid", "color": "white", "confidence": 0.64 }
+      ],
+      "debug": { "segments": 9, "reason": "only one line found; expected 3" }
+    }
+  }
+}
