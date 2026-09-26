@@ -20,6 +20,8 @@ export interface NavState {
   laneSide: "left" | "right" | null;
   laneMovement?: string | null; // what the route does where these lanes apply, e.g. "straight"
   laneBasis?: "arrows" | "mapbox" | null; // how allowed lanes were decided
+  laneToward?: string | null; // where the next turn leads, e.g. "I 95"
+  laneReasons?: string[]; // why this lane, e.g. "Lane 5 only turns right"
   laneSource: { lng: number; lat: number; distanceM: number } | null;
 }
 

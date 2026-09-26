@@ -198,7 +198,9 @@ class RouteModel:
             m = k if j == 0 else k + 1
             while m < last and side_of(self.steps[m]["maneuver"].get("modifier")) is None:
                 m += 1
-            side = side_of(self.steps[min(m, last)]["maneuver"].get("modifier"))
+            turn_step = self.steps[min(m, last)]
+            side = side_of(turn_step["maneuver"].get("modifier"))
+            toward = turn_step.get("destinations") or turn_step.get("name") or None
 
             # Movement: what the route does at the decision these lanes describe, which is the
             # first maneuver point or junction (3+ roads) at or after this point. A plain node on
@@ -222,6 +224,7 @@ class RouteModel:
                 "location": inter["location"],
                 "lanes": inter["lanes"],
                 "side": side,
+                "toward": toward,
                 "movement": movement,
                 "allowed": allowed,
                 "preferred": preferred,
@@ -255,9 +258,53 @@ class RouteModel:
             "laneSide": lp["side"] if lp else None,
             "laneMovement": lp["movement"] if lp else None,
             "laneBasis": lp["basis"] if lp else None,
+            "laneToward": lp["toward"] if lp else None,
             "laneSource": {"lng": lp["location"][0], "lat": lp["location"][1],
                            "distanceM": round(max(0.0, lp["s"] - s), 1)} if lp else None,
         }
+
+
+TURN_WORDS = {
+    "left": "turns left", "slight left": "bears left", "sharp left": "turns sharp left",
+    "right": "turns right", "slight right": "bears right", "sharp right": "turns sharp right",
+    "straight": "goes straight", "uturn": "makes U-turns",
+}
+
+
+def lane_reasons(nav: dict, others: dict[str, dict]) -> list[str]:
+    """Plain-language reasons for the recommended lane, for the lane guidance card.
+
+    First the lanes a driver would be tempted into (not allowed, between our lane and the side of
+    the turn, else right next to it) and what they're for; then why this allowed lane over others.
+    `others` are the other routes' nav states for the same frame: if one of them uses a lane we
+    avoid, that route's name is the clearest explanation ("Lane 2 is for I-95 South").
+    """
+    lanes, target, side = nav["lanes"], nav["preferredLane"], nav["laneSide"]
+    if not lanes or target is None:
+        return []
+    allowed = [i for i, l in enumerate(lanes) if l["allowed"]]
+
+    if side == "right":
+        avoid = [i for i in range(target + 1, len(lanes)) if i not in allowed]
+    elif side == "left":
+        avoid = [i for i in range(target) if i not in allowed]
+    else:
+        avoid = []
+    if not avoid:
+        avoid = [i for i in (target - 1, target + 1) if 0 <= i < len(lanes) and i not in allowed]
+
+    reasons = []
+    for i in avoid:
+        other = next((ROUTES[k]["label"].split(" · ")[0] for k, o in others.items()
+                      if o["lanes"] and len(o["lanes"]) == len(lanes) and o["preferredLane"] == i), None)
+        arrows = [a for a in lanes[i]["indications"] if a != "none"]
+        if other:
+            reasons.append(f"Lane {i + 1} is for {other}")
+        elif arrows:
+            reasons.append(f"Lane {i + 1} only {' or '.join(TURN_WORDS.get(a, a) for a in arrows)}")
+    if side and len(allowed) > 1:
+        reasons.append(f"Stay {side} for {nav['laneToward']}" if nav.get("laneToward") else f"Stay {side}")
+    return reasons[:3]
 
 
 # ---------------------------------------------------------------- data sources
@@ -485,6 +532,9 @@ def main() -> None:
         for key, model in models.items():
             s, off = model.line.project(f["lng"], f["lat"])
             f["nav"][key] = model.state_at(s) if off <= MAX_OFF_ROUTE_M else None
+        for key, nav in f["nav"].items():
+            if nav:
+                nav["laneReasons"] = lane_reasons(nav, {k: o for k, o in f["nav"].items() if k != key and o})
         f["progressM"] = round(f.pop("s"), 1)
         f["lanePolygons"] = polygons.get(f["id"])
         f["polygonSource"] = "labeled" if f["lanePolygons"] else None

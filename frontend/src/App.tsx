@@ -15,6 +15,7 @@ export default function App() {
   const [index, setIndexRaw] = useState(0);
   const [routeKey, setRouteKey] = useState("north");
   const [playing, setPlaying] = useState(false);
+  const [lanesOn, setLanesOn] = useState(true); // false = "before": a standard GPS with no lane guidance
 
   useEffect(() => {
     fetch("/demo_route.json")
@@ -52,7 +53,8 @@ export default function App() {
       else if (e.key === " ") {
         e.preventDefault();
         setPlaying((p) => !p);
-      } else return;
+      } else if (e.key.toLowerCase() === "g") setLanesOn((on) => !on);
+      else return;
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -91,9 +93,29 @@ export default function App() {
 
       <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
         <main className="space-y-4">
-          <DriverView frame={frame} nav={nav} offRoute={offRoute} />
+          <div className="flex justify-end">
+            <div className="flex rounded-lg bg-white/5 p-1" role="group" aria-label="Guidance mode (G)">
+              {[
+                { on: false, label: "Standard GPS" },
+                { on: true, label: "Turnpike lanes" },
+              ].map((m) => (
+                <button
+                  key={m.label}
+                  onClick={() => setLanesOn(m.on)}
+                  aria-pressed={lanesOn === m.on}
+                  title="Toggle with G"
+                  className={`rounded-md px-3 py-1.5 text-sm font-medium ${
+                    lanesOn === m.on ? "bg-accent text-white" : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} />
           <NavCard nav={nav} />
-          <LaneGuidance nav={nav} />
+          {lanesOn && <LaneGuidance nav={nav} />}
           <Controls
             data={data}
             index={index}

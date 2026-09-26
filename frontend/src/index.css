@@ -28,3 +28,42 @@ body {
 .lane-pulse {
   animation: lane-pulse 1.6s ease-in-out infinite;
 }
+
+/* Frame crossfade (DriverView). Origin is the vanishing point within the cropped view, so the
+   outgoing frame zooms "down the road". Keep the duration under App's FRAME_MS. */
+@keyframes frame-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes frame-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes frame-out-forward {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.08); }
+}
+
+.frame-in {
+  animation: frame-in 450ms ease-out both;
+}
+.frame-out {
+  animation: frame-out 450ms ease-in both;
+}
+.frame-out-forward {
+  animation: frame-out-forward 650ms ease-in both;
+  transform-origin: 47% 61%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame-in,
+  .frame-out,
+  .frame-out-forward,
+  .lane-pulse {
+    animation: none;
+  }
+  .frame-out,
+  .frame-out-forward {
+    opacity: 0;
+  }
+}

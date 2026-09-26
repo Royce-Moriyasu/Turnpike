@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Frame, NavState, Point } from "../types";
 import { placeholderLanes, polygonIndexFor } from "../lanes";
 
@@ -5,6 +6,7 @@ interface Props {
   frame: Frame;
   nav: NavState | null;
   offRoute: boolean;
+  overlay: boolean; // false = standard GPS: no lane highlight
 }
 
 const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
@@ -14,6 +16,33 @@ const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
 const CROP_TOP = 0.42;
 const IMAGE_ASPECT = 2048 / 1152;
 const TAG_Y = 0.9; // where the "your lane" tag sits on the road, in image coords
+
+const imgClass = "absolute inset-0 h-full w-full select-none object-cover object-bottom";
+
+/**
+ * Crossfade between frames: the new frame fades in over the previous one. Moving forward, the
+ * previous frame also zooms toward the vanishing point as it fades, which reads as driving.
+ */
+function FrameImages({ frame }: { frame: Frame }) {
+  const [layers, setLayers] = useState<{ cur: Frame; prev: Frame | null }>({ cur: frame, prev: null });
+  if (layers.cur.id !== frame.id) setLayers({ cur: frame, prev: layers.cur }); // track the previous frame
+  const prev = layers.prev;
+  const forward = prev ? frame.progressM > prev.progressM : false;
+  return (
+    <>
+      {prev?.image && (
+        <img
+          key={`prev-${prev.id}`}
+          src={prev.image}
+          alt=""
+          className={`${imgClass} ${forward ? "frame-out-forward" : "frame-out"}`}
+          draggable={false}
+        />
+      )}
+      <img key={frame.id} src={frame.image!} alt="Street-level view" className={`${imgClass} frame-in`} draggable={false} />
+    </>
+  );
+}
 
 /** Horizontal center of a polygon at image row y (falls back to the mean x). */
 function centerAt(poly: Point[], y: number): number {
@@ -26,11 +55,12 @@ function centerAt(poly: Point[], y: number): number {
   return (Math.min(...pts) + Math.max(...pts)) / 2;
 }
 
-export default function DriverView({ frame, nav, offRoute }: Props) {
+export default function DriverView({ frame, nav, offRoute, overlay }: Props) {
   const navCount = nav?.lanes?.length ?? 0;
   const polygons = frame.lanePolygons ?? (navCount ? placeholderLanes(navCount) : []);
+  // No target lane means no highlight, tag or badge: that is the whole "standard GPS" view.
   const target =
-    nav && nav.preferredLane !== null && navCount
+    overlay && nav && nav.preferredLane !== null && navCount
       ? polygonIndexFor(nav.preferredLane, navCount, polygons.length, nav.laneSide)
       : null;
   const imminent = nav ? nav.distanceM < 120 : false;
@@ -41,12 +71,7 @@ export default function DriverView({ frame, nav, offRoute }: Props) {
       style={{ aspectRatio: IMAGE_ASPECT / (1 - CROP_TOP) }}
     >
       {frame.image ? (
-        <img
-          src={frame.image}
-          alt="Street-level view"
-          className="absolute inset-0 h-full w-full select-none object-cover object-bottom"
-          draggable={false}
-        />
+        <FrameImages frame={frame} />
       ) : (
         <div className="absolute inset-0 bg-gradient-to-b from-sky-900/60 via-slate-800 to-neutral-700">
           <div className="absolute inset-x-0 top-3 text-center text-xs uppercase tracking-widest text-white/50">
@@ -56,7 +81,8 @@ export default function DriverView({ frame, nav, offRoute }: Props) {
       )}
 
       <svg
-        className="absolute inset-0 h-full w-full"
+        key={`overlay-${frame.id}`}
+        className="frame-in absolute inset-0 h-full w-full"
         viewBox={`0 ${CROP_TOP} 1 ${1 - CROP_TOP}`}
         preserveAspectRatio="none"
       >
@@ -83,7 +109,8 @@ export default function DriverView({ frame, nav, offRoute }: Props) {
 
       {target !== null && (
         <div
-          className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-lg ring-2 ring-white md:text-sm"
+          key={`tag-${frame.id}`}
+          className="frame-in pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-lg ring-2 ring-white md:text-sm"
           style={{
             left: `${Math.min(0.88, Math.max(0.12, centerAt(polygons[target], TAG_Y))) * 100}%`,
             top: `${((TAG_Y - CROP_TOP) / (1 - CROP_TOP)) * 100}%`,
@@ -96,6 +123,11 @@ export default function DriverView({ frame, nav, offRoute }: Props) {
       {offRoute && (
         <div className="absolute inset-x-0 top-0 bg-red-600/85 py-2 text-center text-sm font-semibold">
           Past the fork: this frame is off the selected route
+        </div>
+      )}
+      {!overlay && (
+        <div className="absolute left-3 top-3 rounded-md bg-black/60 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-white/80">
+          Standard GPS
         </div>
       )}
       {!frame.lanePolygons && target !== null && (

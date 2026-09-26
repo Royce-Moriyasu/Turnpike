@@ -51,6 +51,16 @@ export default function LaneGuidance({ nav }: { nav: NavState | null }) {
         <div className="min-w-0">
           <div className="text-xl font-semibold">{headline}</div>
           <div className="mt-1 text-sm text-white/60">{detail}</div>
+          {n > 0 && !!nav.laneReasons?.length && (
+            <ul className="mt-2 space-y-1">
+              {nav.laneReasons.map((reason) => (
+                <li key={reason} className="flex items-start gap-2 text-sm text-accent-soft">
+                  <span aria-hidden className="mt-0.5 text-xs">ⓘ</span>
+                  <span>{reason}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         {n > 0 && <LaneStrip nav={nav} />}
       </div>

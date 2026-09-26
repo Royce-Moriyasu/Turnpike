@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-26T17:44:15.558240+00:00",
+ "generatedAt": "2026-09-26T17:58:30.911269+00:00",
  "mode": "mapillary",
  "sequenceId": "jI9C10MXmpqDYtcFvBkeWR",
  "primaryRoute": "north",
@@ -369,11 +369,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
       "distanceM": 31.5
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -413,11 +417,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
       "distanceM": 31.5
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 0.0,
@@ -598,11 +606,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
       "distanceM": 23.2
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -642,11 +654,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
       "distanceM": 23.2
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 8.3,
@@ -700,11 +716,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
       "distanceM": 12.1
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -744,11 +764,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
       "distanceM": 12.1
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 19.4,
@@ -802,11 +826,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
       "distanceM": 2.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -846,11 +874,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
       "distanceM": 2.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 29.0,
@@ -904,11 +936,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398096,
       "lat": 27.412787,
       "distanceM": 3.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -948,11 +984,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.398096,
       "lat": 27.412787,
       "distanceM": 3.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 42.9,
@@ -1006,11 +1046,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
       "distanceM": 46.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1050,11 +1094,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
       "distanceM": 46.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 53.7,
@@ -1108,11 +1156,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
       "distanceM": 32.2
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1152,11 +1204,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
       "distanceM": 32.2
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 68.1,
@@ -1210,11 +1266,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
       "distanceM": 19.4
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1254,11 +1314,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
       "distanceM": 19.4
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 80.9,
@@ -1312,11 +1376,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
       "distanceM": 4.0
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1356,11 +1424,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
       "distanceM": 4.0
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 96.3,
@@ -1414,11 +1486,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397435,
       "lat": 27.412972,
       "distanceM": 1.8
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1458,11 +1534,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.397435,
       "lat": 27.412972,
       "distanceM": 1.8
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 113.1,
@@ -1516,11 +1596,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396773,
       "lat": 27.413185,
       "distanceM": 24.8
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1560,11 +1644,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396773,
       "lat": 27.413185,
       "distanceM": 24.8
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 159.7,
@@ -1618,11 +1706,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396773,
       "lat": 27.413185,
       "distanceM": 8.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1662,11 +1754,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396773,
       "lat": 27.413185,
       "distanceM": 8.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 176.0,
@@ -1720,11 +1816,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39675,
       "lat": 27.413192,
       "distanceM": 0.0
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1764,11 +1864,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39675,
       "lat": 27.413192,
       "distanceM": 0.0
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 189.1,
@@ -1822,11 +1926,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
       "distanceM": 43.9
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1865,11 +1973,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
       "distanceM": 43.9
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 206.6,
@@ -1923,11 +2035,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
       "distanceM": 29.2
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -1966,11 +2082,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
       "distanceM": 29.2
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 221.3,
@@ -2024,11 +2144,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
       "distanceM": 9.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -2067,11 +2191,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
       "distanceM": 9.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 241.0,
@@ -2125,11 +2253,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
       "distanceM": 43.5
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -2168,11 +2300,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
       "distanceM": 43.5
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 256.9,
@@ -2226,11 +2362,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
       "distanceM": 22.8
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -2269,11 +2409,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
       "distanceM": 22.8
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 277.5,
@@ -2327,11 +2471,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
       "distanceM": 9.9
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -2370,11 +2518,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
       "distanceM": 9.9
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 290.4,
@@ -2428,11 +2580,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.395476,
       "lat": 27.413601,
       "distanceM": 2.3
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -2471,11 +2627,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.395476,
       "lat": 27.413601,
       "distanceM": 2.3
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 318.4,
@@ -2528,11 +2688,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.395183,
       "lat": 27.413698,
       "distanceM": 12.7
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -2570,11 +2734,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.395183,
       "lat": 27.413698,
       "distanceM": 12.7
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 338.8,
@@ -2770,11 +2938,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
       "distanceM": 83.5
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -2828,11 +3001,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
       "distanceM": 83.5
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 364.6,
@@ -3112,11 +3290,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
       "distanceM": 44.6
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -3170,11 +3353,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
       "distanceM": 44.6
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 403.4,
@@ -3454,11 +3642,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
       "distanceM": 36.7
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -3512,11 +3705,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
       "distanceM": 36.7
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 411.4,
@@ -3585,11 +3783,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
       "distanceM": 11.4
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -3643,11 +3846,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
       "distanceM": 11.4
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 436.6,
@@ -3716,11 +3924,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39407,
       "lat": 27.414055,
       "distanceM": 12.2
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -3774,11 +3987,16 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.39407,
       "lat": 27.414055,
       "distanceM": 12.2
-     }
+     },
+     "laneReasons": [
+      "Lane 5 only turns right",
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 456.2,
@@ -3839,11 +4057,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.393921,
       "lat": 27.414097,
       "distanceM": 1.4
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     },
     "south": {
      "instruction": "Take the I 95 ramp.",
@@ -3889,11 +4111,15 @@
      "laneSide": "right",
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": "I 95",
      "laneSource": {
       "lng": -80.393921,
       "lat": 27.414097,
       "distanceM": 1.4
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95"
+     ]
     }
    },
    "progressM": 482.4,
@@ -3938,11 +4164,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
       "distanceM": 47.4
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -3973,11 +4203,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
       "distanceM": 47.4
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 504.0,
@@ -4022,11 +4256,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
       "distanceM": 21.8
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4057,11 +4295,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
       "distanceM": 21.8
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 529.6,
@@ -4106,11 +4348,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
       "distanceM": 0.0
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4141,11 +4387,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
       "distanceM": 0.0
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 551.9,
@@ -4190,11 +4440,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 213.0
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4225,11 +4479,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 213.0
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 578.4,
@@ -4274,11 +4532,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 192.5
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4309,11 +4571,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 192.5
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 598.9,
@@ -4358,11 +4624,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 167.2
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4393,11 +4663,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 167.2
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 624.3,
@@ -4442,11 +4716,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 142.1
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4477,11 +4755,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 142.1
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 649.3,
@@ -4526,11 +4808,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 123.4
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4561,11 +4847,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 123.4
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 668.0,
@@ -4610,11 +4900,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 99.4
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4645,11 +4939,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 99.4
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 692.0,
@@ -4694,11 +4992,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 80.8
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4729,11 +5031,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 80.8
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 710.7,
@@ -4778,11 +5084,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 57.0
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4813,11 +5123,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 57.0
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 734.4,
@@ -4862,11 +5176,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 38.6
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4897,11 +5215,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 38.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 752.8,
@@ -4946,11 +5268,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 16.6
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Keep right to take I 95 South toward West Palm Beach.",
@@ -4981,11 +5307,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 16.6
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 774.9,
@@ -5030,11 +5360,15 @@
      "laneSide": "left",
      "laneMovement": "slight left",
      "laneBasis": "arrows",
+     "laneToward": "I 95 North: Daytona Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 0.0
-     }
+     },
+     "laneReasons": [
+      "Lane 2 is for I-95 South"
+     ]
     },
     "south": {
      "instruction": "Continue toward I 95 South: West Palm Beach.",
@@ -5065,11 +5399,15 @@
      "laneSide": "right",
      "laneMovement": "slight right",
      "laneBasis": "arrows",
+     "laneToward": "I 95 South: West Palm Beach",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
       "distanceM": 0.0
-     }
+     },
+     "laneReasons": [
+      "Stay right for I 95 South: West Palm Beach"
+     ]
     }
    },
    "progressM": 794.1,
@@ -5095,7 +5433,9 @@
      "laneSide": null,
      "laneMovement": null,
      "laneBasis": null,
-     "laneSource": null
+     "laneToward": null,
+     "laneSource": null,
+     "laneReasons": []
     },
     "south": {
      "instruction": "Continue toward I 95 South: West Palm Beach.",
@@ -5125,11 +5465,13 @@
      "laneSide": null,
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": null,
      "laneSource": {
       "lng": -80.389369,
       "lat": 27.414368,
       "distanceM": 160.3
-     }
+     },
+     "laneReasons": []
     }
    },
    "progressM": 817.9,
@@ -5155,7 +5497,9 @@
      "laneSide": null,
      "laneMovement": null,
      "laneBasis": null,
-     "laneSource": null
+     "laneToward": null,
+     "laneSource": null,
+     "laneReasons": []
     },
     "south": {
      "instruction": "Continue toward I 95 South: West Palm Beach.",
@@ -5185,11 +5529,13 @@
      "laneSide": null,
      "laneMovement": "straight",
      "laneBasis": "arrows",
+     "laneToward": null,
      "laneSource": {
       "lng": -80.389369,
       "lat": 27.414368,
       "distanceM": 143.0
-     }
+     },
+     "laneReasons": []
     }
    },
    "progressM": 837.0,
@@ -5215,7 +5561,9 @@
      "laneSide": null,
      "laneMovement": null,
      "laneBasis": null,
-     "laneSource": null
+     "laneToward": null,
+     "laneSource": null,
+     "laneReasons": []
     },
     "south": null
    },
@@ -5242,7 +5590,9 @@
      "laneSide": null,
      "laneMovement": null,
      "laneBasis": null,
-     "laneSource": null
+     "laneToward": null,
+     "laneSource": null,
+     "laneReasons": []
     },
     "south": null
    },
@@ -5269,7 +5619,9 @@
      "laneSide": null,
      "laneMovement": null,
      "laneBasis": null,
-     "laneSource": null
+     "laneToward": null,
+     "laneSource": null,
+     "laneReasons": []
     },
     "south": null
    },
@@ -5296,7 +5648,9 @@
      "laneSide": null,
      "laneMovement": null,
      "laneBasis": null,
-     "laneSource": null
+     "laneToward": null,
+     "laneSource": null,
+     "laneReasons": []
     },
     "south": null
    },
@@ -5323,7 +5677,9 @@
      "laneSide": null,
      "laneMovement": null,
      "laneBasis": null,
-     "laneSource": null
+     "laneToward": null,
+     "laneSource": null,
+     "laneReasons": []
     },
     "south": null
    },
@@ -5350,7 +5706,9 @@
      "laneSide": null,
      "laneMovement": null,
      "laneBasis": null,
-     "laneSource": null
+     "laneToward": null,
+     "laneSource": null,
+     "laneReasons": []
     },
     "south": null
    },
