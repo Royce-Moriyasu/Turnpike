@@ -13,6 +13,18 @@ const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
 // full-image coordinates and the SVG viewBox crops them the same way.
 const CROP_TOP = 0.42;
 const IMAGE_ASPECT = 2048 / 1152;
+const TAG_Y = 0.9; // where the "your lane" tag sits on the road, in image coords
+
+/** Horizontal center of a polygon at image row y (falls back to the mean x). */
+function centerAt(poly: Point[], y: number): number {
+  const xs: number[] = [];
+  poly.forEach(([x1, y1], i) => {
+    const [x2, y2] = poly[(i + 1) % poly.length];
+    if ((y1 - y) * (y2 - y) <= 0 && y1 !== y2) xs.push(x1 + ((y - y1) / (y2 - y1)) * (x2 - x1));
+  });
+  const pts = xs.length >= 2 ? xs : poly.map((p) => p[0]);
+  return (Math.min(...pts) + Math.max(...pts)) / 2;
+}
 
 export default function DriverView({ frame, nav, offRoute }: Props) {
   const navCount = nav?.lanes?.length ?? 0;
@@ -69,8 +81,20 @@ export default function DriverView({ frame, nav, offRoute }: Props) {
         )}
       </svg>
 
+      {target !== null && (
+        <div
+          className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-lg ring-2 ring-white md:text-sm"
+          style={{
+            left: `${Math.min(0.88, Math.max(0.12, centerAt(polygons[target], TAG_Y))) * 100}%`,
+            top: `${((TAG_Y - CROP_TOP) / (1 - CROP_TOP)) * 100}%`,
+          }}
+        >
+          ▲ Your lane
+        </div>
+      )}
+
       {offRoute && (
-        <div className="absolute inset-x-0 top-0 bg-red-600/80 py-2 text-center text-sm font-semibold">
+        <div className="absolute inset-x-0 top-0 bg-red-600/85 py-2 text-center text-sm font-semibold">
           Past the fork: this frame is off the selected route
         </div>
       )}

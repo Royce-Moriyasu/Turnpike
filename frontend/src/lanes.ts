@@ -13,6 +13,20 @@ const ARROWS: Record<string, string> = {
 
 export const arrowFor = (indication: string) => ARROWS[indication] ?? "•";
 
+const ORDINAL = ["", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
+
+/** "rightmost lane", "2nd lane from the left", ... for lane i of n (0 = leftmost). */
+export function describeLane(i: number, n: number): string {
+  if (n === 1) return "only lane";
+  if (i === n - 1) return "rightmost lane";
+  if (i === 0) return "leftmost lane";
+  if (n % 2 === 1 && i === (n - 1) / 2) return "middle lane";
+  const fromRight = n - 1 - i;
+  return fromRight <= i ? `${ORDINAL[fromRight + 1]} lane from the right` : `${ORDINAL[i + 1]} lane from the left`;
+}
+
+export const isUsable = (lane: { active?: boolean; valid: boolean }) => lane.active ?? lane.valid;
+
 export function formatDistance(m: number): string {
   const ft = m * 3.28084;
   if (ft < 1000) return `${Math.round(ft / 10) * 10} ft`;

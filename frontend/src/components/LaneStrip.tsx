@@ -1,30 +1,30 @@
 import type { NavState } from "../types";
-import { arrowFor } from "../lanes";
+import { arrowFor, isUsable } from "../lanes";
 
-export default function LaneStrip({ nav }: { nav: NavState | null }) {
-  const lanes = nav?.lanes;
-  if (!lanes?.length) {
-    return <div className="text-sm text-white/40">No lane data ahead</div>;
-  }
+/** Mapbox's lanes, left to right: filled = your lane, outlined = also allowed, dimmed = wrong lane. */
+export default function LaneStrip({ nav }: { nav: NavState }) {
+  const lanes = nav.lanes ?? [];
   return (
-    <div className="flex gap-1.5">
+    <div className="flex items-end justify-center gap-1.5">
       {lanes.map((lane, i) => {
-        const preferred = i === nav!.preferredLane;
-        const usable = lane.active ?? lane.valid;
+        const preferred = i === nav.preferredLane;
+        const usable = isUsable(lane);
         return (
-          <div
-            key={i}
-            className={[
-              "flex h-12 min-w-12 flex-col items-center justify-center rounded-lg px-2 text-lg leading-none",
-              preferred
-                ? "bg-accent font-bold text-white shadow-[0_0_16px_var(--color-accent)]"
-                : usable
-                  ? "bg-white/15 text-white"
-                  : "bg-white/5 text-white/30",
-            ].join(" ")}
-            title={lane.indications.join(" / ")}
-          >
-            <span>{lane.indications.map(arrowFor).join("")}</span>
+          <div key={i} className="flex flex-col items-center gap-1">
+            <div
+              className={[
+                "flex h-12 min-w-12 items-center justify-center rounded-lg px-2 text-2xl leading-none md:h-14 md:min-w-14",
+                preferred
+                  ? "bg-accent font-bold text-white shadow-[0_0_20px_var(--color-accent)] ring-2 ring-white"
+                  : usable
+                    ? "text-accent-soft ring-2 ring-accent-soft/60"
+                    : "text-white/25 ring-1 ring-white/15",
+              ].join(" ")}
+              title={`${lane.indications.join(" / ")}${usable ? "" : " (not on your route)"}`}
+            >
+              {lane.indications.map(arrowFor).join("")}
+            </div>
+            <div className={`h-2 text-[10px] font-bold ${preferred ? "text-white" : "text-transparent"}`}>▲</div>
           </div>
         );
       })}

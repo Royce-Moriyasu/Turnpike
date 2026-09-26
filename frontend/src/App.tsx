@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { DemoRoute } from "./types";
 import DriverView from "./components/DriverView";
 import NavCard from "./components/NavCard";
-import LaneStrip from "./components/LaneStrip";
+import LaneGuidance from "./components/LaneGuidance";
 import MiniMap from "./components/MiniMap";
 import DataPanel from "./components/DataPanel";
 import Controls from "./components/Controls";
@@ -85,12 +85,8 @@ export default function App() {
       <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
         <main className="space-y-4">
           <DriverView frame={frame} nav={nav} offRoute={offRoute} />
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="min-w-0 flex-1">
-              <NavCard nav={nav} />
-            </div>
-            <LaneStrip nav={nav} />
-          </div>
+          <NavCard nav={nav} />
+          <LaneGuidance nav={nav} />
           <Controls
             data={data}
             index={index}
