@@ -8,6 +8,7 @@ import path from "node:path";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const LABELS = path.join(repoRoot, "data", "fallback_lanes.json");
+const DETECTED = path.join(repoRoot, "data", "detected_lanes.json");
 
 /** Dev-only endpoints for the labeling tool: read/write data/fallback_lanes.json and re-run the bake. */
 function labelingApi(): Plugin {
@@ -33,6 +34,16 @@ function labelingApi(): Plugin {
         } catch (e) {
           res.statusCode = 500;
           res.end(String(e));
+        }
+      });
+      // Read-only: the OpenCV output, for the CV review page (#cv).
+      server.middlewares.use("/__detected", async (_req, res) => {
+        try {
+          res.setHeader("Content-Type", "application/json");
+          res.end(await readFile(DETECTED, "utf-8"));
+        } catch {
+          res.statusCode = 404;
+          res.end("data/detected_lanes.json not found: run python vision/detect_lanes.py");
         }
       });
       server.middlewares.use("/__bake", (req, res) => {

@@ -84,9 +84,14 @@ export default function App() {
         <span className="text-sm text-white/50">
           Lane-level AR guidance from public road data
           {import.meta.env.DEV && (
-            <a href={`#label=${index + 1}`} className="ml-4 text-accent-soft hover:underline">
-              Label this frame →
-            </a>
+            <>
+              <a href={`#label=${index + 1}`} className="ml-4 text-accent-soft hover:underline">
+                Label this frame →
+              </a>
+              <a href={`#cv=${index + 1}`} className="ml-4 text-accent-soft hover:underline">
+                CV review →
+              </a>
+            </>
           )}
         </span>
       </header>
