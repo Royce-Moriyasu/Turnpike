@@ -1,0 +1,2536 @@
+{
+ "generatedAt": "2026-09-26T07:01:27.114611+00:00",
+ "mode": "synthetic",
+ "sequenceId": null,
+ "primaryRoute": "north",
+ "routes": {
+  "north": {
+   "label": "I-95 North \u00b7 Daytona Beach",
+   "geometry": [
+    [
+     -80.395166,
+     27.413656
+    ],
+    [
+     -80.395183,
+     27.413698
+    ],
+    [
+     -80.394263,
+     27.413993
+    ],
+    [
+     -80.39407,
+     27.414055
+    ],
+    [
+     -80.393921,
+     27.414097
+    ],
+    [
+     -80.393801,
+     27.414136
+    ],
+    [
+     -80.393539,
+     27.414151
+    ],
+    [
+     -80.393432,
+     27.414161
+    ],
+    [
+     -80.393352,
+     27.414177
+    ],
+    [
+     -80.393252,
+     27.414208
+    ],
+    [
+     -80.393107,
+     27.414253
+    ],
+    [
+     -80.392627,
+     27.414413
+    ],
+    [
+     -80.391708,
+     27.4147
+    ],
+    [
+     -80.390965,
+     27.41494
+    ],
+    [
+     -80.390534,
+     27.41508
+    ],
+    [
+     -80.390532,
+     27.415081
+    ],
+    [
+     -80.389533,
+     27.415406
+    ],
+    [
+     -80.389239,
+     27.415502
+    ]
+   ],
+   "distanceM": 626.4
+  },
+  "south": {
+   "label": "I-95 South \u00b7 West Palm Beach",
+   "geometry": [
+    [
+     -80.395166,
+     27.413656
+    ],
+    [
+     -80.395183,
+     27.413698
+    ],
+    [
+     -80.394263,
+     27.413993
+    ],
+    [
+     -80.39407,
+     27.414055
+    ],
+    [
+     -80.393921,
+     27.414097
+    ],
+    [
+     -80.393801,
+     27.414136
+    ],
+    [
+     -80.393539,
+     27.414151
+    ],
+    [
+     -80.393432,
+     27.414161
+    ],
+    [
+     -80.393352,
+     27.414177
+    ],
+    [
+     -80.393252,
+     27.414208
+    ],
+    [
+     -80.393107,
+     27.414253
+    ],
+    [
+     -80.392627,
+     27.414413
+    ],
+    [
+     -80.391708,
+     27.4147
+    ],
+    [
+     -80.390965,
+     27.41494
+    ],
+    [
+     -80.39081,
+     27.414972
+    ],
+    [
+     -80.390723,
+     27.414988
+    ],
+    [
+     -80.390622,
+     27.414998
+    ],
+    [
+     -80.390507,
+     27.415001
+    ],
+    [
+     -80.390404,
+     27.414995
+    ],
+    [
+     -80.39032,
+     27.414985
+    ],
+    [
+     -80.390208,
+     27.414964
+    ],
+    [
+     -80.390118,
+     27.414939
+    ],
+    [
+     -80.389981,
+     27.414893
+    ],
+    [
+     -80.389884,
+     27.414849
+    ],
+    [
+     -80.389792,
+     27.414796
+    ],
+    [
+     -80.389698,
+     27.414733
+    ],
+    [
+     -80.389638,
+     27.414686
+    ],
+    [
+     -80.38958,
+     27.414634
+    ],
+    [
+     -80.389511,
+     27.414563
+    ],
+    [
+     -80.38945,
+     27.414487
+    ],
+    [
+     -80.389386,
+     27.414396
+    ],
+    [
+     -80.389369,
+     27.414368
+    ]
+   ],
+   "distanceM": 629.9
+  }
+ },
+ "frames": [
+  {
+   "id": "synthetic-0",
+   "image": null,
+   "lng": -80.395166,
+   "lat": 27.413656,
+   "heading": 340.2,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Turn right onto SR 70/Okeechobee Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 5.0,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 101.5
+     }
+    },
+    "south": {
+     "instruction": "Turn right onto SR 70/Okeechobee Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 5.0,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 3,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 101.5
+     }
+    }
+   },
+   "progressM": 0.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-20",
+   "image": null,
+   "lng": -80.39503971826817,
+   "lat": 27.413743943598796,
+   "heading": 70.1,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 129.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 81.5
+     }
+    },
+    "south": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 129.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 3,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 81.5
+     }
+    }
+   },
+   "progressM": 20.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-40",
+   "image": null,
+   "lng": -80.39484915229028,
+   "lat": 27.41380504899388,
+   "heading": 70.1,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 109.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 61.5
+     }
+    },
+    "south": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 109.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 3,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 61.5
+     }
+    }
+   },
+   "progressM": 40.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-60",
+   "image": null,
+   "lng": -80.39465858631239,
+   "lat": 27.413866154388963,
+   "heading": 70.1,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 89.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 41.5
+     }
+    },
+    "south": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 89.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 3,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 41.5
+     }
+    }
+   },
+   "progressM": 60.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-80",
+   "image": null,
+   "lng": -80.39446802033451,
+   "lat": 27.413927259784042,
+   "heading": 70.1,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 69.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 21.5
+     }
+    },
+    "south": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 69.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 3,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 21.5
+     }
+    }
+   },
+   "progressM": 80.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-100",
+   "image": null,
+   "lng": -80.39427745435663,
+   "lat": 27.413988365179126,
+   "heading": 70.1,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 49.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 1.5
+     }
+    },
+    "south": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 49.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 3,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.394263,
+      "lat": 27.413993,
+      "distanceM": 1.5
+     }
+    }
+   },
+   "progressM": 100.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-120",
+   "image": null,
+   "lng": -80.39408692588715,
+   "lat": 27.414049562668378,
+   "heading": 70.6,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 29.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.39407,
+      "lat": 27.414055,
+      "distanceM": 1.8
+     }
+    },
+    "south": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 29.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 3,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.39407,
+      "lat": 27.414055,
+      "distanceM": 1.8
+     }
+    }
+   },
+   "progressM": 120.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-140",
+   "image": null,
+   "lng": -80.39389443861629,
+   "lat": 27.414105632449708,
+   "heading": 70.0,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 9.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.393921,
+      "lat": 27.414097,
+      "distanceM": 0.0
+     }
+    },
+    "south": {
+     "instruction": "Take the I 95 ramp.",
+     "maneuverType": "on ramp",
+     "modifier": "slight right",
+     "distanceM": 9.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      }
+     ],
+     "preferredLane": 3,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.393921,
+      "lat": 27.414097,
+      "distanceM": 0.0
+     }
+    }
+   },
+   "progressM": 140.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-160",
+   "image": null,
+   "lng": -80.39369810064856,
+   "lat": 27.414141891184244,
+   "heading": 86.3,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 284.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.393252,
+      "lat": 27.414208,
+      "distanceM": 44.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 284.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.393252,
+      "lat": 27.414208,
+      "distanceM": 44.9
+     }
+    }
+   },
+   "progressM": 160.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-180",
+   "image": null,
+   "lng": -80.39349605149087,
+   "lat": 27.41415501387936,
+   "heading": 84.0,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 264.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.393252,
+      "lat": 27.414208,
+      "distanceM": 24.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 264.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.393252,
+      "lat": 27.414208,
+      "distanceM": 24.9
+     }
+    }
+   },
+   "progressM": 180.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-200",
+   "image": null,
+   "lng": -80.39329893622318,
+   "lat": 27.414193449770814,
+   "heading": 70.8,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 244.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.393252,
+      "lat": 27.414208,
+      "distanceM": 4.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 244.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.393252,
+      "lat": 27.414208,
+      "distanceM": 4.9
+     }
+    }
+   },
+   "progressM": 200.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-220",
+   "image": null,
+   "lng": -80.39310766508667,
+   "lat": 27.41425279359379,
+   "heading": 70.1,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 224.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 224.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 224.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 224.9
+     }
+    }
+   },
+   "progressM": 220.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-240",
+   "image": null,
+   "lng": -80.39291797450747,
+   "lat": 27.41431600849751,
+   "heading": 69.4,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 204.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 204.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 204.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 204.9
+     }
+    }
+   },
+   "progressM": 240.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-260",
+   "image": null,
+   "lng": -80.39272828942369,
+   "lat": 27.41437923685877,
+   "heading": 69.4,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 184.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 184.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 184.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 184.9
+     }
+    }
+   },
+   "progressM": 260.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-280",
+   "image": null,
+   "lng": -80.39253792902478,
+   "lat": 27.414440816506954,
+   "heading": 70.6,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 164.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 164.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 164.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 164.9
+     }
+    }
+   },
+   "progressM": 280.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-300",
+   "image": null,
+   "lng": -80.39234679480643,
+   "lat": 27.414500506953814,
+   "heading": 70.6,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 144.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 144.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 144.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 144.9
+     }
+    }
+   },
+   "progressM": 300.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-320",
+   "image": null,
+   "lng": -80.39215566058807,
+   "lat": 27.414560197400675,
+   "heading": 70.6,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 124.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 124.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 124.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 124.9
+     }
+    }
+   },
+   "progressM": 320.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-340",
+   "image": null,
+   "lng": -80.39196452636973,
+   "lat": 27.414619887847536,
+   "heading": 70.6,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 104.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 104.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 104.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 104.9
+     }
+    }
+   },
+   "progressM": 340.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-360",
+   "image": null,
+   "lng": -80.39177339215138,
+   "lat": 27.414679578294397,
+   "heading": 70.6,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 84.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 84.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 84.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 84.9
+     }
+    }
+   },
+   "progressM": 360.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-380",
+   "image": null,
+   "lng": -80.39158273863413,
+   "lat": 27.41474046127565,
+   "heading": 70.0,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 64.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 64.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 64.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 64.9
+     }
+    }
+   },
+   "progressM": 380.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-400",
+   "image": null,
+   "lng": -80.39139233510544,
+   "lat": 27.41480196443431,
+   "heading": 70.0,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 44.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 44.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 44.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 44.9
+     }
+    }
+   },
+   "progressM": 400.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-420",
+   "image": null,
+   "lng": -80.39120193157676,
+   "lat": 27.414863467592973,
+   "heading": 70.0,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 24.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 24.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 24.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 24.9
+     }
+    }
+   },
+   "progressM": 420.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-440",
+   "image": null,
+   "lng": -80.39101152804807,
+   "lat": 27.414924970751635,
+   "heading": 70.0,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Keep left to take I 95 North toward Daytona Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight left",
+     "distanceM": 4.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      }
+     ],
+     "preferredLane": 0,
+     "laneSide": "left",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 4.9
+     }
+    },
+    "south": {
+     "instruction": "Keep right to take I 95 South toward West Palm Beach.",
+     "maneuverType": "fork",
+     "modifier": "slight right",
+     "distanceM": 4.9,
+     "lanes": [
+      {
+       "indications": [
+        "straight",
+        "slight right"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "slight right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "slight right"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.390965,
+      "lat": 27.41494,
+      "distanceM": 4.9
+     }
+    }
+   },
+   "progressM": 440.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-460",
+   "image": null,
+   "lng": -80.39082121901657,
+   "lat": 27.41498670379972,
+   "heading": 69.9,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Continue toward I 95 North: Daytona Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 166.4,
+     "lanes": null,
+     "preferredLane": null,
+     "laneSide": null,
+     "laneSource": null
+    },
+    "south": {
+     "instruction": "Continue toward I 95 South: West Palm Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 170.0,
+     "lanes": [
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.389369,
+      "lat": 27.414368,
+      "distanceM": 170.0
+     }
+    }
+   },
+   "progressM": 460.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-480",
+   "image": null,
+   "lng": -80.39063094054464,
+   "lat": 27.415048511191998,
+   "heading": 69.9,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Continue toward I 95 North: Daytona Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 146.4,
+     "lanes": null,
+     "preferredLane": null,
+     "laneSide": null,
+     "laneSource": null
+    },
+    "south": {
+     "instruction": "Continue toward I 95 South: West Palm Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 150.7,
+     "lanes": [
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.389369,
+      "lat": 27.414368,
+      "distanceM": 150.7
+     }
+    }
+   },
+   "progressM": 480.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-500",
+   "image": null,
+   "lng": -80.39044083428038,
+   "lat": 27.415110658517392,
+   "heading": 69.9,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Continue toward I 95 North: Daytona Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 126.4,
+     "lanes": null,
+     "preferredLane": null,
+     "laneSide": null,
+     "laneSource": null
+    },
+    "south": {
+     "instruction": "Continue toward I 95 South: West Palm Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 133.4,
+     "lanes": [
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "straight"
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneSource": {
+      "lng": -80.389369,
+      "lat": 27.414368,
+      "distanceM": 133.4
+     }
+    }
+   },
+   "progressM": 500.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-520",
+   "image": null,
+   "lng": -80.39025059036581,
+   "lat": 27.415172549680793,
+   "heading": 69.9,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Continue toward I 95 North: Daytona Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 106.4,
+     "lanes": null,
+     "preferredLane": null,
+     "laneSide": null,
+     "laneSource": null
+    },
+    "south": null
+   },
+   "progressM": 520.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-540",
+   "image": null,
+   "lng": -80.39006034645124,
+   "lat": 27.41523444084419,
+   "heading": 69.9,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Continue toward I 95 North: Daytona Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 86.4,
+     "lanes": null,
+     "preferredLane": null,
+     "laneSide": null,
+     "laneSource": null
+    },
+    "south": null
+   },
+   "progressM": 540.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-560",
+   "image": null,
+   "lng": -80.38987010253666,
+   "lat": 27.41529633200759,
+   "heading": 69.9,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Continue toward I 95 North: Daytona Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 66.4,
+     "lanes": null,
+     "preferredLane": null,
+     "laneSide": null,
+     "laneSource": null
+    },
+    "south": null
+   },
+   "progressM": 560.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-580",
+   "image": null,
+   "lng": -80.3896798586221,
+   "lat": 27.41535822317099,
+   "heading": 69.9,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Continue toward I 95 North: Daytona Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 46.4,
+     "lanes": null,
+     "preferredLane": null,
+     "laneSide": null,
+     "laneSource": null
+    },
+    "south": null
+   },
+   "progressM": 580.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-600",
+   "image": null,
+   "lng": -80.38948963376212,
+   "lat": 27.415420160404203,
+   "heading": 69.8,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Continue toward I 95 North: Daytona Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 26.4,
+     "lanes": null,
+     "preferredLane": null,
+     "laneSide": null,
+     "laneSource": null
+    },
+    "south": null
+   },
+   "progressM": 600.0,
+   "lanePolygons": null
+  },
+  {
+   "id": "synthetic-620",
+   "image": null,
+   "lng": -80.38929947340173,
+   "lat": 27.415482253583107,
+   "heading": 69.8,
+   "capturedAt": null,
+   "nav": {
+    "north": {
+     "instruction": "Continue toward I 95 North: Daytona Beach.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 6.4,
+     "lanes": null,
+     "preferredLane": null,
+     "laneSide": null,
+     "laneSource": null
+    },
+    "south": null
+   },
+   "progressM": 620.0,
+   "lanePolygons": null
+  }
+ ],
+ "attribution": [
+  "Route and lane guidance: Mapbox Directions API (\u00a9 Mapbox, \u00a9 OpenStreetMap contributors)",
+  "Street-level imagery: Mapillary, CC-BY-SA 4.0"
+ ]
+}

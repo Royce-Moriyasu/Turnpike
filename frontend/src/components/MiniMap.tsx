@@ -1,0 +1,46 @@
+import type { DemoRoute, Frame } from "../types";
+
+interface Props {
+  data: DemoRoute;
+  routeKey: string;
+  frame: Frame;
+}
+
+export default function MiniMap({ data, routeKey, frame }: Props) {
+  const all = Object.values(data.routes).flatMap((r) => r.geometry);
+  const lngs = all.map((p) => p[0]);
+  const lats = all.map((p) => p[1]);
+  const [minX, maxX, minY, maxY] = [Math.min(...lngs), Math.max(...lngs), Math.min(...lats), Math.max(...lats)];
+  const kx = Math.cos((((minY + maxY) / 2) * Math.PI) / 180); // shrink longitude to keep shapes true
+  const w = (maxX - minX) * kx;
+  const h = maxY - minY;
+  const pad = Math.max(w, h) * 0.08;
+  const project = ([lng, lat]: [number, number]) => [(lng - minX) * kx + pad, maxY - lat + pad];
+  const path = (g: [number, number][]) => g.map((p) => project(p).join(",")).join(" ");
+  const [cx, cy] = project([frame.lng, frame.lat]);
+  const vb = `0 0 ${w + 2 * pad} ${h + 2 * pad}`;
+  const r = Math.max(w, h) * 0.02;
+
+  return (
+    <div className="rounded-2xl bg-neutral-900 p-3 ring-1 ring-white/10">
+      <div className="mb-2 text-xs uppercase tracking-widest text-white/50">Route</div>
+      <svg viewBox={vb} className="aspect-[4/3] w-full">
+        {Object.entries(data.routes)
+          .sort(([a]) => (a === routeKey ? 1 : -1))
+          .map(([key, route]) => (
+            <polyline
+              key={key}
+              points={path(route.geometry)}
+              fill="none"
+              stroke={key === routeKey ? "var(--color-gold)" : "rgba(255,255,255,0.25)"}
+              strokeWidth={key === routeKey ? 4 : 2.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
+        <circle cx={cx} cy={cy} r={r} fill="#fff" stroke="#000" strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
+      </svg>
+    </div>
+  );
+}

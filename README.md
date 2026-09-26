@@ -1,1 +1,67 @@
 # Turnpike
+
+Lane-level AR navigation from public road data. Mapbox tells us which lane to be in, vision finds
+that lane in the driver's view, and we highlight it in gold.
+
+Demo route: SR 70 (Okeechobee Rd) eastbound onto I-95 in Fort Pierce, FL. The North and South routes
+share the approach, so the same frames highlight a different lane depending on the destination.
+
+## Layout
+
+```
+bake/       Python: Mapbox route + Mapillary sequence -> frontend/public/demo_route.json
+data/       Cached Mapbox responses, fallback_lanes.json (hand-labeled lane polygons)
+frontend/   Vite + React + TypeScript + Tailwind
+vision/     OpenCV lane detection (writes the same format as fallback_lanes.json)
+```
+
+## Setup
+
+```bash
+cp .env.example .env                       # add MAPBOX_TOKEN and MAPILLARY_TOKEN
+python -m pip install -r bake/requirements.txt
+cd frontend && npm install
+```
+
+## Run
+
+```bash
+# 1. Bake the demo data (any image id from the Mapillary clip: the pKey= value in its URL)
+python bake/bake_route.py --image-id <mapillary image id>
+#    ...or without imagery, to test navigation logic:
+python bake/bake_route.py --synthetic
+
+# 2. Frontend
+cd frontend && npm run dev                 # http://localhost:5173
+```
+
+Keys: `←`/`→` step frames, `Space` plays/pauses.
+
+## How the lane is chosen
+
+At each intersection Mapbox returns lanes (left → right) with `active`/`valid` flags. We pick the usable
+lane nearest the side of the maneuver it serves: rightmost for a right-side ramp/exit, leftmost for a
+keep-left fork. See `preferred_lane()` in `bake/bake_route.py`.
+
+## Lane polygons (vision contract)
+
+`data/fallback_lanes.json`, keyed by frame id. Each frame is a list of visible lane polygons, sorted
+left → right, points in normalized image coordinates (0–1, origin top-left):
+
+```json
+{
+  "1234567890": [
+    [[0.10, 1.0], [0.42, 1.0], [0.49, 0.58], [0.45, 0.58]],
+    [[0.42, 1.0], [0.78, 1.0], [0.53, 0.58], [0.49, 0.58]]
+  ]
+}
+```
+
+If a frame shows fewer lanes than the Mapbox data, the frontend aligns them from the maneuver side
+(it counts from the right edge for right-side maneuvers). Re-run the bake after editing polygons.
+Frames with no polygons get placeholder geometry, labeled as such in the UI.
+
+## Data sources
+
+- Route and lane guidance: Mapbox Directions API (© Mapbox, © OpenStreetMap contributors)
+- Street-level imagery: Mapillary, CC-BY-SA 4.0 (attribution is shown in the app)
