@@ -79,7 +79,14 @@ export default function App() {
         <h1 className="text-2xl font-bold tracking-tight">
           Turn<span className="text-accent">pike</span>
         </h1>
-        <span className="text-sm text-white/50">Lane-level AR guidance from public road data</span>
+        <span className="text-sm text-white/50">
+          Lane-level AR guidance from public road data
+          {import.meta.env.DEV && (
+            <a href={`#label=${index + 1}`} className="ml-4 text-accent-soft hover:underline">
+              Label this frame →
+            </a>
+          )}
+        </span>
       </header>
 
       <div className="grid gap-4 lg:grid-cols-[1fr_320px]">

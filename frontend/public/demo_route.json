@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-26T14:53:59.386628+00:00",
+ "generatedAt": "2026-09-26T17:44:15.558240+00:00",
  "mode": "mapillary",
  "sequenceId": "jI9C10MXmpqDYtcFvBkeWR",
  "primaryRoute": "north",
@@ -343,7 +343,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -351,7 +352,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -359,11 +361,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
@@ -382,7 +387,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -390,7 +396,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -398,11 +405,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
@@ -411,7 +421,135 @@
     }
    },
    "progressM": 0.0,
-   "lanePolygons": null
+   "lanePolygons": [
+    [
+     [
+      -1.127,
+      1
+     ],
+     [
+      -0.752,
+      0.95
+     ],
+     [
+      -0.377,
+      0.9
+     ],
+     [
+      -0.077,
+      0.86
+     ],
+     [
+      0.148,
+      0.83
+     ],
+     [
+      0.427,
+      0.83
+     ],
+     [
+      0.326,
+      0.86
+     ],
+     [
+      0.191,
+      0.9
+     ],
+     [
+      0.022,
+      0.95
+     ],
+     [
+      -0.147,
+      1
+     ]
+    ],
+    [
+     [
+      -0.147,
+      1
+     ],
+     [
+      0.022,
+      0.95
+     ],
+     [
+      0.191,
+      0.9
+     ],
+     [
+      0.326,
+      0.86
+     ],
+     [
+      0.427,
+      0.83
+     ],
+     [
+      0.568,
+      0.83
+     ],
+     [
+      0.522,
+      0.86
+     ],
+     [
+      0.459,
+      0.9
+     ],
+     [
+      0.38,
+      0.95
+     ],
+     [
+      0.302,
+      1
+     ]
+    ],
+    [
+     [
+      0.302,
+      1
+     ],
+     [
+      0.38,
+      0.95
+     ],
+     [
+      0.459,
+      0.9
+     ],
+     [
+      0.522,
+      0.86
+     ],
+     [
+      0.568,
+      0.83
+     ],
+     [
+      0.686,
+      0.83
+     ],
+     [
+      0.694,
+      0.86
+     ],
+     [
+      0.704,
+      0.9
+     ],
+     [
+      0.717,
+      0.95
+     ],
+     [
+      0.729,
+      1
+     ]
+    ]
+   ],
+   "polygonSource": "labeled"
   },
   {
    "id": "354855846651660",
@@ -434,7 +572,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -442,7 +581,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -450,11 +590,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
@@ -473,7 +616,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -481,7 +625,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -489,11 +634,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
@@ -502,7 +650,8 @@
     }
    },
    "progressM": 8.3,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1311428959344081",
@@ -525,7 +674,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -533,7 +683,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -541,11 +692,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
@@ -564,7 +718,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -572,7 +727,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -580,11 +736,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
@@ -593,7 +752,8 @@
     }
    },
    "progressM": 19.4,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1049580408958329",
@@ -616,7 +776,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -624,7 +785,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -632,11 +794,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
@@ -655,7 +820,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -663,7 +829,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -671,11 +838,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398242,
       "lat": 27.412751,
@@ -684,7 +854,8 @@
     }
    },
    "progressM": 29.0,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "689180478772785",
@@ -707,7 +878,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -715,7 +887,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -723,11 +896,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398096,
       "lat": 27.412787,
@@ -746,7 +922,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -754,7 +931,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -762,11 +940,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.398096,
       "lat": 27.412787,
@@ -775,7 +956,8 @@
     }
    },
    "progressM": 42.9,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1051634542234780",
@@ -798,7 +980,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -806,7 +989,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -814,11 +998,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
@@ -837,7 +1024,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -845,7 +1033,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -853,11 +1042,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
@@ -866,7 +1058,8 @@
     }
    },
    "progressM": 53.7,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "484076496492610",
@@ -889,7 +1082,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -897,7 +1091,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -905,11 +1100,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
@@ -928,7 +1126,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -936,7 +1135,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -944,11 +1144,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
@@ -957,7 +1160,8 @@
     }
    },
    "progressM": 68.1,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "169317962092165",
@@ -980,7 +1184,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -988,7 +1193,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -996,11 +1202,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
@@ -1019,7 +1228,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1027,7 +1237,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1035,11 +1246,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
@@ -1048,7 +1262,8 @@
     }
    },
    "progressM": 80.9,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1124801011671114",
@@ -1071,7 +1286,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1079,7 +1295,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1087,11 +1304,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
@@ -1110,7 +1330,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1118,7 +1339,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1126,11 +1348,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397572,
       "lat": 27.412921,
@@ -1139,7 +1364,8 @@
     }
    },
    "progressM": 96.3,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "7176471462394944",
@@ -1162,7 +1388,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1170,7 +1397,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1178,11 +1406,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397435,
       "lat": 27.412972,
@@ -1201,7 +1432,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1209,7 +1441,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1217,11 +1450,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.397435,
       "lat": 27.412972,
@@ -1230,7 +1466,8 @@
     }
    },
    "progressM": 113.1,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "525819832202751",
@@ -1253,7 +1490,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1261,7 +1499,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1269,11 +1508,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396773,
       "lat": 27.413185,
@@ -1292,7 +1534,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1300,7 +1543,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1308,11 +1552,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396773,
       "lat": 27.413185,
@@ -1321,7 +1568,8 @@
     }
    },
    "progressM": 159.7,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "994228878185755",
@@ -1344,7 +1592,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1352,7 +1601,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1360,11 +1610,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396773,
       "lat": 27.413185,
@@ -1383,7 +1636,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1391,7 +1645,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1399,11 +1654,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396773,
       "lat": 27.413185,
@@ -1412,7 +1670,8 @@
     }
    },
    "progressM": 176.0,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "2788869688083814",
@@ -1435,7 +1694,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1443,7 +1703,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1451,11 +1712,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39675,
       "lat": 27.413192,
@@ -1474,7 +1738,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1482,7 +1747,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1490,11 +1756,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39675,
       "lat": 27.413192,
@@ -1503,7 +1772,8 @@
     }
    },
    "progressM": 189.1,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "497255855121814",
@@ -1526,7 +1796,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1534,7 +1805,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1542,11 +1814,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
@@ -1564,7 +1839,8 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -1572,7 +1848,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1580,11 +1857,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
@@ -1593,7 +1873,8 @@
     }
    },
    "progressM": 206.6,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "483174736521106",
@@ -1616,7 +1897,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1624,7 +1906,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1632,11 +1915,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
@@ -1654,7 +1940,8 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -1662,7 +1949,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1670,11 +1958,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
@@ -1683,7 +1974,8 @@
     }
    },
    "progressM": 221.3,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "749728276431707",
@@ -1706,7 +1998,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1714,7 +2007,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1722,11 +2016,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
@@ -1744,7 +2041,8 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -1752,7 +2050,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1760,11 +2059,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.396144,
       "lat": 27.413387,
@@ -1773,7 +2075,8 @@
     }
    },
    "progressM": 241.0,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1422180624863025",
@@ -1796,7 +2099,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1804,7 +2108,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1812,11 +2117,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
@@ -1834,7 +2142,8 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -1842,7 +2151,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1850,11 +2160,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
@@ -1863,7 +2176,8 @@
     }
    },
    "progressM": 256.9,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "494623058708545",
@@ -1886,7 +2200,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1894,7 +2209,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1902,11 +2218,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
@@ -1924,7 +2243,8 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -1932,7 +2252,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1940,11 +2261,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
@@ -1953,7 +2277,8 @@
     }
    },
    "progressM": 277.5,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1084181202127649",
@@ -1976,7 +2301,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1984,7 +2310,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -1992,11 +2319,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
@@ -2014,7 +2344,8 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2022,7 +2353,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2030,11 +2362,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39567,
       "lat": 27.41354,
@@ -2043,7 +2378,8 @@
     }
    },
    "progressM": 290.4,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "280281800918643",
@@ -2066,7 +2402,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2074,7 +2411,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2082,11 +2420,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.395476,
       "lat": 27.413601,
@@ -2104,7 +2445,8 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2112,7 +2454,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2120,11 +2463,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.395476,
       "lat": 27.413601,
@@ -2133,7 +2479,8 @@
     }
    },
    "progressM": 318.4,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "154525470279752",
@@ -2156,7 +2503,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2164,18 +2512,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       }
      ],
-     "preferredLane": 1,
+     "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.395183,
       "lat": 27.413698,
@@ -2193,14 +2545,16 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2208,11 +2562,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 2,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.395183,
       "lat": 27.413698,
@@ -2221,7 +2578,135 @@
     }
    },
    "progressM": 338.8,
-   "lanePolygons": null
+   "lanePolygons": [
+    [
+     [
+      -0.236,
+      1
+     ],
+     [
+      -0.095,
+      0.95
+     ],
+     [
+      0.046,
+      0.9
+     ],
+     [
+      0.159,
+      0.86
+     ],
+     [
+      0.244,
+      0.83
+     ],
+     [
+      0.396,
+      0.83
+     ],
+     [
+      0.368,
+      0.86
+     ],
+     [
+      0.329,
+      0.9
+     ],
+     [
+      0.281,
+      0.95
+     ],
+     [
+      0.233,
+      1
+     ]
+    ],
+    [
+     [
+      0.233,
+      1
+     ],
+     [
+      0.281,
+      0.95
+     ],
+     [
+      0.329,
+      0.9
+     ],
+     [
+      0.368,
+      0.86
+     ],
+     [
+      0.396,
+      0.83
+     ],
+     [
+      0.524,
+      0.83
+     ],
+     [
+      0.548,
+      0.86
+     ],
+     [
+      0.58,
+      0.9
+     ],
+     [
+      0.619,
+      0.95
+     ],
+     [
+      0.659,
+      1
+     ]
+    ],
+    [
+     [
+      0.659,
+      1
+     ],
+     [
+      0.619,
+      0.95
+     ],
+     [
+      0.58,
+      0.9
+     ],
+     [
+      0.548,
+      0.86
+     ],
+     [
+      0.524,
+      0.83
+     ],
+     [
+      0.629,
+      0.83
+     ],
+     [
+      0.695,
+      0.86
+     ],
+     [
+      0.782,
+      0.9
+     ],
+     [
+      0.892,
+      0.95
+     ],
+     [
+      1.001,
+      1
+     ]
+    ]
+   ],
+   "polygonSource": "labeled"
   },
   {
    "id": "1799404123598083",
@@ -2243,7 +2728,8 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
@@ -2251,7 +2737,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2259,25 +2746,30 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
-     "preferredLane": 2,
+     "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
@@ -2295,21 +2787,24 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2317,18 +2812,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
@@ -2337,7 +2836,219 @@
     }
    },
    "progressM": 364.6,
-   "lanePolygons": null
+   "lanePolygons": [
+    [
+     [
+      -0.272,
+      1
+     ],
+     [
+      -0.119,
+      0.95
+     ],
+     [
+      0.034,
+      0.9
+     ],
+     [
+      0.157,
+      0.86
+     ],
+     [
+      0.249,
+      0.83
+     ],
+     [
+      0.101,
+      0.83
+     ],
+     [
+      0.04,
+      0.86
+     ],
+     [
+      -0.041,
+      0.9
+     ],
+     [
+      -0.143,
+      0.95
+     ],
+     [
+      -0.245,
+      1
+     ]
+    ],
+    [
+     [
+      -0.245,
+      1
+     ],
+     [
+      -0.143,
+      0.95
+     ],
+     [
+      -0.041,
+      0.9
+     ],
+     [
+      0.04,
+      0.86
+     ],
+     [
+      0.101,
+      0.83
+     ],
+     [
+      0.399,
+      0.83
+     ],
+     [
+      0.371,
+      0.86
+     ],
+     [
+      0.333,
+      0.9
+     ],
+     [
+      0.286,
+      0.95
+     ],
+     [
+      0.239,
+      1
+     ]
+    ],
+    [
+     [
+      0.239,
+      1
+     ],
+     [
+      0.286,
+      0.95
+     ],
+     [
+      0.333,
+      0.9
+     ],
+     [
+      0.371,
+      0.86
+     ],
+     [
+      0.399,
+      0.83
+     ],
+     [
+      0.525,
+      0.83
+     ],
+     [
+      0.55,
+      0.86
+     ],
+     [
+      0.582,
+      0.9
+     ],
+     [
+      0.622,
+      0.95
+     ],
+     [
+      0.663,
+      1
+     ]
+    ],
+    [
+     [
+      0.663,
+      1
+     ],
+     [
+      0.622,
+      0.95
+     ],
+     [
+      0.582,
+      0.9
+     ],
+     [
+      0.55,
+      0.86
+     ],
+     [
+      0.525,
+      0.83
+     ],
+     [
+      0.631,
+      0.83
+     ],
+     [
+      0.695,
+      0.86
+     ],
+     [
+      0.779,
+      0.9
+     ],
+     [
+      0.884,
+      0.95
+     ],
+     [
+      0.99,
+      1
+     ]
+    ],
+    [
+     [
+      0.99,
+      1
+     ],
+     [
+      0.884,
+      0.95
+     ],
+     [
+      0.779,
+      0.9
+     ],
+     [
+      0.695,
+      0.86
+     ],
+     [
+      0.631,
+      0.83
+     ],
+     [
+      0.738,
+      0.83
+     ],
+     [
+      0.79,
+      0.86
+     ],
+     [
+      0.852,
+      0.9
+     ],
+     [
+      0.929,
+      0.95
+     ],
+     [
+      1.007,
+      1
+     ]
+    ]
+   ],
+   "polygonSource": "labeled"
   },
   {
    "id": "5380894818610735",
@@ -2359,7 +3070,8 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
@@ -2367,7 +3079,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2375,25 +3088,30 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
-     "preferredLane": 2,
+     "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
@@ -2411,21 +3129,24 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2433,18 +3154,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
@@ -2453,7 +3178,219 @@
     }
    },
    "progressM": 403.4,
-   "lanePolygons": null
+   "lanePolygons": [
+    [
+     [
+      -1.003,
+      1
+     ],
+     [
+      -0.709,
+      0.95
+     ],
+     [
+      -0.415,
+      0.9
+     ],
+     [
+      -0.179,
+      0.86
+     ],
+     [
+      -0.003,
+      0.83
+     ],
+     [
+      0.192,
+      0.83
+     ],
+     [
+      0.086,
+      0.86
+     ],
+     [
+      -0.055,
+      0.9
+     ],
+     [
+      -0.232,
+      0.95
+     ],
+     [
+      -0.409,
+      1
+     ]
+    ],
+    [
+     [
+      -0.409,
+      1
+     ],
+     [
+      -0.232,
+      0.95
+     ],
+     [
+      -0.055,
+      0.9
+     ],
+     [
+      0.086,
+      0.86
+     ],
+     [
+      0.192,
+      0.83
+     ],
+     [
+      0.341,
+      0.83
+     ],
+     [
+      0.298,
+      0.86
+     ],
+     [
+      0.24,
+      0.9
+     ],
+     [
+      0.167,
+      0.95
+     ],
+     [
+      0.094,
+      1
+     ]
+    ],
+    [
+     [
+      0.094,
+      1
+     ],
+     [
+      0.167,
+      0.95
+     ],
+     [
+      0.24,
+      0.9
+     ],
+     [
+      0.298,
+      0.86
+     ],
+     [
+      0.341,
+      0.83
+     ],
+     [
+      0.478,
+      0.83
+     ],
+     [
+      0.488,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.516,
+      0.95
+     ],
+     [
+      0.532,
+      1
+     ]
+    ],
+    [
+     [
+      0.532,
+      1
+     ],
+     [
+      0.516,
+      0.95
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.488,
+      0.86
+     ],
+     [
+      0.478,
+      0.83
+     ],
+     [
+      0.591,
+      0.83
+     ],
+     [
+      0.646,
+      0.86
+     ],
+     [
+      0.72,
+      0.9
+     ],
+     [
+      0.812,
+      0.95
+     ],
+     [
+      0.904,
+      1
+     ]
+    ],
+    [
+     [
+      0.904,
+      1
+     ],
+     [
+      0.812,
+      0.95
+     ],
+     [
+      0.72,
+      0.9
+     ],
+     [
+      0.646,
+      0.86
+     ],
+     [
+      0.591,
+      0.83
+     ],
+     [
+      0.729,
+      0.83
+     ],
+     [
+      0.825,
+      0.86
+     ],
+     [
+      0.953,
+      0.9
+     ],
+     [
+      1.113,
+      0.95
+     ],
+     [
+      1.274,
+      1
+     ]
+    ]
+   ],
+   "polygonSource": "labeled"
   },
   {
    "id": "754481875530988",
@@ -2475,7 +3412,8 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
@@ -2483,7 +3421,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2491,25 +3430,30 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
-     "preferredLane": 2,
+     "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
@@ -2527,21 +3471,24 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2549,18 +3496,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
@@ -2569,7 +3520,8 @@
     }
    },
    "progressM": 411.4,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1151140942363476",
@@ -2591,7 +3543,8 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
@@ -2599,7 +3552,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2607,25 +3561,30 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
-     "preferredLane": 2,
+     "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
@@ -2643,21 +3602,24 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2665,18 +3627,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.394263,
       "lat": 27.413993,
@@ -2685,7 +3651,8 @@
     }
    },
    "progressM": 436.6,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "172160751802378",
@@ -2707,7 +3674,8 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
@@ -2715,7 +3683,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2723,25 +3692,30 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
-     "preferredLane": 2,
+     "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39407,
       "lat": 27.414055,
@@ -2759,21 +3733,24 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2781,18 +3758,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.39407,
       "lat": 27.414055,
@@ -2801,7 +3782,8 @@
     }
    },
    "progressM": 456.2,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "155484140237039",
@@ -2823,7 +3805,8 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
@@ -2831,7 +3814,8 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
@@ -2839,18 +3823,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       }
      ],
-     "preferredLane": 2,
+     "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.393921,
       "lat": 27.414097,
@@ -2868,21 +3856,24 @@
         "left"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2890,11 +3881,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 3,
      "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.393921,
       "lat": 27.414097,
@@ -2903,7 +3897,8 @@
     }
    },
    "progressM": 482.4,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "132173049325117",
@@ -2927,18 +3922,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
@@ -2957,7 +3956,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -2965,11 +3965,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
@@ -2978,7 +3981,8 @@
     }
    },
    "progressM": 504.0,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "182643754090879",
@@ -3002,18 +4006,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
@@ -3032,7 +4040,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3040,11 +4049,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
@@ -3053,7 +4065,8 @@
     }
    },
    "progressM": 529.6,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "373417314306458",
@@ -3077,18 +4090,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
@@ -3107,7 +4124,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3115,11 +4133,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.393252,
       "lat": 27.414208,
@@ -3128,7 +4149,8 @@
     }
    },
    "progressM": 551.9,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "379583843980480",
@@ -3152,18 +4174,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3182,7 +4208,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3190,11 +4217,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3203,7 +4233,8 @@
     }
    },
    "progressM": 578.4,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "490549489091873",
@@ -3227,18 +4258,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3257,7 +4292,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3265,11 +4301,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3278,7 +4317,8 @@
     }
    },
    "progressM": 598.9,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "525346512582354",
@@ -3302,18 +4342,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3332,7 +4376,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3340,11 +4385,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3353,7 +4401,8 @@
     }
    },
    "progressM": 624.3,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "977064226564086",
@@ -3377,18 +4426,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3407,7 +4460,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3415,11 +4469,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3428,7 +4485,8 @@
     }
    },
    "progressM": 649.3,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "654753859162003",
@@ -3452,18 +4510,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3482,7 +4544,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3490,11 +4553,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3503,7 +4569,8 @@
     }
    },
    "progressM": 668.0,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "652394722654505",
@@ -3527,18 +4594,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3557,7 +4628,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3565,11 +4637,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3578,7 +4653,8 @@
     }
    },
    "progressM": 692.0,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1135769180156036",
@@ -3602,18 +4678,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3632,7 +4712,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3640,11 +4721,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3653,7 +4737,8 @@
     }
    },
    "progressM": 710.7,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "149502924183820",
@@ -3677,18 +4762,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3707,7 +4796,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3715,11 +4805,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3728,7 +4821,8 @@
     }
    },
    "progressM": 734.4,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "658068828682070",
@@ -3752,18 +4846,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3782,7 +4880,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3790,11 +4889,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3803,7 +4905,8 @@
     }
    },
    "progressM": 752.8,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "337539458390495",
@@ -3827,18 +4930,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3857,7 +4964,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3865,11 +4973,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3878,7 +4989,8 @@
     }
    },
    "progressM": 774.9,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "2027512867410072",
@@ -3902,18 +5014,22 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       },
       {
        "indications": [
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": false
       }
      ],
      "preferredLane": 0,
      "laneSide": "left",
+     "laneMovement": "slight left",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3932,7 +5048,8 @@
         "slight right"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3940,11 +5057,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "slight right"
+       "valid_indication": "slight right",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": "right",
+     "laneMovement": "slight right",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.390965,
       "lat": 27.41494,
@@ -3953,7 +5073,8 @@
     }
    },
    "progressM": 794.1,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1755472991458046",
@@ -3972,6 +5093,8 @@
      "lanes": null,
      "preferredLane": null,
      "laneSide": null,
+     "laneMovement": null,
+     "laneBasis": null,
      "laneSource": null
     },
     "south": {
@@ -3985,7 +5108,8 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -3993,11 +5117,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": null,
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.389369,
       "lat": 27.414368,
@@ -4006,7 +5133,8 @@
     }
    },
    "progressM": 817.9,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "633795277709182",
@@ -4025,6 +5153,8 @@
      "lanes": null,
      "preferredLane": null,
      "laneSide": null,
+     "laneMovement": null,
+     "laneBasis": null,
      "laneSource": null
     },
     "south": {
@@ -4038,7 +5168,8 @@
         "straight"
        ],
        "valid": false,
-       "active": false
+       "active": false,
+       "allowed": true
       },
       {
        "indications": [
@@ -4046,11 +5177,14 @@
        ],
        "valid": true,
        "active": true,
-       "valid_indication": "straight"
+       "valid_indication": "straight",
+       "allowed": true
       }
      ],
      "preferredLane": 1,
      "laneSide": null,
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
      "laneSource": {
       "lng": -80.389369,
       "lat": 27.414368,
@@ -4059,7 +5193,8 @@
     }
    },
    "progressM": 837.0,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "707701070595956",
@@ -4078,12 +5213,15 @@
      "lanes": null,
      "preferredLane": null,
      "laneSide": null,
+     "laneMovement": null,
+     "laneBasis": null,
      "laneSource": null
     },
     "south": null
    },
    "progressM": 861.3,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "4985117674869918",
@@ -4102,12 +5240,15 @@
      "lanes": null,
      "preferredLane": null,
      "laneSide": null,
+     "laneMovement": null,
+     "laneBasis": null,
      "laneSource": null
     },
     "south": null
    },
    "progressM": 884.9,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "3044239262491530",
@@ -4126,12 +5267,15 @@
      "lanes": null,
      "preferredLane": null,
      "laneSide": null,
+     "laneMovement": null,
+     "laneBasis": null,
      "laneSource": null
     },
     "south": null
    },
    "progressM": 904.2,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "325060823010028",
@@ -4150,12 +5294,15 @@
      "lanes": null,
      "preferredLane": null,
      "laneSide": null,
+     "laneMovement": null,
+     "laneBasis": null,
      "laneSource": null
     },
     "south": null
    },
    "progressM": 928.4,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "1099295494249684",
@@ -4174,12 +5321,15 @@
      "lanes": null,
      "preferredLane": null,
      "laneSide": null,
+     "laneMovement": null,
+     "laneBasis": null,
      "laneSource": null
     },
     "south": null
    },
    "progressM": 947.1,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   },
   {
    "id": "110130878278417",
@@ -4198,12 +5348,15 @@
      "lanes": null,
      "preferredLane": null,
      "laneSide": null,
+     "laneMovement": null,
+     "laneBasis": null,
      "laneSource": null
     },
     "south": null
    },
    "progressM": 970.6,
-   "lanePolygons": null
+   "lanePolygons": null,
+   "polygonSource": null
   }
  ],
  "attribution": [

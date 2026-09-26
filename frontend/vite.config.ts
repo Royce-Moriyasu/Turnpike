@@ -1,7 +1,54 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { readFile, writeFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const LABELS = path.join(repoRoot, "data", "fallback_lanes.json");
+
+/** Dev-only endpoints for the labeling tool: read/write data/fallback_lanes.json and re-run the bake. */
+function labelingApi(): Plugin {
+  return {
+    name: "labeling-api",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use("/__labels", async (req, res) => {
+        try {
+          if (req.method === "GET") {
+            res.setHeader("Content-Type", "application/json");
+            res.end(await readFile(LABELS, "utf-8"));
+          } else if (req.method === "PUT") {
+            let body = "";
+            for await (const chunk of req) body += chunk;
+            JSON.parse(body); // never write malformed JSON over the labels
+            await writeFile(LABELS, body);
+            res.end("ok");
+          } else {
+            res.statusCode = 405;
+            res.end();
+          }
+        } catch (e) {
+          res.statusCode = 500;
+          res.end(String(e));
+        }
+      });
+      server.middlewares.use("/__bake", (req, res) => {
+        if (req.method !== "POST") {
+          res.statusCode = 405;
+          return res.end();
+        }
+        execFile("python", ["bake/bake_route.py", "--frames"], { cwd: repoRoot }, (err, stdout, stderr) => {
+          res.statusCode = err ? 500 : 200;
+          res.end(err ? stderr || String(err) : stdout);
+        });
+      });
+    },
+  };
+}
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), labelingApi()],
 });

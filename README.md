@@ -39,9 +39,20 @@ Keys: `←`/`→` step frames, `Space` plays/pauses.
 
 ## How the lane is chosen
 
-At each intersection Mapbox returns lanes (left → right) with `active`/`valid` flags. We pick the usable
-lane nearest the side of the maneuver it serves: rightmost for a right-side ramp/exit, leftmost for a
-keep-left fork. See `preferred_lane()` in `bake/bake_route.py`.
+At each intersection Mapbox returns the lane layout (left → right), with each lane's painted turn
+arrows (`indications`, e.g. `left | through | through | through | right`). For every such point the bake:
+
+1. Works out the **movement** the route makes at the decision those lanes describe: the maneuver itself
+   at a maneuver point (e.g. "slight left" at a fork), or what the route does at the next junction it
+   drives through (usually "straight").
+2. Marks as **allowed** the lanes whose arrows permit that movement (falling back to through lanes).
+3. Picks the allowed lane **nearest the side of the next turn**: rightmost before a right-side ramp,
+   leftmost before a keep-left fork.
+
+Mapbox's own `active`/`valid` flags are only used when no lane's arrows match. We don't trust them
+first because Mapbox infers them where OpenStreetMap has no lane tags. On our route that inference
+wrongly marked the rightmost through lane on SR 70 as I-95 South only, when the real footage shows it
+is the lane that reaches I-95 North. See `choose_lane()` in `bake/bake_route.py`.
 
 ## Lane polygons (vision contract)
 

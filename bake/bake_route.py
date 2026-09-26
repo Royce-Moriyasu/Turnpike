@@ -118,17 +118,64 @@ def side_of(modifier: str | None) -> str | None:
     return None
 
 
-def preferred_lane(lanes: list[dict], side: str | None) -> int | None:
-    """Mapbox says which lanes are usable; we pick the usable lane nearest the maneuver side."""
-    usable = [i for i, l in enumerate(lanes) if l.get("active")] or \
-             [i for i, l in enumerate(lanes) if l.get("valid")]
-    if not usable:
-        return None
+# Lane arrows that can make each movement, best match first. "none" is an unmarked lane,
+# which OSM uses for plain through lanes.
+ARROWS_FOR = {
+    "straight": ["straight", "none"],
+    "slight right": ["slight right", "right", "sharp right"],
+    "right": ["right", "slight right", "sharp right"],
+    "sharp right": ["sharp right", "right", "slight right"],
+    "slight left": ["slight left", "left", "sharp left"],
+    "left": ["left", "slight left", "sharp left"],
+    "sharp left": ["sharp left", "left", "slight left"],
+    "uturn": ["uturn"],
+}
+
+
+def turn_through(inter: dict) -> str:
+    """The movement the route makes through a junction, from its entry and exit bearings."""
+    if "in" not in inter or "out" not in inter:
+        return "straight"
+    heading_in = (inter["bearings"][inter["in"]] + 180) % 360
+    delta = (inter["bearings"][inter["out"]] - heading_in + 540) % 360 - 180  # + = right
+    size = abs(delta)
+    if size < 25:
+        return "straight"
+    side = "right" if delta > 0 else "left"
+    if size < 60:
+        return f"slight {side}"
+    return side if size < 135 else f"sharp {side}"
+
+
+def lanes_for_movement(lanes: list[dict], movement: str) -> list[int]:
+    """Lanes whose painted arrows allow the movement. Falls back to through lanes, since a
+    ramp or fork that leaves at a shallow angle is often tagged as 'through'."""
+    for arrow in ARROWS_FOR.get(movement, []) + ARROWS_FOR["straight"]:
+        match = [i for i, l in enumerate(lanes) if arrow in l.get("indications", [])]
+        if match:
+            return match
+    return []
+
+
+def choose_lane(lanes: list[dict], movement: str, side: str | None) -> tuple[list[int], int | None, str]:
+    """(allowed lanes, preferred lane, basis). Uses the lane arrows; Mapbox's own active/valid
+    flags only when no arrow matches, because Mapbox infers them when map data is missing."""
+    allowed, basis = lanes_for_movement(lanes, movement), "arrows"
+    if not allowed:
+        allowed = [i for i, l in enumerate(lanes) if l.get("active")] or \
+                  [i for i, l in enumerate(lanes) if l.get("valid")]
+        basis = "mapbox"
+    if not allowed:
+        return [], None, basis
     if side == "right":
-        return max(usable)
+        return allowed, max(allowed), basis
     if side == "left":
-        return min(usable)
-    return usable[0] if len(usable) == 1 else None
+        return allowed, min(allowed), basis
+    if len(allowed) == 1:
+        return allowed, allowed[0], basis
+    # No turn ahead to lean toward: let Mapbox break the tie if it singles out one allowed lane.
+    mapbox = [i for i in allowed if lanes[i].get("active")]
+    return allowed, mapbox[0] if len(mapbox) == 1 else None, basis
 
 
 class RouteModel:
@@ -139,22 +186,47 @@ class RouteModel:
         self.steps = route["legs"][0]["steps"]
         self.maneuver_s = [self.line.cum[st["intersections"][0]["geometry_index"]] for st in self.steps]
 
-        # Every intersection that carries lane data, with the maneuver those lanes serve:
-        # lanes at a step's own maneuver point serve that maneuver; later ones serve the next.
+        # Every intersection that carries lane data. For each: the movement the route makes there
+        # (which lanes' arrows allow it) and the side of the next turn (which of those lanes to pick).
         self.lane_points = []
-        for k, step in enumerate(self.steps):
-            for j, inter in enumerate(step["intersections"]):
-                if not inter.get("lanes"):
-                    continue
-                m = k if j == 0 else k + 1
-                while m < len(self.steps) - 1 and side_of(self.steps[m]["maneuver"].get("modifier")) is None:
-                    m += 1
-                self.lane_points.append({
-                    "s": self.line.cum[inter["geometry_index"]],
-                    "location": inter["location"],
-                    "lanes": inter["lanes"],
-                    "side": side_of(self.steps[min(m, len(self.steps) - 1)]["maneuver"].get("modifier")),
-                })
+        last = len(self.steps) - 1
+        points = [(k, j, inter) for k, step in enumerate(self.steps) for j, inter in enumerate(step["intersections"])]
+        for p, (k, j, inter) in enumerate(points):
+            if not inter.get("lanes"):
+                continue
+            # Side: the next maneuver that actually turns (lanes at a maneuver point serve it).
+            m = k if j == 0 else k + 1
+            while m < last and side_of(self.steps[m]["maneuver"].get("modifier")) is None:
+                m += 1
+            side = side_of(self.steps[min(m, last)]["maneuver"].get("modifier"))
+
+            # Movement: what the route does at the decision these lanes describe, which is the
+            # first maneuver point or junction (3+ roads) at or after this point. A plain node on
+            # the road carries the lanes of the junction ahead of it.
+            #  - maneuver point: the maneuver itself (e.g. "slight left" at the fork)
+            #  - junction we drive through: from its entry/exit bearings, usually straight
+            dk, dj, decision = next(
+                ((kk, jj, it) for kk, jj, it in points[p:] if jj == 0 or len(it.get("bearings", [])) > 2),
+                (k, j, inter),
+            )
+            if dj == 0:
+                maneuver = self.steps[dk]["maneuver"]
+                movement = "straight" if maneuver["type"] in ("depart", "arrive") \
+                    else maneuver.get("modifier") or "straight"
+            else:
+                movement = turn_through(decision)
+
+            allowed, preferred, basis = choose_lane(inter["lanes"], movement, side)
+            self.lane_points.append({
+                "s": self.line.cum[inter["geometry_index"]],
+                "location": inter["location"],
+                "lanes": inter["lanes"],
+                "side": side,
+                "movement": movement,
+                "allowed": allowed,
+                "preferred": preferred,
+                "basis": basis,
+            })
 
     def state_at(self, s: float) -> dict:
         # Next maneuver strictly ahead (skip depart).
@@ -169,8 +241,9 @@ class RouteModel:
         lp = next((p for p in self.lane_points if p["s"] >= s - 3), None)
         if lp and lp["s"] - s > LANE_LOOKAHEAD_M:
             lp = None
-        lanes = [{k2: l[k2] for k2 in ("indications", "valid", "active", "valid_indication") if k2 in l}
-                 for l in lp["lanes"]] if lp else None
+        lanes = [{**{k2: l[k2] for k2 in ("indications", "valid", "active", "valid_indication") if k2 in l},
+                  "allowed": i in lp["allowed"]}
+                 for i, l in enumerate(lp["lanes"])] if lp else None
 
         return {
             "instruction": instruction,
@@ -178,8 +251,10 @@ class RouteModel:
             "modifier": man.get("modifier"),
             "distanceM": round(max(0.0, self.maneuver_s[k] - s), 1),
             "lanes": lanes,
-            "preferredLane": preferred_lane(lp["lanes"], lp["side"]) if lp else None,
+            "preferredLane": lp["preferred"] if lp else None,
             "laneSide": lp["side"] if lp else None,
+            "laneMovement": lp["movement"] if lp else None,
+            "laneBasis": lp["basis"] if lp else None,
             "laneSource": {"lng": lp["location"][0], "lat": lp["location"][1],
                            "distanceM": round(max(0.0, lp["s"] - s), 1)} if lp else None,
         }
@@ -355,6 +430,31 @@ def synthetic_frames(primary: RouteModel) -> list[dict]:
     return frames
 
 
+def boundaries_to_polygons(frame: dict, rows: list[float]) -> list[list[list[float]]]:
+    """Lane i = the space between boundary i and i+1 (vision/README.md format), as a polygon."""
+    def bottom_x(b):
+        return next((x for x in b["x"] if x is not None), math.inf)
+
+    lines = sorted(frame["boundaries"], key=bottom_x)
+    lanes = []
+    for left, right in zip(lines, lines[1:]):
+        both = [j for j, r in enumerate(rows) if left["x"][j] is not None and right["x"][j] is not None]
+        if len(both) < 2:
+            continue  # can't draw a lane from fewer than two shared rows
+        lanes.append([[left["x"][j], rows[j]] for j in both] +
+                     [[right["x"][j], rows[j]] for j in reversed(both)])
+    return lanes
+
+
+def load_lane_polygons(path: Path) -> dict[str, list]:
+    """Polygons per frame id. Accepts the boundary format (vision/README.md) or legacy raw polygons."""
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if "frames" not in data:
+        return data
+    return {fid: lanes for fid, fr in data["frames"].items()
+            if (lanes := boundaries_to_polygons(fr, data["rows"]))}
+
+
 # ---------------------------------------------------------------- main
 
 def main() -> None:
@@ -379,7 +479,7 @@ def main() -> None:
     else:
         seq, frames = mapillary_frames(args.image_id, primary)
 
-    polygons = json.loads((DATA / "fallback_lanes.json").read_text(encoding="utf-8"))
+    polygons = load_lane_polygons(DATA / "fallback_lanes.json")
     for f in frames:
         f["nav"] = {}
         for key, model in models.items():
@@ -387,6 +487,7 @@ def main() -> None:
             f["nav"][key] = model.state_at(s) if off <= MAX_OFF_ROUTE_M else None
         f["progressM"] = round(f.pop("s"), 1)
         f["lanePolygons"] = polygons.get(f["id"])
+        f["polygonSource"] = "labeled" if f["lanePolygons"] else None
 
     out = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),

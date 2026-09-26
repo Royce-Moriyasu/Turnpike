@@ -25,7 +25,9 @@ export function describeLane(i: number, n: number): string {
   return fromRight <= i ? `${ORDINAL[fromRight + 1]} lane from the right` : `${ORDINAL[i + 1]} lane from the left`;
 }
 
-export const isUsable = (lane: { active?: boolean; valid: boolean }) => lane.active ?? lane.valid;
+// `allowed` is the bake's decision from the lane arrows; Mapbox's own flags are the fallback.
+export const isUsable = (lane: { allowed?: boolean; active?: boolean; valid: boolean }) =>
+  lane.allowed ?? lane.active ?? lane.valid;
 
 export function formatDistance(m: number): string {
   const ft = m * 3.28084;

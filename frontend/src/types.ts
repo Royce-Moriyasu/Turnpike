@@ -5,7 +5,8 @@ export type Point = [number, number]; // normalized image coords, 0..1
 export interface Lane {
   indications: string[];
   valid: boolean;
-  active?: boolean;
+  active?: boolean; // Mapbox's flag (inferred by Mapbox when map data is missing)
+  allowed?: boolean; // ours: this lane's arrows allow the movement the route makes here
   valid_indication?: string;
 }
 
@@ -17,6 +18,8 @@ export interface NavState {
   lanes: Lane[] | null;
   preferredLane: number | null;
   laneSide: "left" | "right" | null;
+  laneMovement?: string | null; // what the route does where these lanes apply, e.g. "straight"
+  laneBasis?: "arrows" | "mapbox" | null; // how allowed lanes were decided
   laneSource: { lng: number; lat: number; distanceM: number } | null;
 }
 
