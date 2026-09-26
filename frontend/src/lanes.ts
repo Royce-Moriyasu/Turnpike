@@ -24,9 +24,12 @@ export function formatDistance(m: number): string {
  * n lanes fanned out from a vanishing point. Clearly approximate — the data panel says so.
  */
 export function placeholderLanes(n: number): Point[][] {
-  const vp: Point = [0.5, 0.48];
-  const top = 0.58;
-  const [left, right] = [-0.45, 1.45];
+  // Tuned to the Mapillary clip: horizon sits ~77% down the frame.
+  const vp: Point = [0.47, 0.775];
+  const top = 0.8;
+  const laneWidthAtBottom = 0.55;
+  const left = 0.5 - (laneWidthAtBottom * n) / 2;
+  const right = 0.5 + (laneWidthAtBottom * n) / 2;
   const t = (1 - top) / (1 - vp[1]);
   const bottomX = (i: number) => left + ((right - left) * i) / n;
   const topX = (i: number) => bottomX(i) + (vp[0] - bottomX(i)) * t;

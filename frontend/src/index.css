@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
+/* Google Maps dark palette: charcoal surfaces, route blue for guidance. */
 @theme {
-  --color-gold: #f5b700;
-  --color-gold-soft: #ffd65a;
+  --color-accent: #4285f4;
+  --color-accent-soft: #8ab4f8;
+  --color-surface: #2d2e31;
+  --color-page: #202124;
 }
 
 html,
@@ -12,8 +15,8 @@ body,
 }
 
 body {
-  background: #0b0d10;
-  color: #e7e9ec;
+  background: var(--color-page);
+  color: #e8eaed;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 

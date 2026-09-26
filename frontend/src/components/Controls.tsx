@@ -22,7 +22,7 @@ export default function Controls({ data, index, setIndex, playing, setPlaying, r
             key={key}
             onClick={() => setRouteKey(key)}
             className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-              key === routeKey ? "bg-gold text-black" : "text-white/70 hover:text-white"
+              key === routeKey ? "bg-accent text-white" : "text-white/70 hover:text-white"
             }`}
           >
             {route.label}
@@ -52,7 +52,7 @@ export default function Controls({ data, index, setIndex, playing, setPlaying, r
         max={last}
         value={index}
         onChange={(e) => setIndex(Number(e.target.value))}
-        className="min-w-40 flex-1 accent-[var(--color-gold)]"
+        className="min-w-40 flex-1 accent-[var(--color-accent)]"
         aria-label="Frame"
       />
       <span className="text-sm tabular-nums text-white/50">

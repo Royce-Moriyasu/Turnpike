@@ -26,6 +26,7 @@ export interface Frame {
   lng: number;
   lat: number;
   heading: number | null;
+  headingSource?: "camera" | "route";
   capturedAt: string | null;
   progressM: number;
   nav: Record<string, NavState | null>;

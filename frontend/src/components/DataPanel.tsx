@@ -31,7 +31,7 @@ export default function DataPanel({ data, frame, nav }: Props) {
       : "—";
 
   return (
-    <div className="rounded-2xl bg-neutral-900 p-4 text-sm ring-1 ring-white/10">
+    <div className="rounded-2xl bg-surface p-4 text-sm ring-1 ring-white/10">
       <div className="mb-2 text-xs uppercase tracking-widest text-white/50">Public road data</div>
       <dl>
         <Row label="Position">

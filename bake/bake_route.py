@@ -1,6 +1,7 @@
 """Bake the demo: Mapbox lane guidance + a Mapillary image sequence -> demo_route.json.
 
-    python bake/bake_route.py --image-id <mapillary image id>   # real imagery
+    python bake/bake_route.py --frames                          # images from pipeline/data/frames.json
+    python bake/bake_route.py --image-id <mapillary image id>   # fetch the sequence from Mapillary
     python bake/bake_route.py --synthetic                       # no imagery; frames sampled along the route
 
 Mapbox responses are cached in data/mapbox_<route>.json (use --refresh to re-fetch).
@@ -13,6 +14,7 @@ import argparse
 import json
 import math
 import os
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -25,16 +27,20 @@ DATA = ROOT / "data"
 PUBLIC = ROOT / "frontend" / "public"
 IMG_DIR = PUBLIC / "route"
 OUT = PUBLIC / "demo_route.json"
+PIPELINE_FRAMES = ROOT / "pipeline" / "data" / "frames.json"
 
 load_dotenv(ROOT / ".env")
 
 # SR 70 (Okeechobee Rd) eastbound onto I-95, Fort Pierce FL. Both routes share the
 # approach and split at the ramp fork, so the same frames get a different lane per route.
+# Origin is where the Mapillary clip is already eastbound on SR 70; the bearing keeps Mapbox
+# from snapping it onto the westbound side of the divided road.
+ORIGIN, ORIGIN_BEARING = (-80.398568, 27.41274), 70
 ROUTES = {
     "north": {"label": "I-95 North · Daytona Beach",
-              "origin": (-80.395166, 27.413656), "destination": (-80.389239, 27.415502)},
+              "origin": ORIGIN, "destination": (-80.389239, 27.415502)},
     "south": {"label": "I-95 South · West Palm Beach",
-              "origin": (-80.395166, 27.413656), "destination": (-80.389369, 27.414368)},
+              "origin": ORIGIN, "destination": (-80.389369, 27.414368)},
 }
 PRIMARY_ROUTE = "north"  # the Mapillary clip takes I-95 North
 
@@ -185,24 +191,31 @@ def load_mapbox(key: str, refresh: bool) -> dict:
     cache = DATA / f"mapbox_{key}.json"
     if cache.exists() and not refresh:
         return json.loads(cache.read_text(encoding="utf-8"))
-    token = os.getenv("MAPBOX_TOKEN") or sys.exit("MAPBOX_TOKEN missing from .env")
+    token = os.getenv("MAPBOX_TOKEN") or sys.exit("MAPBOX_TOKEN not set (set it in this terminal, or add it to .env)")
     cfg = ROUTES[key]
     coords = ";".join(f"{lng},{lat}" for lng, lat in (cfg["origin"], cfg["destination"]))
-    r = requests.get(
-        f"https://api.mapbox.com/directions/v5/mapbox/driving/{coords}",
-        params={"steps": "true", "banner_instructions": "true", "geometries": "geojson",
-                "overview": "full", "access_token": token},
-        timeout=30,
-    )
-    r.raise_for_status()
+    try:
+        r = requests.get(
+            f"https://api.mapbox.com/directions/v5/mapbox/driving/{coords}",
+            params={"steps": "true", "banner_instructions": "true", "geometries": "geojson",
+                    "overview": "full", "bearings": f"{ORIGIN_BEARING},45;", "access_token": token},
+            timeout=30,
+        )
+        r.raise_for_status()
+    except requests.RequestException as e:
+        # Mapbox takes the token in the URL; never let it reach the console.
+        sys.exit(f"Mapbox request for '{key}' failed: {str(e).replace(token, '<MAPBOX_TOKEN>')}")
     resp = r.json()
+    for wp in resp["waypoints"]:
+        if wp["distance"] > 15:
+            print(f"  warning: {key} waypoint snapped {wp['distance']:.0f} m to '{wp['name']}'")
     cache.write_text(json.dumps(resp, indent=1), encoding="utf-8")
     print(f"  fetched Mapbox route '{key}' -> {cache.relative_to(ROOT)}")
     return resp
 
 
 def mly_get(path: str, **params) -> dict:
-    token = os.getenv("MAPILLARY_TOKEN") or sys.exit("MAPILLARY_TOKEN missing from .env")
+    token = os.getenv("MAPILLARY_TOKEN") or sys.exit("MAPILLARY_TOKEN not set (set it in this terminal, or add it to .env)")
     r = requests.get(f"{GRAPH}/{path}", params=params,
                      headers={"Authorization": f"OAuth {token}"}, timeout=30)
     r.raise_for_status()
@@ -278,6 +291,59 @@ def mapillary_frames(image_id: str, primary: RouteModel) -> tuple[str, list[dict
     return seq, frames
 
 
+def manifest_frames(path: Path, primary: RouteModel) -> tuple[str | None, list[dict]]:
+    """Frames from pipeline/fetch_mapillary.py output, in capture order.
+
+    Keeps the longest time-contiguous run of on-route frames (so a later pass over the same
+    road can't interleave), drops GPS glitches that jump backwards along the route, and
+    replaces compass headings that disagree with the direction of travel.
+    """
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    base = path.parent.parent  # "file" paths are relative to pipeline/
+
+    runs, run, last_s = [], [], -math.inf
+    for f in sorted(manifest["frames"], key=lambda f: f["captured_at"]):
+        s, off = primary.line.project(f["lon"], f["lat"])
+        if off > MAX_OFF_ROUTE_M or not (0 < s < primary.line.length):
+            if run:
+                runs.append(run)
+            run, last_s = [], -math.inf
+            continue
+        if s < last_s - 2:
+            print(f"  dropped {f['image_id']}: position jumps back {last_s - s:.0f} m (GPS glitch)")
+            continue
+        run.append((f, s))
+        last_s = s
+    if run:
+        runs.append(run)
+    if not runs:
+        sys.exit(f"No frames in {path} are on the route.")
+    best = max(runs, key=len)
+    print(f"  {sum(map(len, runs))} frames on route in {len(runs)} run(s); using {len(best)}")
+
+    IMG_DIR.mkdir(parents=True, exist_ok=True)
+    keep = {f"{f['image_id']}.jpg" for f, _ in best}
+    for old in IMG_DIR.glob("*.jpg"):
+        if old.name not in keep:
+            old.unlink()
+
+    frames = []
+    for f, s in best:
+        shutil.copy2(base / f["file"], IMG_DIR / f"{f['image_id']}.jpg")
+        heading, source = f.get("compass_angle"), "camera"
+        route_bearing = primary.line.bearing_at(s)
+        if heading is None or angle_diff(heading, route_bearing) > MAX_HEADING_DIFF:
+            print(f"  {f['image_id']}: heading {heading} disagrees with route ({route_bearing:.0f}), using route")
+            heading, source = round(route_bearing, 1), "route"
+        frames.append({
+            "id": f["image_id"], "image": f"/route/{f['image_id']}.jpg", "lng": f["lon"], "lat": f["lat"],
+            "heading": heading, "headingSource": source,
+            "capturedAt": datetime.fromtimestamp(f["captured_at"] / 1000, tz=timezone.utc).isoformat(),
+            "s": s,
+        })
+    return manifest.get("sequence_id"), frames
+
+
 def synthetic_frames(primary: RouteModel) -> list[dict]:
     frames = []
     s = 0.0
@@ -294,6 +360,8 @@ def synthetic_frames(primary: RouteModel) -> list[dict]:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     src = ap.add_mutually_exclusive_group(required=True)
+    src.add_argument("--frames", nargs="?", const=str(PIPELINE_FRAMES), metavar="PATH",
+                     help="use a frames.json manifest (default: pipeline/data/frames.json)")
     src.add_argument("--image-id", help="any Mapillary image id from the clip (pKey= in the web URL)")
     src.add_argument("--synthetic", action="store_true", help="no imagery; sample frames along the route")
     ap.add_argument("--refresh", action="store_true", help="re-fetch Mapbox routes instead of using data/ cache")
@@ -306,6 +374,8 @@ def main() -> None:
     print("Building frames")
     if args.synthetic:
         seq, frames = None, synthetic_frames(primary)
+    elif args.frames:
+        seq, frames = manifest_frames(Path(args.frames), primary)
     else:
         seq, frames = mapillary_frames(args.image_id, primary)
 

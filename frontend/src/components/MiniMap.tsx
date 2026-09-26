@@ -22,7 +22,7 @@ export default function MiniMap({ data, routeKey, frame }: Props) {
   const r = Math.max(w, h) * 0.02;
 
   return (
-    <div className="rounded-2xl bg-neutral-900 p-3 ring-1 ring-white/10">
+    <div className="rounded-2xl bg-surface p-3 ring-1 ring-white/10">
       <div className="mb-2 text-xs uppercase tracking-widest text-white/50">Route</div>
       <svg viewBox={vb} className="aspect-[4/3] w-full">
         {Object.entries(data.routes)
@@ -32,7 +32,7 @@ export default function MiniMap({ data, routeKey, frame }: Props) {
               key={key}
               points={path(route.geometry)}
               fill="none"
-              stroke={key === routeKey ? "var(--color-gold)" : "rgba(255,255,255,0.25)"}
+              stroke={key === routeKey ? "var(--color-accent)" : "rgba(232,234,237,0.25)"}
               strokeWidth={key === routeKey ? 4 : 2.5}
               strokeLinecap="round"
               strokeLinejoin="round"

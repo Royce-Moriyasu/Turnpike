@@ -17,7 +17,7 @@ export default function LaneStrip({ nav }: { nav: NavState | null }) {
             className={[
               "flex h-12 min-w-12 flex-col items-center justify-center rounded-lg px-2 text-lg leading-none",
               preferred
-                ? "bg-gold font-bold text-black shadow-[0_0_16px_var(--color-gold)]"
+                ? "bg-accent font-bold text-white shadow-[0_0_16px_var(--color-accent)]"
                 : usable
                   ? "bg-white/15 text-white"
                   : "bg-white/5 text-white/30",

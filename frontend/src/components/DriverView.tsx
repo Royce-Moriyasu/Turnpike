@@ -9,6 +9,11 @@ interface Props {
 
 const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
 
+// The clip is mostly sky; show only the bottom of each frame. Polygons stay in
+// full-image coordinates and the SVG viewBox crops them the same way.
+const CROP_TOP = 0.42;
+const IMAGE_ASPECT = 2048 / 1152;
+
 export default function DriverView({ frame, nav, offRoute }: Props) {
   const navCount = nav?.lanes?.length ?? 0;
   const polygons = frame.lanePolygons ?? (navCount ? placeholderLanes(navCount) : []);
@@ -19,22 +24,34 @@ export default function DriverView({ frame, nav, offRoute }: Props) {
   const imminent = nav ? nav.distanceM < 120 : false;
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-black ring-1 ring-white/10">
+    <div
+      className="relative overflow-hidden rounded-2xl bg-black ring-1 ring-white/10"
+      style={{ aspectRatio: IMAGE_ASPECT / (1 - CROP_TOP) }}
+    >
       {frame.image ? (
-        <img src={frame.image} alt="Street-level view" className="block w-full select-none" draggable={false} />
+        <img
+          src={frame.image}
+          alt="Street-level view"
+          className="absolute inset-0 h-full w-full select-none object-cover object-bottom"
+          draggable={false}
+        />
       ) : (
-        <div className="aspect-[16/9] w-full bg-gradient-to-b from-sky-900/60 via-slate-800 to-neutral-700">
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-900/60 via-slate-800 to-neutral-700">
           <div className="absolute inset-x-0 top-3 text-center text-xs uppercase tracking-widest text-white/50">
-            Synthetic frame · run the bake with --image-id for real imagery
+            Synthetic frame · run the bake with --frames for real imagery
           </div>
         </div>
       )}
 
-      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1 1" preserveAspectRatio="none">
+      <svg
+        className="absolute inset-0 h-full w-full"
+        viewBox={`0 ${CROP_TOP} 1 ${1 - CROP_TOP}`}
+        preserveAspectRatio="none"
+      >
         <defs>
           <linearGradient id="lane-fill" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0%" stopColor="var(--color-gold)" stopOpacity={imminent ? 0.7 : 0.5} />
-            <stop offset="100%" stopColor="var(--color-gold)" stopOpacity={0} />
+            <stop offset="0%" stopColor="var(--color-accent)" stopOpacity={imminent ? 0.7 : 0.5} />
+            <stop offset="100%" stopColor="var(--color-accent)" stopOpacity={0} />
           </linearGradient>
         </defs>
         {polygons.map((poly, i) =>
@@ -43,7 +60,7 @@ export default function DriverView({ frame, nav, offRoute }: Props) {
               key={i}
               points={toPoints(poly)}
               fill="url(#lane-fill)"
-              stroke="var(--color-gold-soft)"
+              stroke="var(--color-accent-soft)"
               strokeWidth={2}
               vectorEffect="non-scaling-stroke"
               className="lane-pulse"

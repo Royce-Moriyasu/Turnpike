@@ -1,7 +1,7 @@
 # Turnpike
 
 Lane-level AR navigation from public road data. Mapbox tells us which lane to be in, vision finds
-that lane in the driver's view, and we highlight it in gold.
+that lane in the driver's view, and we highlight it on the road.
 
 Demo route: SR 70 (Okeechobee Rd) eastbound onto I-95 in Fort Pierce, FL. The North and South routes
 share the approach, so the same frames highlight a different lane depending on the destination.

@@ -7,7 +7,7 @@ import MiniMap from "./components/MiniMap";
 import DataPanel from "./components/DataPanel";
 import Controls from "./components/Controls";
 
-const FRAME_MS = 350;
+const FRAME_MS = 700; // the clip was captured at ~1 frame/s; this plays at ~1.4x
 
 export default function App() {
   const [data, setData] = useState<DemoRoute | null>(null);
@@ -77,7 +77,7 @@ export default function App() {
     <div className="mx-auto max-w-7xl p-4 md:p-6">
       <header className="mb-4 flex items-baseline justify-between">
         <h1 className="text-2xl font-bold tracking-tight">
-          Turn<span className="text-gold">pike</span>
+          Turn<span className="text-accent">pike</span>
         </h1>
         <span className="text-sm text-white/50">Lane-level AR guidance from public road data</span>
       </header>
