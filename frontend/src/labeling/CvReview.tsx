@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { DemoRoute } from "../types";
-import { describeLane, polygonIndexFor } from "../lanes";
+import { describeLane, laneTarget, lanesFromLines } from "../lanes";
 import { IMG_H, IMG_W, type LabelFile } from "./labels";
 
 // Read-only review of the OpenCV output (data/detected_lanes.json, see vision/README.md) frame by
@@ -30,6 +30,95 @@ interface CvFile {
 type Line = { x: (number | null)[] };
 
 const frameFromHash = () => Math.max(1, Number(location.hash.split("=")[1]) || 1) - 1;
+
+// ---- YOLOPv2 masks (vision/yolop_masks.py), served by the dev server ----
+const YOLOP_VIEW = "band";
+const maskUrl = (kind: "lane" | "drivable", id: string) => `/__yolop/${YOLOP_VIEW}/${kind}/${id}.png`;
+const COVER_TOL = 15; // px either side of a traced line
+const COVER_MIN = 0.6; // share of a traced line's rows the mask must hit to count as covered
+
+function loadMask(url: string): Promise<ImageData> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement("canvas");
+      c.width = img.width;
+      c.height = img.height;
+      const ctx = c.getContext("2d", { willReadFrequently: true })!;
+      ctx.drawImage(img, 0, 0);
+      resolve(ctx.getImageData(0, 0, c.width, c.height));
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
+/** Transparent image, colored where the (grayscale) mask is >= 128. */
+function tint(mask: ImageData, [r, g, b, a]: number[]): string {
+  const out = new ImageData(mask.width, mask.height);
+  for (let i = 0; i < mask.data.length; i += 4) {
+    if (mask.data[i] >= 128) out.data.set([r, g, b, a], i);
+  }
+  const c = document.createElement("canvas");
+  c.width = mask.width;
+  c.height = mask.height;
+  c.getContext("2d")!.putImageData(out, 0, 0);
+  return c.toDataURL("image/png");
+}
+
+/** How many on-screen traced lines the lane mask sits on (same test as the Python check). */
+function coverage(mask: ImageData, traced: Line[], rows: number[]) {
+  const { width: w, height: h, data } = mask;
+  let covered = 0;
+  let total = 0;
+  for (const b of traced) {
+    const pts = b.x.map((x, j) => [x, rows[j]] as const).filter(([x]) => x !== null && x > 0.01 && x < 0.99);
+    if (pts.length < 2) continue;
+    total++;
+    const hits = pts.filter(([x, r]) => {
+      const y = Math.min(h - 1, Math.floor(r * h));
+      const cx = Math.floor(x! * w);
+      for (let px = Math.max(0, cx - COVER_TOL); px < Math.min(w, cx + COVER_TOL); px++) {
+        if (data[(y * w + px) * 4] >= 128) return true;
+      }
+      return false;
+    }).length;
+    if (hits / pts.length >= COVER_MIN) covered++;
+  }
+  return { covered, total };
+}
+
+interface YolopState {
+  status: "loading" | "ok" | "missing";
+  lane?: string;
+  drivable?: string;
+  covered?: number;
+  total?: number;
+}
+
+function useYolop(frameId: string | undefined, traced: Line[] | null, rows: number[] | undefined): YolopState {
+  const [state, setState] = useState<YolopState>({ status: "loading" });
+  useEffect(() => {
+    if (!frameId || !rows) return;
+    let cancelled = false;
+    setState({ status: "loading" });
+    Promise.all([loadMask(maskUrl("lane", frameId)), loadMask(maskUrl("drivable", frameId))])
+      .then(([lane, drivable]) => {
+        if (cancelled) return;
+        setState({
+          status: "ok",
+          lane: tint(lane, [234, 67, 53, 210]),
+          drivable: tint(drivable, [52, 168, 83, 80]),
+          ...(traced ? coverage(lane, traced, rows) : {}),
+        });
+      })
+      .catch(() => !cancelled && setState({ status: "missing" }));
+    return () => {
+      cancelled = true;
+    };
+  }, [frameId, traced, rows]);
+  return state;
+}
 const confColor = (c: number) => (c >= GOOD ? "#34a853" : c >= 0.3 ? "#fbbc04" : "#ea4335");
 const bottomX = (b: Line) => b.x.slice(0, 3).find((x) => x !== null) ?? null;
 
@@ -70,18 +159,24 @@ export default function CvReview() {
   const [error, setError] = useState<string | null>(null);
   const [index, setIndex] = useState(frameFromHash);
   const [routeKey, setRouteKey] = useState("north");
-  const [show, setShow] = useState({ cv: true, labels: true, target: true });
+  const [show, setShow] = useState({ cv: true, labels: true, target: true, yolop: true, drivable: false });
+  // Which detected lines to review: YOLOPv2-based (vision/yolop_lanes.py) or OpenCV (detect_lanes.py).
+  const [detSource, setDetSource] = useState<"yolop" | "opencv">("yolop");
 
   useEffect(() => {
     fetch("/demo_route.json").then((r) => r.json()).then(setData);
-    fetch("/__detected")
-      .then(async (r) => (r.ok ? r.json() : Promise.reject(await r.text())))
-      .then(setCv)
-      .catch((e) => setError(String(e)));
     fetch("/__labels")
       .then((r) => (r.ok ? r.json() : null))
       .then((f) => f?.frames && setLabels(f));
   }, []);
+
+  useEffect(() => {
+    setError(null);
+    fetch(`/__detected?source=${detSource}`)
+      .then(async (r) => (r.ok ? r.json() : Promise.reject(await r.text())))
+      .then(setCv)
+      .catch((e) => setError(String(e)));
+  }, [detSource]);
 
   useEffect(() => history.replaceState(null, "", `#cv=${index + 1}`), [index]);
 
@@ -92,16 +187,27 @@ export default function CvReview() {
       else if (e.key === "ArrowLeft") setIndex((i) => Math.max(0, i - 1));
       else if (e.key.toLowerCase() === "l") setShow((s) => ({ ...s, labels: !s.labels }));
       else if (e.key.toLowerCase() === "c") setShow((s) => ({ ...s, cv: !s.cv }));
+      else if (e.key.toLowerCase() === "y") setShow((s) => ({ ...s, yolop: !s.yolop }));
+      else if (e.key.toLowerCase() === "d") setShow((s) => ({ ...s, drivable: !s.drivable }));
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [count]);
+
+  const currentId = data?.frames[index]?.id;
+  const yolop = useYolop(currentId, (currentId && labels?.frames[currentId]?.boundaries) || null, cv?.rows);
 
   if (error)
     return (
       <div className="mx-auto max-w-xl p-10 text-white/80">
         <h1 className="mb-3 text-2xl font-semibold">No CV output</h1>
         <p className="mb-3 text-sm">{error}</p>
+        <button
+          className="mr-4 rounded-lg bg-white/10 px-3 py-1.5 text-sm hover:bg-white/20"
+          onClick={() => setDetSource(detSource === "yolop" ? "opencv" : "yolop")}
+        >
+          Review {detSource === "yolop" ? "OpenCV" : "YOLOPv2"} lines instead
+        </button>
         <a href="#" className="text-accent-soft hover:underline">← back to app</a>
       </div>
     );
@@ -114,10 +220,10 @@ export default function CvReview() {
   const nav = frame.nav[routeKey];
   const navCount = nav?.lanes?.length ?? 0;
   const cvLanes = Math.max(0, (det?.boundaries.length ?? 0) - 1);
-  const target =
-    nav && nav.preferredLane !== null && navCount && cvLanes
-      ? polygonIndexFor(nav.preferredLane, navCount, cvLanes, nav.laneSide)
-      : null;
+  const { index: target, excluded } =
+    det && nav && nav.preferredLane !== null && navCount && cvLanes
+      ? laneTarget(nav.preferredLane, navCount, lanesFromLines(det.boundaries, rows), nav.laneSide)
+      : { index: null, excluded: new Set<number>() };
   const cmp = det && traced ? compare(traced, det.boundaries) : null;
 
   const allConf = data.frames.map((f) => cv.frames[f.id]?.confidence ?? null);
@@ -148,7 +254,21 @@ export default function CvReview() {
         <h1 className="text-2xl font-bold tracking-tight">
           CV <span className="text-accent">review</span>
         </h1>
-        <div className="flex items-center gap-4 text-sm text-white/60">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-white/60">
+          <div className="flex rounded-lg bg-white/5 p-1" role="group" aria-label="Detected lines to review">
+            {(["yolop", "opencv"] as const).map((k) => (
+              <button
+                key={k}
+                onClick={() => setDetSource(k)}
+                aria-pressed={detSource === k}
+                className={`rounded-md px-2.5 py-1 text-xs font-medium ${
+                  detSource === k ? "bg-accent text-white" : "text-white/60 hover:text-white"
+                }`}
+              >
+                {k === "yolop" ? "YOLOPv2 lines" : "OpenCV lines"}
+              </button>
+            ))}
+          </div>
           <span>
             {cv.method} · {scored.filter((c) => c >= GOOD).length}/{count} frames ≥ {GOOD}
           </span>
@@ -182,6 +302,12 @@ export default function CvReview() {
         {frame.image && (
           <img src={frame.image} alt="" className="absolute inset-0 h-full w-full object-cover object-bottom" />
         )}
+        {show.drivable && yolop.drivable && (
+          <img src={yolop.drivable} alt="" className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom" />
+        )}
+        {show.yolop && yolop.lane && (
+          <img src={yolop.lane} alt="" className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom" />
+        )}
         <svg
           className="absolute inset-0 h-full w-full"
           viewBox={`0 ${TOP * IMG_H} ${IMG_W} ${(1 - TOP) * IMG_H}`}
@@ -190,6 +316,12 @@ export default function CvReview() {
           {rows.map((r) => (
             <line key={r} x1={0} x2={IMG_W} y1={r * IMG_H} y2={r * IMG_H} stroke="white" strokeOpacity={0.15} strokeDasharray="12 10" strokeWidth={2} />
           ))}
+          {show.target &&
+            det &&
+            [...excluded].map((k) => {
+              const poly = lanePoly(det.boundaries[k], det.boundaries[k + 1]);
+              return poly ? <polygon key={`bike${k}`} points={poly} fill="#fbbc04" fillOpacity={0.3} /> : null;
+            })}
           {show.target && det && target !== null && lanePoly(det.boundaries[target], det.boundaries[target + 1]) && (
             <polygon
               points={lanePoly(det.boundaries[target], det.boundaries[target + 1])!}
@@ -236,9 +368,11 @@ export default function CvReview() {
             })}
         </svg>
         <div className="absolute left-3 top-3 flex gap-3 rounded-md bg-black/60 px-2 py-1 text-xs">
-          <span style={{ color: "#ff6d00" }}>━ CV line (conf)</span>
+          <span style={{ color: "#ff6d00" }}>━ {detSource === "yolop" ? "YOLOPv2" : "OpenCV"} line (conf)</span>
           <span className="text-accent-soft">┅ hand-traced</span>
           <span className="text-accent">▮ CV lane the demo would highlight</span>
+          <span style={{ color: "#ea4335" }}>▮ YOLOPv2 lane mask</span>
+          <span style={{ color: "#fbbc04" }}>▮ bike lane/shoulder (not counted)</span>
         </div>
       </div>
 
@@ -257,6 +391,8 @@ export default function CvReview() {
             {toggle("cv", "CV lines", "C")}
             {toggle("labels", "Hand-traced", "L")}
             {toggle("target", "Target lane", "")}
+            {toggle("yolop", "YOLOPv2 lanes", "Y")}
+            {toggle("drivable", "YOLOPv2 drivable", "D")}
           </div>
           <p className="text-xs text-white/40">
             Strip: green ≥ {GOOD}, amber ≥ 0.3, red below; ● marks hand-traced frames. CV output from {cv.generatedAt}.
@@ -292,11 +428,25 @@ export default function CvReview() {
               <Row label="Mapbox target">
                 {nav?.preferredLane != null && navCount ? `Lane ${nav.preferredLane + 1} of ${navCount} (${describeLane(nav.preferredLane, navCount)})` : "—"}
               </Row>
+              {excluded.size > 0 && (
+                <Row label="Not counted">
+                  {[...excluded].map((k) => `CV lane ${k + 1}`).join(", ")} (bike lane/shoulder)
+                </Row>
+              )}
               <Row label="Would highlight">{target !== null ? `CV lane ${target + 1}` : "nothing"}</Row>
-              <Row label="vs hand-traced">
+              <Row label={`${detSource === "yolop" ? "YOLOPv2" : "OpenCV"} lines vs traced`}>
                 {cmp
                   ? `${cmp.matched}/${cmp.total} lines matched${cmp.meanPx !== null ? `, ${cmp.meanPx.toFixed(1)} px off` : ""}${cmp.extra ? `, ${cmp.extra} extra` : ""}`
                   : "not traced"}
+              </Row>
+              <Row label="YOLOPv2 mask vs traced">
+                {yolop.status === "loading"
+                  ? "…"
+                  : yolop.status === "missing"
+                    ? "no mask: run vision/yolop_masks.py"
+                    : yolop.total !== undefined
+                      ? `${yolop.covered}/${yolop.total} lines covered`
+                      : "not traced"}
               </Row>
               <div className="mt-2 space-y-1 border-t border-white/10 pt-2 font-mono text-xs text-white/60">
                 {det.boundaries.map((b, i) => (

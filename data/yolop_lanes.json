@@ -1,0 +1,2778 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-26T20:02:24+00:00",
+  "method": "yolopv2-mask-tracks-v1",
+  "imageSize": [
+    2048,
+    1152
+  ],
+  "rows": [
+    1.0,
+    0.95,
+    0.9,
+    0.86,
+    0.83
+  ],
+  "frames": {
+    "940755019976735": {
+      "confidence": 0.002,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            0.096,
+            0.27,
+            0.404
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.007
+        },
+        {
+          "x": [
+            0.274,
+            0.362,
+            0.449,
+            0.52,
+            0.572
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.003
+        },
+        {
+          "x": [
+            0.728,
+            0.72,
+            0.709,
+            0.698,
+            0.689
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.002
+        },
+        {
+          "x": [
+            0.899,
+            0.854,
+            0.804,
+            0.761,
+            0.727
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.002
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "north"
+      }
+    },
+    "354855846651660": {
+      "confidence": 0.11,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            -0.065,
+            0.051,
+            0.19
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.122
+        },
+        {
+          "x": [
+            -0.079,
+            0.058,
+            0.196,
+            0.306,
+            0.388
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.299
+        },
+        {
+          "x": [
+            0.416,
+            0.45,
+            0.483,
+            0.51,
+            0.531
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.2
+        },
+        {
+          "x": [
+            0.822,
+            0.77,
+            0.717,
+            0.675,
+            0.644
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.125
+        },
+        {
+          "x": [
+            0.982,
+            0.893,
+            0.805,
+            0.735,
+            0.682
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.11
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "1311428959344081": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            -0.075,
+            0.073,
+            0.185
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.008
+        },
+        {
+          "x": [
+            0.061,
+            0.154,
+            0.245,
+            0.317,
+            0.37
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.769
+        },
+        {
+          "x": [
+            0.516,
+            0.516,
+            0.515,
+            0.515,
+            0.514
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.472
+        },
+        {
+          "x": [
+            0.902,
+            0.818,
+            0.737,
+            0.674,
+            0.628
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.328
+        },
+        {
+          "x": [
+            1.032,
+            0.922,
+            0.815,
+            0.731,
+            0.67
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.28
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north",
+        "reason": "lane width 0.13 at bottom is out of range"
+      }
+    },
+    "1049580408958329": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.09,
+            0.167,
+            0.245,
+            0.306,
+            0.353
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.67
+        },
+        {
+          "x": [
+            0.562,
+            0.545,
+            0.528,
+            0.515,
+            0.505
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.592
+        },
+        {
+          "x": [
+            0.927,
+            0.839,
+            0.75,
+            0.678,
+            0.622
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.548
+        },
+        {
+          "x": [
+            1.053,
+            0.946,
+            0.833,
+            0.739,
+            0.665
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.38
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "north",
+        "reason": "lane width 0.13 at bottom is out of range"
+      }
+    },
+    "689180478772785": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.151,
+            0.215,
+            0.28,
+            0.331,
+            0.37
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.692
+        },
+        {
+          "x": [
+            0.612,
+            0.585,
+            0.556,
+            0.532,
+            0.514
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.84
+        },
+        {
+          "x": [
+            0.972,
+            0.874,
+            0.773,
+            0.69,
+            0.626
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.62
+        },
+        {
+          "x": [
+            null,
+            0.962,
+            0.851,
+            0.751,
+            0.67
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.267
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "north",
+        "reason": "lane width 0.09 at bottom is out of range"
+      }
+    },
+    "1051634542234780": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            0.032,
+            0.153,
+            0.243
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.239
+        },
+        {
+          "x": [
+            0.212,
+            0.265,
+            0.318,
+            0.36,
+            0.391
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.742
+        },
+        {
+          "x": [
+            0.638,
+            0.604,
+            0.568,
+            0.539,
+            0.517
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.866
+        },
+        {
+          "x": [
+            0.975,
+            0.87,
+            0.765,
+            0.681,
+            0.618
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.531
+        },
+        {
+          "x": [
+            null,
+            0.974,
+            0.841,
+            0.735,
+            0.655
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.51
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "north",
+        "reason": "lane width 0.10 at bottom is out of range"
+      }
+    },
+    "484076496492610": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.013,
+            -0.029,
+            0.025,
+            0.104
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.039,
+            0.154,
+            0.241
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.339
+        },
+        {
+          "x": [
+            0.221,
+            0.273,
+            0.322,
+            0.361,
+            0.389
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.771
+        },
+        {
+          "x": [
+            0.657,
+            0.615,
+            0.574,
+            0.54,
+            0.515
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.757
+        },
+        {
+          "x": [
+            0.992,
+            0.882,
+            0.772,
+            0.684,
+            0.617
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.625
+        },
+        {
+          "x": [
+            null,
+            0.975,
+            0.843,
+            0.738,
+            0.659
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.412
+        }
+      ],
+      "debug": {
+        "tracks": 7,
+        "route": "north",
+        "reason": "lane width 0.07 at bottom is out of range"
+      }
+    },
+    "169317962092165": {
+      "confidence": 0.212,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            0.025,
+            0.144,
+            0.234
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.33
+        },
+        {
+          "x": [
+            0.216,
+            0.265,
+            0.315,
+            0.355,
+            0.384
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.647
+        },
+        {
+          "x": [
+            0.653,
+            0.61,
+            0.567,
+            0.533,
+            0.507
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.779
+        },
+        {
+          "x": [
+            null,
+            0.974,
+            0.819,
+            0.696,
+            0.603
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.212
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "1124801011671114": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.093,
+            0.029,
+            0.139,
+            0.23
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.258
+        },
+        {
+          "x": [
+            0.207,
+            0.259,
+            0.311,
+            0.35,
+            0.38
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.707
+        },
+        {
+          "x": [
+            0.641,
+            0.603,
+            0.564,
+            0.531,
+            0.505
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.815
+        },
+        {
+          "x": [
+            0.986,
+            0.878,
+            0.767,
+            0.677,
+            0.608
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.605
+        },
+        {
+          "x": [
+            1.059,
+            0.957,
+            0.838,
+            0.732,
+            0.646
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.331
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north",
+        "reason": "lane width 0.07 at bottom is out of range"
+      }
+    },
+    "7176471462394944": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            0.029,
+            0.151,
+            0.246
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.474
+        },
+        {
+          "x": [
+            0.213,
+            0.266,
+            0.317,
+            0.357,
+            0.387
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.756
+        },
+        {
+          "x": [
+            0.654,
+            0.61,
+            0.567,
+            0.532,
+            0.506
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.697
+        },
+        {
+          "x": [
+            0.992,
+            0.883,
+            0.768,
+            0.672,
+            0.598
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.634
+        },
+        {
+          "x": [
+            null,
+            0.984,
+            0.848,
+            0.732,
+            0.639
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.469
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north",
+        "reason": "lane width 0.10 at bottom is out of range"
+      }
+    },
+    "525819832202751": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.099,
+            0.05,
+            0.169,
+            0.259
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.504
+        },
+        {
+          "x": [
+            0.233,
+            0.281,
+            0.329,
+            0.368,
+            0.397
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.674
+        },
+        {
+          "x": [
+            0.652,
+            0.611,
+            0.569,
+            0.535,
+            0.51
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.718
+        },
+        {
+          "x": [
+            0.97,
+            0.865,
+            0.756,
+            0.667,
+            0.598
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.588
+        },
+        {
+          "x": [
+            null,
+            0.966,
+            0.827,
+            0.716,
+            0.633
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.323
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north",
+        "reason": "lane width 0.10 at bottom is out of range"
+      }
+    },
+    "994228878185755": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.087,
+            0.051,
+            0.162,
+            0.245
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.199
+        },
+        {
+          "x": [
+            0.248,
+            0.292,
+            0.337,
+            0.372,
+            0.399
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.748
+        },
+        {
+          "x": [
+            0.662,
+            0.621,
+            0.581,
+            0.548,
+            0.524
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.72
+        },
+        {
+          "x": [
+            0.985,
+            0.877,
+            0.769,
+            0.683,
+            0.618
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.475
+        },
+        {
+          "x": [
+            null,
+            0.984,
+            0.847,
+            0.734,
+            0.648
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.475
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north",
+        "reason": "lane width 0.11 at bottom is out of range"
+      }
+    },
+    "2788869688083814": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            0.005,
+            0.125,
+            0.215
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.045
+        },
+        {
+          "x": [
+            0.233,
+            0.282,
+            0.331,
+            0.37,
+            0.4
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.795
+        },
+        {
+          "x": [
+            0.679,
+            0.635,
+            0.59,
+            0.555,
+            0.529
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.859
+        },
+        {
+          "x": [
+            0.998,
+            0.889,
+            0.78,
+            0.693,
+            0.627
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.343
+        },
+        {
+          "x": [
+            null,
+            0.987,
+            0.849,
+            0.746,
+            0.672
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.335
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north",
+        "reason": "lane width 0.10 at bottom is out of range"
+      }
+    },
+    "497255855121814": {
+      "confidence": 0.614,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            0.022,
+            0.154,
+            0.247
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.299
+        },
+        {
+          "x": [
+            0.242,
+            0.291,
+            0.338,
+            0.375,
+            0.402
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.819
+        },
+        {
+          "x": [
+            0.669,
+            0.626,
+            0.584,
+            0.552,
+            0.527
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.851
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "north"
+      }
+    },
+    "483174736521106": {
+      "confidence": 0.587,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            0.041,
+            0.156,
+            0.237
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.211
+        },
+        {
+          "x": [
+            0.247,
+            0.292,
+            0.337,
+            0.373,
+            0.4
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.783
+        },
+        {
+          "x": [
+            0.675,
+            0.634,
+            0.592,
+            0.56,
+            0.535
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.807
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "north"
+      }
+    },
+    "749728276431707": {
+      "confidence": 0.025,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            -0.013,
+            0.135,
+            0.231
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.193
+        },
+        {
+          "x": [
+            0.252,
+            0.297,
+            0.342,
+            0.378,
+            0.405
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.78
+        },
+        {
+          "x": [
+            0.678,
+            0.637,
+            0.595,
+            0.562,
+            0.538
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.734
+        },
+        {
+          "x": [
+            1.012,
+            0.905,
+            0.799,
+            0.713,
+            0.649
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.13
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.983,
+            0.848,
+            0.747
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.025
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "1422180624863025": {
+      "confidence": 0.304,
+      "boundaries": [
+        {
+          "x": [
+            0.251,
+            0.297,
+            0.344,
+            0.381,
+            0.409
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.799
+        },
+        {
+          "x": [
+            0.682,
+            0.639,
+            0.597,
+            0.563,
+            0.538
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.757
+        },
+        {
+          "x": [
+            null,
+            1.034,
+            0.891,
+            0.771,
+            0.677
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.405
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "north"
+      }
+    },
+    "494623058708545": {
+      "confidence": 0.176,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            0.039,
+            0.16,
+            0.252
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.329
+        },
+        {
+          "x": [
+            0.259,
+            0.304,
+            0.349,
+            0.385,
+            0.412
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.839
+        },
+        {
+          "x": [
+            0.683,
+            0.642,
+            0.6,
+            0.566,
+            0.539
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.768
+        },
+        {
+          "x": [
+            1.035,
+            0.919,
+            0.803,
+            0.71,
+            0.641
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.176
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "north"
+      }
+    },
+    "1084181202127649": {
+      "confidence": 0.617,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.086,
+            0.061,
+            0.178,
+            0.267
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.266
+        },
+        {
+          "x": [
+            0.292,
+            0.33,
+            0.367,
+            0.397,
+            0.419
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.85
+        },
+        {
+          "x": [
+            0.704,
+            0.657,
+            0.608,
+            0.568,
+            0.537
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.823
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "north"
+      }
+    },
+    "280281800918643": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.074,
+            0.068,
+            0.181,
+            0.265
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.454
+        },
+        {
+          "x": [
+            0.277,
+            0.317,
+            0.357,
+            0.388,
+            0.412
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.801
+        },
+        {
+          "x": [
+            0.689,
+            0.643,
+            0.596,
+            0.559,
+            0.531
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.892
+        },
+        {
+          "x": [
+            1.041,
+            0.922,
+            0.802,
+            0.706,
+            0.634
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.402
+        },
+        {
+          "x": [
+            null,
+            1.023,
+            0.879,
+            0.763,
+            0.676
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.129
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north",
+        "reason": "lane width 0.10 at bottom is out of range"
+      }
+    },
+    "154525470279752": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            -0.037,
+            0.044,
+            0.106
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.043,
+            0.162,
+            0.251
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.396
+        },
+        {
+          "x": [
+            0.239,
+            0.286,
+            0.333,
+            0.371,
+            0.399
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.789
+        },
+        {
+          "x": [
+            0.66,
+            0.621,
+            0.581,
+            0.548,
+            0.523
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.85
+        },
+        {
+          "x": [
+            0.998,
+            0.894,
+            0.785,
+            0.695,
+            0.626
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.574
+        },
+        {
+          "x": [
+            null,
+            0.997,
+            0.857,
+            0.745,
+            0.662
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.285
+        },
+        {
+          "x": [
+            1.091,
+            0.988,
+            0.884,
+            0.801,
+            0.738
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.001
+        }
+      ],
+      "debug": {
+        "tracks": 7,
+        "route": "north",
+        "reason": "lane width 0.08 at bottom is out of range"
+      }
+    },
+    "1799404123598083": {
+      "confidence": 0.528,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            -0.005,
+            0.125,
+            0.223
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.338
+        },
+        {
+          "x": [
+            0.168,
+            0.229,
+            0.29,
+            0.338,
+            0.375
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.715
+        },
+        {
+          "x": [
+            0.61,
+            0.579,
+            0.549,
+            0.524,
+            0.505
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.748
+        },
+        {
+          "x": [
+            0.95,
+            0.857,
+            0.759,
+            0.677,
+            0.614
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.634
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.995,
+            0.853,
+            0.746
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.189
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "5380894818610735": {
+      "confidence": 0.584,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            -0.064,
+            0.079,
+            0.186
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.212
+        },
+        {
+          "x": [
+            0.085,
+            0.161,
+            0.237,
+            0.298,
+            0.343
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.643
+        },
+        {
+          "x": [
+            0.539,
+            0.521,
+            0.504,
+            0.49,
+            0.479
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.85
+        },
+        {
+          "x": [
+            0.906,
+            0.813,
+            0.72,
+            0.646,
+            0.59
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.701
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.974,
+            0.837,
+            0.732
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.315
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "754481875530988": {
+      "confidence": 0.563,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            null,
+            0.012,
+            0.128
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.092
+        },
+        {
+          "x": [
+            -0.055,
+            0.047,
+            0.148,
+            0.229,
+            0.289
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.391
+        },
+        {
+          "x": [
+            0.425,
+            0.429,
+            0.433,
+            0.436,
+            0.439
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.753
+        },
+        {
+          "x": [
+            0.83,
+            0.751,
+            0.672,
+            0.608,
+            0.561
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.676
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.977,
+            0.84,
+            0.737
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.165
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "1151140942363476": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            1.046,
+            0.883,
+            0.774
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.087
+        }
+      ],
+      "debug": {
+        "tracks": 1,
+        "route": "north",
+        "reason": "lines for target lane 3 not found"
+      }
+    },
+    "172160751802378": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            0.7,
+            0.371,
+            0.174,
+            0.064
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.937,
+            0.843,
+            0.815
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 2,
+        "route": "north",
+        "reason": "lane does not narrow toward the horizon"
+      }
+    },
+    "155484140237039": {
+      "confidence": 0.016,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            0.605,
+            0.566,
+            0.536,
+            0.513
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.354
+        },
+        {
+          "x": [
+            null,
+            1.035,
+            0.795,
+            0.651,
+            0.571
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.039
+        }
+      ],
+      "debug": {
+        "tracks": 2,
+        "route": "north"
+      }
+    },
+    "132173049325117": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            null,
+            0.024,
+            0.143
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.119
+        },
+        {
+          "x": [
+            0.09,
+            0.164,
+            0.239,
+            0.298,
+            0.343
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.61
+        },
+        {
+          "x": [
+            0.571,
+            0.546,
+            0.52,
+            0.499,
+            0.484
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.833
+        },
+        {
+          "x": [
+            0.738,
+            0.677,
+            0.615,
+            0.566,
+            0.529
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.791
+        },
+        {
+          "x": [
+            0.865,
+            0.813,
+            0.761,
+            0.72,
+            0.688
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.011
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "north",
+        "reason": "lane width 0.13 at bottom is out of range"
+      }
+    },
+    "182643754090879": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            -0.048,
+            0.053,
+            0.154,
+            0.235,
+            0.295
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.455
+        },
+        {
+          "x": [
+            0.598,
+            0.564,
+            0.53,
+            0.503,
+            0.483
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.826
+        },
+        {
+          "x": [
+            null,
+            1.077,
+            0.906,
+            0.77,
+            0.668
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.471
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "north",
+        "reason": "lane width 0.65 at bottom is out of range"
+      }
+    },
+    "373417314306458": {
+      "confidence": 0.325,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.061,
+            0.068,
+            0.172,
+            0.249
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.325
+        },
+        {
+          "x": [
+            0.288,
+            0.318,
+            0.348,
+            0.372,
+            0.39
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.607
+        },
+        {
+          "x": [
+            0.866,
+            0.774,
+            0.681,
+            0.607,
+            0.552
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.701
+        },
+        {
+          "x": [
+            null,
+            1.041,
+            0.878,
+            0.748,
+            0.651
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.587
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "north"
+      }
+    },
+    "379583843980480": {
+      "confidence": 0.177,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            -0.041,
+            0.091,
+            0.19
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.177
+        },
+        {
+          "x": [
+            0.136,
+            0.197,
+            0.259,
+            0.309,
+            0.346
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.553
+        },
+        {
+          "x": [
+            0.337,
+            0.358,
+            0.378,
+            0.395,
+            0.407
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.661
+        },
+        {
+          "x": [
+            0.747,
+            0.679,
+            0.614,
+            0.563,
+            0.526
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.832
+        },
+        {
+          "x": [
+            1.09,
+            0.954,
+            0.819,
+            0.71,
+            0.629
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.479
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "north"
+      }
+    },
+    "490549489091873": {
+      "confidence": 0.514,
+      "boundaries": [
+        {
+          "x": [
+            0.049,
+            0.129,
+            0.209,
+            0.273,
+            0.321
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.514
+        },
+        {
+          "x": [
+            0.261,
+            0.298,
+            0.335,
+            0.365,
+            0.387
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.656
+        },
+        {
+          "x": [
+            0.689,
+            0.635,
+            0.584,
+            0.545,
+            0.517
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.773
+        },
+        {
+          "x": [
+            1.004,
+            0.891,
+            0.778,
+            0.688,
+            0.62
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.358
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "525346512582354": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            -0.036,
+            0.06,
+            0.155,
+            0.232,
+            0.289
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.359
+        },
+        {
+          "x": [
+            0.181,
+            0.235,
+            0.288,
+            0.33,
+            0.362
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.619
+        },
+        {
+          "x": [
+            0.637,
+            0.6,
+            0.563,
+            0.534,
+            0.511
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.828
+        },
+        {
+          "x": [
+            1.008,
+            0.898,
+            0.787,
+            0.698,
+            0.631
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.336
+        },
+        {
+          "x": [
+            1.063,
+            0.942,
+            0.821,
+            0.724,
+            0.651
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.312
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "north",
+        "reason": "lane width 0.05 at bottom is out of range"
+      }
+    },
+    "977064226564086": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            -0.084,
+            0.025,
+            0.135,
+            0.222,
+            0.288
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.43
+        },
+        {
+          "x": [
+            0.128,
+            0.195,
+            0.262,
+            0.315,
+            0.355
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.618
+        },
+        {
+          "x": [
+            0.595,
+            0.568,
+            0.54,
+            0.518,
+            0.502
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.677
+        },
+        {
+          "x": [
+            0.98,
+            0.876,
+            0.772,
+            0.688,
+            0.626
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.414
+        },
+        {
+          "x": [
+            1.04,
+            0.924,
+            0.809,
+            0.717,
+            0.648
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.376
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north",
+        "reason": "lane width 0.06 at bottom is out of range"
+      }
+    },
+    "654753859162003": {
+      "confidence": 0.503,
+      "boundaries": [
+        {
+          "x": [
+            -0.095,
+            0.019,
+            0.133,
+            0.224,
+            0.292
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.503
+        },
+        {
+          "x": [
+            0.108,
+            0.182,
+            0.256,
+            0.315,
+            0.359
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.631
+        },
+        {
+          "x": [
+            0.576,
+            0.555,
+            0.533,
+            0.516,
+            0.504
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.727
+        },
+        {
+          "x": [
+            0.957,
+            0.857,
+            0.758,
+            0.678,
+            0.618
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.447
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "652394722654505": {
+      "confidence": 0.547,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.012,
+            0.111,
+            0.21,
+            0.284
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.547
+        },
+        {
+          "x": [
+            0.074,
+            0.154,
+            0.235,
+            0.3,
+            0.348
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.664
+        },
+        {
+          "x": [
+            0.584,
+            0.561,
+            0.539,
+            0.521,
+            0.508
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.786
+        },
+        {
+          "x": [
+            0.955,
+            0.857,
+            0.759,
+            0.681,
+            0.623
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.441
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "1135769180156036": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.028,
+            0.102,
+            0.207,
+            0.285
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.58
+        },
+        {
+          "x": [
+            0.061,
+            0.143,
+            0.227,
+            0.295,
+            0.347
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.724
+        },
+        {
+          "x": [
+            0.151,
+            0.221,
+            0.29,
+            0.346,
+            0.387
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.774
+        },
+        {
+          "x": [
+            0.593,
+            0.568,
+            0.542,
+            0.522,
+            0.507
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.793
+        },
+        {
+          "x": [
+            0.961,
+            0.86,
+            0.759,
+            0.678,
+            0.618
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.439
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "north",
+        "reason": "lane width 0.09 at bottom is out of range"
+      }
+    },
+    "149502924183820": {
+      "confidence": 0.468,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            -0.047,
+            0.085,
+            0.191,
+            0.271
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.479
+        },
+        {
+          "x": [
+            0.038,
+            0.124,
+            0.211,
+            0.28,
+            0.332
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.468
+        },
+        {
+          "x": [
+            0.198,
+            0.254,
+            0.311,
+            0.356,
+            0.39
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.24
+        },
+        {
+          "x": [
+            0.603,
+            0.574,
+            0.545,
+            0.522,
+            0.504
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.721
+        },
+        {
+          "x": [
+            0.965,
+            0.86,
+            0.756,
+            0.673,
+            0.61
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.462
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "north"
+      }
+    },
+    "658068828682070": {
+      "confidence": 0.224,
+      "boundaries": [
+        {
+          "x": [
+            0.169,
+            0.233,
+            0.298,
+            0.349,
+            0.388
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.224
+        },
+        {
+          "x": [
+            0.6,
+            0.571,
+            0.543,
+            0.521,
+            0.506
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.853
+        },
+        {
+          "x": [
+            0.98,
+            0.872,
+            0.763,
+            0.676,
+            0.611
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.433
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "north"
+      }
+    },
+    "337539458390495": {
+      "confidence": 0.208,
+      "boundaries": [
+        {
+          "x": [
+            0.145,
+            0.212,
+            0.278,
+            0.331,
+            0.371
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.208
+        },
+        {
+          "x": [
+            0.614,
+            0.584,
+            0.557,
+            0.538,
+            0.525
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.684
+        },
+        {
+          "x": [
+            0.987,
+            0.885,
+            0.782,
+            0.699,
+            0.638
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.288
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "north"
+      }
+    },
+    "2027512867410072": {
+      "confidence": 0.108,
+      "boundaries": [
+        {
+          "x": [
+            0.206,
+            0.264,
+            0.317,
+            0.357,
+            0.385
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.405
+        },
+        {
+          "x": [
+            0.69,
+            0.649,
+            0.622,
+            0.61,
+            0.607
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.108
+        },
+        {
+          "x": [
+            1.037,
+            0.931,
+            0.834,
+            0.762,
+            0.711
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.061
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "north"
+      }
+    },
+    "1755472991458046": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.183,
+            0.237,
+            0.296,
+            0.346,
+            0.387
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.435
+        },
+        {
+          "x": [
+            0.627,
+            0.595,
+            0.562,
+            0.536,
+            0.516
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.741
+        },
+        {
+          "x": [
+            0.759,
+            0.738,
+            0.728,
+            0.727,
+            0.731
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            1.071,
+            1.006,
+            0.94,
+            0.887,
+            0.848
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "north",
+        "reason": "lane width 0.13 at bottom is out of range"
+      }
+    },
+    "633795277709182": {
+      "confidence": 0.429,
+      "boundaries": [
+        {
+          "x": [
+            0.183,
+            0.243,
+            0.304,
+            0.353,
+            0.389
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.429
+        },
+        {
+          "x": [
+            0.612,
+            0.583,
+            0.554,
+            0.53,
+            0.513
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.659
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "north",
+        "reason": "no Mapbox lane data"
+      }
+    },
+    "707701070595956": {
+      "confidence": 0.288,
+      "boundaries": [
+        {
+          "x": [
+            0.204,
+            0.261,
+            0.318,
+            0.363,
+            0.397
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.288
+        },
+        {
+          "x": [
+            0.635,
+            0.601,
+            0.568,
+            0.541,
+            0.521
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.689
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "north",
+        "reason": "no Mapbox lane data"
+      }
+    },
+    "4985117674869918": {
+      "confidence": 0.425,
+      "boundaries": [
+        {
+          "x": [
+            0.202,
+            0.259,
+            0.317,
+            0.362,
+            0.397
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.425
+        },
+        {
+          "x": [
+            0.636,
+            0.601,
+            0.565,
+            0.537,
+            0.515
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.851
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "north",
+        "reason": "no Mapbox lane data"
+      }
+    },
+    "3044239262491530": {
+      "confidence": 0.451,
+      "boundaries": [
+        {
+          "x": [
+            0.206,
+            0.261,
+            0.315,
+            0.359,
+            0.392
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.451
+        },
+        {
+          "x": [
+            0.624,
+            0.591,
+            0.559,
+            0.533,
+            0.514
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.904
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "north",
+        "reason": "no Mapbox lane data"
+      }
+    },
+    "325060823010028": {
+      "confidence": 0.5,
+      "boundaries": [
+        {
+          "x": [
+            0.213,
+            0.266,
+            0.318,
+            0.36,
+            0.391
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.5
+        },
+        {
+          "x": [
+            0.633,
+            0.6,
+            0.567,
+            0.541,
+            0.521
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.828
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "north",
+        "reason": "no Mapbox lane data"
+      }
+    },
+    "1099295494249684": {
+      "confidence": 0.347,
+      "boundaries": [
+        {
+          "x": [
+            0.208,
+            0.264,
+            0.32,
+            0.365,
+            0.398
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.347
+        },
+        {
+          "x": [
+            0.64,
+            0.606,
+            0.572,
+            0.545,
+            0.524
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.819
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "north",
+        "reason": "no Mapbox lane data"
+      }
+    },
+    "110130878278417": {
+      "confidence": 0.317,
+      "boundaries": [
+        {
+          "x": [
+            0.184,
+            0.243,
+            0.303,
+            0.351,
+            0.387
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.317
+        },
+        {
+          "x": [
+            0.639,
+            0.603,
+            0.569,
+            0.542,
+            0.522
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.834
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "north",
+        "reason": "no Mapbox lane data"
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type MouseEvent, type ReactNode } from "react";
 import type { DemoRoute } from "../types";
-import { describeLane, polygonIndexFor } from "../lanes";
+import { describeLane, laneTarget, lanesFromLines } from "../lanes";
 import {
   bottomX,
   emptyLabelFile,
@@ -175,10 +175,10 @@ export default function LabelTool() {
   const visibleLanes = Math.max(0, order.length - 1);
   const nav = frame.nav[routeKey];
   const navCount = nav?.lanes?.length ?? 0;
-  const target =
+  const { index: target, excluded } =
     nav && nav.preferredLane !== null && navCount && visibleLanes
-      ? polygonIndexFor(nav.preferredLane, navCount, visibleLanes, nav.laneSide)
-      : null;
+      ? laneTarget(nav.preferredLane, navCount, lanesFromLines(order.map((i) => lines[i]), ROWS), nav.laneSide)
+      : { index: null, excluded: new Set<number>() };
   const labeledCount = frames.filter((f) => file.frames[f.id]).length;
 
   const px = ([x, y]: Pt) => `${x * IMG_W},${y * IMG_H}`;
@@ -241,6 +241,7 @@ export default function LabelTool() {
             const pts = lanePolygon(lines[li], lines[order[k + 1]]);
             if (!pts) return null;
             const isTarget = k === target;
+            const isBike = excluded.has(k);
             // Label at the lowest row where the lane's center is on screen (outer lanes often
             // leave the frame near the bottom); otherwise pin it inside the nearest edge.
             const [l, r] = [lines[li], lines[order[k + 1]]];
@@ -255,7 +256,11 @@ export default function LabelTool() {
             const cy = Math.min(0.985, ROWS[j] + 0.012);
             return (
               <g key={`lane-${k}`}>
-                <polygon points={pts} fill={isTarget ? "var(--color-accent)" : "white"} fillOpacity={isTarget ? 0.4 : 0.08} />
+                <polygon
+                  points={pts}
+                  fill={isTarget ? "var(--color-accent)" : isBike ? "#fbbc04" : "white"}
+                  fillOpacity={isTarget ? 0.4 : isBike ? 0.25 : 0.08}
+                />
                 <text
                   x={cx * IMG_W}
                   y={cy * IMG_H}
@@ -267,7 +272,7 @@ export default function LabelTool() {
                   fontSize={34}
                   fontWeight={700}
                 >
-                  {isTarget ? `Lane ${k + 1} ★` : `Lane ${k + 1}`}
+                  {isTarget ? `Lane ${k + 1} ★` : isBike ? `Lane ${k + 1}: bike/shoulder` : `Lane ${k + 1}`}
                 </text>
               </g>
             );
@@ -416,6 +421,11 @@ export default function LabelTool() {
           <Row label="You traced">
             {lines.length} lines → {visibleLanes} lane{visibleLanes === 1 ? "" : "s"}
           </Row>
+          {excluded.size > 0 && (
+            <Row label="Not counted">
+              {[...excluded].map((k) => `Lane ${k + 1}`).join(", ")} (narrow: bike lane/shoulder)
+            </Row>
+          )}
           <Row label="Demo will highlight">
             {target !== null ? `your Lane ${target + 1} ★` : visibleLanes && navCount ? "nothing (out of range)" : "—"}
           </Row>

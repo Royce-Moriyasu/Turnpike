@@ -1,12 +1,13 @@
 import { useState } from "react";
-import type { Frame, NavState, Point } from "../types";
-import { placeholderLanes, polygonIndexFor } from "../lanes";
+import type { ActiveLanes, Frame, NavState, Point } from "../types";
+import { laneTarget, placeholderLanes } from "../lanes";
 
 interface Props {
   frame: Frame;
   nav: NavState | null;
   offRoute: boolean;
   overlay: boolean; // false = standard GPS: no lane highlight
+  lanes: ActiveLanes; // the selected lane source's geometry for this frame
 }
 
 const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
@@ -55,13 +56,13 @@ function centerAt(poly: Point[], y: number): number {
   return (Math.min(...pts) + Math.max(...pts)) / 2;
 }
 
-export default function DriverView({ frame, nav, offRoute, overlay }: Props) {
+export default function DriverView({ frame, nav, offRoute, overlay, lanes }: Props) {
   const navCount = nav?.lanes?.length ?? 0;
-  const polygons = frame.lanePolygons ?? (navCount ? placeholderLanes(navCount) : []);
+  const polygons = lanes.polygons ?? (navCount ? placeholderLanes(navCount) : []);
   // No target lane means no highlight, tag or badge: that is the whole "standard GPS" view.
   const target =
     overlay && nav && nav.preferredLane !== null && navCount
-      ? polygonIndexFor(nav.preferredLane, navCount, polygons.length, nav.laneSide)
+      ? laneTarget(nav.preferredLane, navCount, polygons, nav.laneSide).index
       : null;
   const imminent = nav ? nav.distanceM < 120 : false;
 
@@ -130,9 +131,9 @@ export default function DriverView({ frame, nav, offRoute, overlay }: Props) {
           Standard GPS
         </div>
       )}
-      {!frame.lanePolygons && target !== null && (
+      {target !== null && (
         <div className="absolute bottom-2 right-3 rounded bg-black/60 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white/60">
-          placeholder lane geometry
+          {lanes.polygons ? `${lanes.label} lanes` : `placeholder lane geometry (no ${lanes.label} lanes)`}
         </div>
       )}
     </div>

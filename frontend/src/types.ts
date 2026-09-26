@@ -25,6 +25,20 @@ export interface NavState {
   laneSource: { lng: number; lat: number; distanceM: number } | null;
 }
 
+/** One lane source's geometry for a frame (bake: LANE_SOURCES). */
+export interface LaneSet {
+  polygons: Point[][] | null;
+  confidence: number | null;
+}
+
+/** The lanes the overlay is drawing, and where they came from. */
+export interface ActiveLanes {
+  source: string | null; // e.g. "yolop"; null = placeholder
+  label: string; // e.g. "YOLOPv2"
+  polygons: Point[][] | null;
+  confidence: number | null;
+}
+
 export interface Frame {
   id: string;
   image: string | null;
@@ -35,7 +49,9 @@ export interface Frame {
   capturedAt: string | null;
   progressM: number;
   nav: Record<string, NavState | null>;
-  lanePolygons: Point[][] | null;
+  lanePolygons: Point[][] | null; // default source's lanes (see laneSets)
+  polygonSource?: string | null;
+  laneSets?: Record<string, LaneSet>; // every lane source's geometry for this frame
 }
 
 export interface RouteInfo {
@@ -52,4 +68,5 @@ export interface DemoRoute {
   routes: Record<string, RouteInfo>;
   frames: Frame[];
   attribution: string[];
+  laneSources?: Record<string, { label: string; method: string | null }>; // in preference order
 }

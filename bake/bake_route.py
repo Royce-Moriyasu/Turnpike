@@ -502,6 +502,29 @@ def load_lane_polygons(path: Path) -> dict[str, list]:
             if (lanes := boundaries_to_polygons(fr, data["rows"]))}
 
 
+# Lane geometry sources, all in the vision/README.md boundary format. The frontend can switch
+# between them; the first one present is the default.
+LANE_SOURCES = {
+    "yolop": ("YOLOPv2", DATA / "yolop_lanes.json"),
+    "opencv": ("OpenCV", DATA / "detected_lanes.json"),
+    "labeled": ("Hand-traced", DATA / "fallback_lanes.json"),
+}
+
+
+def load_lane_sources() -> tuple[dict[str, dict], dict[str, dict]]:
+    """({source: {frame id: polygons}}, {source: {label, method, confidence by frame id}})."""
+    polygons, info = {}, {}
+    for key, (label, path) in LANE_SOURCES.items():
+        if not path.exists():
+            continue
+        data = json.loads(path.read_text(encoding="utf-8"))
+        polygons[key] = load_lane_polygons(path)
+        frames = data.get("frames", {})
+        info[key] = {"label": label, "method": data.get("method"),
+                     "confidence": {fid: fr.get("confidence") for fid, fr in frames.items()}}
+    return polygons, info
+
+
 # ---------------------------------------------------------------- main
 
 def main() -> None:
@@ -526,7 +549,8 @@ def main() -> None:
     else:
         seq, frames = mapillary_frames(args.image_id, primary)
 
-    polygons = load_lane_polygons(DATA / "fallback_lanes.json")
+    lane_polys, lane_info = load_lane_sources()
+    print("Lane sources: " + ", ".join(f"{k} ({len(p)} frames)" for k, p in lane_polys.items()))
     for f in frames:
         f["nav"] = {}
         for key, model in models.items():
@@ -536,8 +560,12 @@ def main() -> None:
             if nav:
                 nav["laneReasons"] = lane_reasons(nav, {k: o for k, o in f["nav"].items() if k != key and o})
         f["progressM"] = round(f.pop("s"), 1)
-        f["lanePolygons"] = polygons.get(f["id"])
-        f["polygonSource"] = "labeled" if f["lanePolygons"] else None
+        # Every source's geometry, so the frontend can switch between them; lanePolygons is the
+        # first source (in LANE_SOURCES order) that has lanes for this frame.
+        f["laneSets"] = {k: {"polygons": polys.get(f["id"]), "confidence": lane_info[k]["confidence"].get(f["id"])}
+                         for k, polys in lane_polys.items()}
+        f["polygonSource"] = next((k for k, v in f["laneSets"].items() if v["polygons"]), None)
+        f["lanePolygons"] = f["laneSets"][f["polygonSource"]]["polygons"] if f["polygonSource"] else None
 
     out = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
@@ -546,6 +574,7 @@ def main() -> None:
         "primaryRoute": PRIMARY_ROUTE,
         "routes": {k: {"label": ROUTES[k]["label"], "geometry": m.line.coords,
                        "distanceM": round(m.line.length, 1)} for k, m in models.items()},
+        "laneSources": {k: {"label": v["label"], "method": v["method"]} for k, v in lane_info.items()},
         "frames": frames,
         "attribution": [
             "Route and lane guidance: Mapbox Directions API (© Mapbox, © OpenStreetMap contributors)",

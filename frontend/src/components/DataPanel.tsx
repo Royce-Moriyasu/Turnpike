@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
-import type { DemoRoute, Frame, NavState } from "../types";
+import type { ActiveLanes, DemoRoute, Frame, NavState } from "../types";
 
 interface Props {
   data: DemoRoute;
   frame: Frame;
   nav: NavState | null;
+  lanes: ActiveLanes;
 }
 
 function Row({ label, children }: { label: string; children: ReactNode }) {
@@ -16,7 +17,7 @@ function Row({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
-export default function DataPanel({ data, frame, nav }: Props) {
+export default function DataPanel({ data, frame, nav, lanes }: Props) {
   const navCount = nav?.lanes?.length ?? 0;
   const lanePos = (i: number | null) => {
     if (i === null || !navCount) return "—";
@@ -24,10 +25,10 @@ export default function DataPanel({ data, frame, nav }: Props) {
     if (i === 0) return `1 of ${navCount} (leftmost)`;
     return `${i + 1} of ${navCount}`;
   };
-  const vision = frame.lanePolygons
-    ? `${frame.lanePolygons.length} lanes (labeled)`
+  const vision = lanes.polygons
+    ? `${lanes.polygons.length} lanes · ${lanes.label}${lanes.confidence != null ? ` (conf ${lanes.confidence.toFixed(2)})` : ""}`
     : navCount
-      ? "placeholder geometry"
+      ? `placeholder (no ${lanes.label} lanes)`
       : "—";
 
   return (

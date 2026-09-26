@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { DemoRoute } from "./types";
+import type { ActiveLanes, DemoRoute } from "./types";
 import DriverView from "./components/DriverView";
 import NavCard from "./components/NavCard";
 import LaneGuidance from "./components/LaneGuidance";
@@ -16,6 +16,7 @@ export default function App() {
   const [routeKey, setRouteKey] = useState("north");
   const [playing, setPlaying] = useState(false);
   const [lanesOn, setLanesOn] = useState(true); // false = "before": a standard GPS with no lane guidance
+  const [laneSource, setLaneSource] = useState<string | null>(null); // which lane geometry to draw (V cycles)
 
   useEffect(() => {
     fetch("/demo_route.json")
@@ -23,6 +24,7 @@ export default function App() {
       .then((d: DemoRoute) => {
         setData(d);
         setRouteKey(d.primaryRoute);
+        setLaneSource(Object.keys(d.laneSources ?? {})[0] ?? null);
         // Preload every frame so autoplay doesn't stutter.
         d.frames.forEach((f) => f.image && (new Image().src = f.image));
       })
@@ -30,6 +32,8 @@ export default function App() {
   }, []);
 
   const count = data?.frames.length ?? 0;
+  const sources = data?.laneSources ?? {};
+  const sourceKeys = Object.keys(sources).join(",");
   const setIndex = useCallback((i: number) => setIndexRaw(Math.max(0, Math.min(count - 1, i))), [count]);
 
   useEffect(() => {
@@ -54,11 +58,15 @@ export default function App() {
         e.preventDefault();
         setPlaying((p) => !p);
       } else if (e.key.toLowerCase() === "g") setLanesOn((on) => !on);
+      else if (e.key.toLowerCase() === "v" && sourceKeys) {
+        const keys = sourceKeys.split(",");
+        setLaneSource((cur) => keys[(keys.indexOf(cur ?? "") + 1) % keys.length]);
+      }
       else return;
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [index, setIndex]);
+  }, [index, setIndex, sourceKeys]);
 
   if (error) {
     return (
@@ -74,6 +82,10 @@ export default function App() {
   const frame = data.frames[index];
   const nav = frame.nav[routeKey] ?? null;
   const offRoute = nav === null && frame.nav[data.primaryRoute] !== null;
+  const set = laneSource ? frame.laneSets?.[laneSource] : undefined;
+  const lanes: ActiveLanes = laneSource
+    ? { source: laneSource, label: sources[laneSource]?.label ?? laneSource, polygons: set?.polygons ?? null, confidence: set?.confidence ?? null }
+    : { source: frame.polygonSource ?? null, label: "labeled", polygons: frame.lanePolygons, confidence: null };
 
   return (
     <div className="mx-auto max-w-7xl p-4 md:p-6">
@@ -98,7 +110,29 @@ export default function App() {
 
       <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
         <main className="space-y-4">
-          <div className="flex justify-end">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            {Object.keys(sources).length > 0 ? (
+              <div className="flex items-center gap-2" role="group" aria-label="Lane geometry source (V)">
+                <span className="text-xs uppercase tracking-widest text-white/40">Lanes</span>
+                <div className="flex rounded-lg bg-white/5 p-1">
+                  {Object.entries(sources).map(([key, src]) => (
+                    <button
+                      key={key}
+                      onClick={() => setLaneSource(key)}
+                      aria-pressed={laneSource === key}
+                      title={`${src.method ?? src.label} · cycle with V`}
+                      className={`rounded-md px-3 py-1.5 text-sm font-medium ${
+                        laneSource === key ? "bg-white/20 text-white" : "text-white/60 hover:text-white"
+                      }`}
+                    >
+                      {src.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <span />
+            )}
             <div className="flex rounded-lg bg-white/5 p-1" role="group" aria-label="Guidance mode (G)">
               {[
                 { on: false, label: "Standard GPS" },
@@ -118,7 +152,7 @@ export default function App() {
               ))}
             </div>
           </div>
-          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} />
+          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} lanes={lanes} />
           <NavCard nav={nav} />
           {lanesOn && <LaneGuidance nav={nav} />}
           <Controls
@@ -133,7 +167,7 @@ export default function App() {
         </main>
         <aside className="space-y-4">
           <MiniMap data={data} routeKey={routeKey} frame={frame} />
-          <DataPanel data={data} frame={frame} nav={nav} />
+          <DataPanel data={data} frame={frame} nav={nav} lanes={lanes} />
         </aside>
       </div>
     </div>

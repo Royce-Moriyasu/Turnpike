@@ -9,6 +9,7 @@ import path from "node:path";
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const LABELS = path.join(repoRoot, "data", "fallback_lanes.json");
 const DETECTED = path.join(repoRoot, "data", "detected_lanes.json");
+const YOLOP_LANES = path.join(repoRoot, "data", "yolop_lanes.json");
 
 /** Dev-only endpoints for the labeling tool: read/write data/fallback_lanes.json and re-run the bake. */
 function labelingApi(): Plugin {
@@ -36,14 +37,35 @@ function labelingApi(): Plugin {
           res.end(String(e));
         }
       });
-      // Read-only: the OpenCV output, for the CV review page (#cv).
-      server.middlewares.use("/__detected", async (_req, res) => {
+      // Read-only: detected lane lines for the CV review page (#cv). ?source=yolop for the
+      // YOLOPv2-based lines (vision/yolop_lanes.py), otherwise the OpenCV output.
+      server.middlewares.use("/__detected", async (req, res) => {
+        const yolop = new URL(req.url ?? "/", "http://dev").searchParams.get("source") === "yolop";
         try {
           res.setHeader("Content-Type", "application/json");
-          res.end(await readFile(DETECTED, "utf-8"));
+          res.end(await readFile(yolop ? YOLOP_LANES : DETECTED, "utf-8"));
         } catch {
           res.statusCode = 404;
-          res.end("data/detected_lanes.json not found: run python vision/detect_lanes.py");
+          res.end(yolop
+            ? "data/yolop_lanes.json not found: run vision/yolop_masks.py, then vision/yolop_lanes.py"
+            : "data/detected_lanes.json not found: run python vision/detect_lanes.py");
+        }
+      });
+      // Read-only: YOLOPv2 masks from vision/yolop_masks.py, e.g. /__yolop/band/lane/<frame id>.png
+      server.middlewares.use("/__yolop", async (req, res) => {
+        const m = /^\/(band|full|road)\/(lane|drivable)\/(\d+)\.png$/.exec(req.url ?? "");
+        if (!m) {
+          res.statusCode = 400;
+          return res.end();
+        }
+        try {
+          const png = await readFile(path.join(repoRoot, "data", "yolop", m[1], m[2], `${m[3]}.png`));
+          res.setHeader("Content-Type", "image/png");
+          res.setHeader("Cache-Control", "no-cache");
+          res.end(req.method === "HEAD" ? undefined : png);
+        } catch {
+          res.statusCode = 404;
+          res.end();
         }
       });
       server.middlewares.use("/__bake", (req, res) => {

@@ -1,0 +1,7 @@
+# Vision: OpenCV pipeline + YOLOPv2 masks.
+# PyTorch CPU wheels come from PyTorch's own index:
+#   python -m pip install -r vision/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+opencv-python-headless
+numpy
+torch
+torchvision

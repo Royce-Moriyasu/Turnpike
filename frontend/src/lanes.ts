@@ -57,6 +57,77 @@ export function placeholderLanes(n: number): Point[][] {
   ]);
 }
 
+/** Lane polygons from boundary lines sorted left to right (the vision/README.md format). */
+export function lanesFromLines(lines: { x: (number | null)[] }[], rows: number[]): Point[][] {
+  return lines.slice(0, -1).map((l, i) => {
+    const r = lines[i + 1];
+    const both = rows.map((_, j) => j).filter((j) => l.x[j] !== null && r.x[j] !== null);
+    if (both.length < 2) return [];
+    return [
+      ...both.map((j): Point => [l.x[j]!, rows[j]]),
+      ...[...both].reverse().map((j): Point => [r.x[j]!, rows[j]]),
+    ];
+  });
+}
+
+// A bike lane (~1.5 m) is well under half a travel lane (~3.5 m) wide. Perspective shrinks lanes
+// equally at a given image row, so compare an outer lane with its neighbor row by row.
+const BIKE_LANE_RATIO = 0.55;
+
+function widthsByRow(poly: Point[]): Map<number, number> {
+  const xsByRow = new Map<number, number[]>();
+  for (const [x, y] of poly) {
+    const key = Math.round(y * 1000);
+    xsByRow.set(key, [...(xsByRow.get(key) ?? []), x]);
+  }
+  const widths = new Map<number, number>();
+  for (const [key, xs] of xsByRow) if (xs.length >= 2) widths.set(key, Math.max(...xs) - Math.min(...xs));
+  return widths;
+}
+
+/**
+ * Outer lanes that look like a bike lane or shoulder rather than a travel lane: narrower than
+ * BIKE_LANE_RATIO x their neighbor at every row both span. Mapbox only counts travel lanes, so
+ * these must not be counted when matching. Only applied while we see MORE lanes than Mapbox has:
+ * with lanes out of frame, a narrow outer lane is as likely a real lane squeezed by perspective
+ * (e.g. the right-turn lane at the Crossroads signal), and dropping it would shift the highlight.
+ * The right side is checked first (bike lanes run on the right in the US).
+ */
+export function bikeLikeLanes(lanes: Point[][], navCount: number): Set<number> {
+  const out = new Set<number>();
+  let extra = lanes.length - navCount;
+  if (lanes.length < 2 || extra <= 0) return out;
+  const narrow = (i: number, neighbor: number) => {
+    const a = widthsByRow(lanes[i]);
+    const b = widthsByRow(lanes[neighbor]);
+    const shared = [...a.keys()].filter((k) => b.has(k));
+    return shared.length > 0 && shared.every((k) => a.get(k)! < BIKE_LANE_RATIO * b.get(k)!);
+  };
+  const last = lanes.length - 1;
+  if (extra > 0 && narrow(last, last - 1)) {
+    out.add(last);
+    extra--;
+  }
+  if (extra > 0 && lanes.length - out.size >= 2 && narrow(0, 1)) out.add(0);
+  return out;
+}
+
+/**
+ * Which visible lane to highlight: skips bike-like outer lanes, then matches Mapbox's lane to
+ * the remaining travel lanes (see polygonIndexFor). Returns the index into `lanes`.
+ */
+export function laneTarget(
+  navIndex: number,
+  navCount: number,
+  lanes: Point[][],
+  side: "left" | "right" | null,
+): { index: number | null; excluded: Set<number> } {
+  const excluded = bikeLikeLanes(lanes, navCount);
+  const travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i));
+  const t = polygonIndexFor(navIndex, navCount, travel.length, side);
+  return { index: t === null ? null : travel[t], excluded };
+}
+
 /**
  * Map a navigation lane index to a visible polygon index. When the image shows fewer
  * lanes than the data, align from the maneuver side (e.g. count from the right edge
