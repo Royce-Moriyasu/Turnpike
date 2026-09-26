@@ -63,6 +63,45 @@ function widthsByRow(poly: Point[]): Map<number, number> {
   return widths;
 }
 
+// Perspective check. On a flat road a lane's width in the image at row y is k * (y - HORIZON_Y),
+// with the same k for every lane, since lanes are all ~3.6 m wide. Measured on this clip's
+// hand-traced lanes: k median 2.0 (10-90%: 1.5-2.7), and it stays within a factor of ~1.6 across a
+// lane's rows because both edges head for the vanishing point.
+//  - A lane that NARROWS ahead faster than that (k at the bottom row / k at the top row > LANE_CLOSING)
+//    has edges that meet before the horizon, which no real lane does: e.g. the curb-and-island shape
+//    just past the Crossroads signal. Rejected.
+//  - A lane that WIDENS ahead is still opening (a taper, e.g. the SOUTH lane just after the ramp
+//    splits). Real, so it's judged by its width at the far end, where it's fully formed.
+//  - Otherwise the median k must be a lane's: not several lanes merged, not a sliver. The range is
+//    wide on purpose: the ramp's real lanes near the fork measure 0.9-1.3.
+const HORIZON_Y = 0.775;
+const LANE_K_RANGE: [number, number] = [0.7, 3.5];
+const LANE_CLOSING = 2.0;
+const MIN_ROW_DEPTH = 0.03; // rows closer to the horizon than this are too squashed to measure
+
+export interface LaneShape {
+  k: number | null; // width / (row - horizon): the median, or the far end's for an opening lane
+  closing: number | null; // k at the bottom row / k at the top row (> 1: narrows ahead)
+  ok: boolean;
+}
+
+export function laneShape(poly: Point[]): LaneShape {
+  const ks = [...widthsByRow(poly)]
+    .map(([key, w]) => [key / 1000 - HORIZON_Y, w] as const)
+    .filter(([depth]) => depth >= MIN_ROW_DEPTH)
+    .sort((a, b) => a[0] - b[0]) // top (far) row first
+    .map(([depth, w]) => w / depth);
+  if (ks.length < 2) return { k: ks[0] ?? null, closing: null, ok: true }; // too little to judge
+  const kTop = ks[0];
+  const kBottom = ks[ks.length - 1];
+  const closing = kTop > 0 ? kBottom / kTop : Infinity;
+  const opening = closing < 1 / LANE_CLOSING;
+  const k = opening ? kTop : [...ks].sort((a, b) => a - b)[Math.floor(ks.length / 2)];
+  return { k, closing, ok: closing <= LANE_CLOSING && k >= LANE_K_RANGE[0] && k <= LANE_K_RANGE[1] };
+}
+
+export const laneShapeLimits = { k: LANE_K_RANGE, closing: LANE_CLOSING };
+
 const TURN_ARROWS = {
   right: ["right", "slight right", "sharp right"],
   left: ["left", "slight left", "sharp left", "uturn"],
@@ -108,6 +147,36 @@ export function bikeLikeLanes(
   return out;
 }
 
+export interface LaneTargetResult {
+  index: number | null; // lane to highlight, or null (see reason)
+  excluded: Set<number>; // bike lanes / shoulders
+  upcoming: Set<number>; // turn lanes opening ahead that the snapshot doesn't list yet
+  implausible: Set<number>; // travel lanes failing the perspective check (laneShape)
+  otherRoad: Set<number>; // lanes beyond a bike lane that separates our branch from the road we left
+  counted: number[]; // the lanes matched to Mapbox's, left to right
+  countFrom: "left" | "right" | null; // the side counted from
+  reason: string | null; // why there is no target
+}
+
+// An inner lane narrower than this x both neighbors (and not opening or closing ahead) is a bike
+// lane, e.g. a keyhole bike lane between SR 70 and the I-95 ramp. Relative to the same frame, so
+// it doesn't depend on the camera.
+const INNER_BIKE_RATIO = 0.5;
+
+function innerBikeLanes(lanes: Point[][]): Set<number> {
+  const shapes = lanes.map(laneShape);
+  const out = new Set<number>();
+  for (let i = 1; i < lanes.length - 1; i++) {
+    const { k, closing } = shapes[i];
+    const left = shapes[i - 1].k;
+    const right = shapes[i + 1].k;
+    if (k === null || closing === null || left === null || right === null) continue;
+    const steady = closing <= LANE_CLOSING && closing >= 1 / LANE_CLOSING;
+    if (steady && k < INNER_BIKE_RATIO * Math.min(left, right)) out.add(i);
+  }
+  return out;
+}
+
 /** The parts of a route's nav state that lane matching needs (see NavState). */
 export interface LaneMatchNav {
   preferredLane: number | null;
@@ -128,13 +197,20 @@ export interface LaneMatchNav {
 export function laneTarget(
   nav: LaneMatchNav,
   lanes: Point[][],
-): { index: number | null; excluded: Set<number>; upcoming: Set<number> } {
+): LaneTargetResult {
   const navCount = nav.lanes?.length ?? 0;
   const excluded = new Set<number>();
   const upcoming = new Set<number>();
-  if (nav.preferredLane === null || !navCount || !lanes.length) return { index: null, excluded, upcoming };
+  const implausible = new Set<number>();
+  const otherRoad = new Set<number>();
+  const result = (index: number | null, counted: number[], countFrom: "left" | "right" | null, reason: string | null) =>
+    ({ index, excluded, upcoming, implausible, otherRoad, counted, countFrom, reason });
+  if (nav.preferredLane === null || !navCount || !lanes.length) {
+    return result(null, [], null, lanes.length ? "no Mapbox lane target" : "no lanes");
+  }
 
   bikeLikeLanes(lanes, navCount, nav.lanes).forEach((i) => excluded.add(i));
+  innerBikeLanes(lanes).forEach((i) => excluded.add(i));
   let travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i));
   for (let k = 0; k < (nav.laneAhead?.right ?? 0) && travel.length > navCount; k++) upcoming.add(travel.pop()!);
   for (let k = 0; k < (nav.laneAhead?.left ?? 0) && travel.length > navCount; k++) upcoming.add(travel.shift()!);
@@ -145,8 +221,43 @@ export function laneTarget(
     travel = travel.filter((i) => !excluded.has(i));
   }
 
-  const t = polygonIndexFor(nav.preferredLane, navCount, travel.length, nav.laneAnchor ?? nav.laneSide);
-  return { index: t === null ? null : travel[t], excluded, upcoming };
+  let side = nav.laneAnchor ?? nav.laneSide;
+  let minLanes = Math.min(2, navCount);
+  // Don't count across a bike lane on a branch: just after a ramp or fork (the bake set laneAnchor
+  // to the side we branched to), a bike lane between the lanes separates our branch from the road
+  // we left, so Mapbox's lanes are only the ones on the branch side. Count them from the bike lane,
+  // a fixed edge (the branch's outer edge may still be opening), and one lane is enough evidence.
+  // On an ordinary road the lanes beyond a keyhole bike lane are a turn lane Mapbox does count,
+  // which the rules above handle.
+  const onBranch = !!nav.laneAnchor && nav.laneAnchor !== nav.laneSide;
+  const bikeBetween = (a: number, b: number) => [...excluded].some((e) => e > a && e < b);
+  if (onBranch && travel.some((i, j) => j > 0 && bikeBetween(travel[j - 1], i))) {
+    const groups: number[][] = [[travel[0]]];
+    travel.slice(1).forEach((i, j) => {
+      if (bikeBetween(travel[j], i)) groups.push([]);
+      groups[groups.length - 1].push(i);
+    });
+    const keep = side === "left" ? groups[0] : groups[groups.length - 1];
+    travel.filter((i) => !keep.includes(i)).forEach((i) => otherRoad.add(i));
+    travel = keep;
+    side = side === "left" ? "right" : "left";
+    minLanes = 1;
+  }
+
+  const t = polygonIndexFor(nav.preferredLane, navCount, travel.length, side);
+  travel.forEach((i) => !laneShape(lanes[i]).ok && implausible.add(i));
+  if (t === null) return result(null, travel, side, "lanes don't line up with Mapbox's");
+
+  // Evidence rules: only highlight when the count that reached the target can be trusted.
+  //  - every lane counted on the way (from the counting edge to the target) must have a lane's shape
+  //  - at least 2 trustworthy lanes (1 is enough only if Mapbox has 1): with a single lane, the
+  //    count is a guess, and any lane-like shape would "win"
+  const path = side === "left" ? travel.slice(0, t + 1) : travel.slice(t);
+  if (path.some((i) => implausible.has(i))) return result(null, travel, side, "odd lane shape where lanes are counted");
+  if (travel.filter((i) => !implausible.has(i)).length < minLanes) {
+    return result(null, travel, side, "too few lanes to anchor the count");
+  }
+  return result(travel[t], travel, side, null);
 }
 
 /**
@@ -166,7 +277,7 @@ export function polygonIndexFor(
 
 // ---- Debug: why each visible lane was (or wasn't) matched ----
 
-export type LaneStatus = "target" | "counted" | "outside" | "bike" | "upcoming";
+export type LaneStatus = "target" | "counted" | "outside" | "bike" | "upcoming" | "shape" | "otherRoad";
 
 export interface LaneDebugRow {
   lane: number; // index into the visible lanes, left to right
@@ -174,21 +285,25 @@ export interface LaneDebugRow {
   mapboxLane: number | null; // Mapbox lane index it was matched to
   bottomWidth: number | null; // width at the lowest row it spans (0-1 of image width)
   ratio: number | null; // widest ratio to its inward neighbor over shared rows (bike rule: all < BIKE_LANE_RATIO)
+  k: number | null; // perspective check (laneShape)
+  closing: number | null;
 }
 
 export const bikeLaneRatio = BIKE_LANE_RATIO;
 
 /** Per-lane explanation of laneTarget: what each visible lane was matched to, and why. */
-export function laneDebug(nav: LaneMatchNav, lanes: Point[][]): LaneDebugRow[] {
-  const { index, excluded, upcoming } = laneTarget(nav, lanes);
+export function laneDebug(
+  nav: LaneMatchNav,
+  lanes: Point[][],
+): { rows: LaneDebugRow[]; reason: string | null; countFrom: "left" | "right" | null } {
+  const { index, excluded, upcoming, implausible, otherRoad, counted, countFrom, reason } = laneTarget(nav, lanes);
   const navCount = nav.lanes?.length ?? 0;
-  const travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i) && !upcoming.has(i));
-  const side = nav.laneAnchor ?? nav.laneSide;
-  const offset = side === "left" ? 0 : navCount - travel.length; // Mapbox index = travel position + offset
+  const travel = counted;
+  const offset = countFrom === "left" ? 0 : navCount - travel.length; // Mapbox index = travel position + offset
   const widths = lanes.map(widthsByRow);
   const bottom = (w: Map<number, number>) => (w.size ? w.get(Math.max(...w.keys()))! : null);
 
-  return lanes.map((_, i) => {
+  const rows = lanes.map((_, i) => {
     // inward neighbor: toward the middle of the visible lanes (what the bike rule compares against)
     const neighbor = lanes.length < 2 ? null : i < (lanes.length - 1) / 2 ? i + 1 : i - 1;
     let ratio: number | null = null;
@@ -203,11 +318,17 @@ export function laneDebug(nav: LaneMatchNav, lanes: Point[][]): LaneDebugRow[] {
       ? "bike"
       : upcoming.has(i)
         ? "upcoming"
-        : i === index
-          ? "target"
-          : mapboxLane === null
-            ? "outside"
-            : "counted";
-    return { lane: i, status, mapboxLane, bottomWidth: bottom(widths[i]), ratio };
+        : otherRoad.has(i)
+          ? "otherRoad"
+          : implausible.has(i)
+            ? "shape"
+            : i === index
+              ? "target"
+              : mapboxLane === null
+                ? "outside"
+                : "counted";
+    const shape = laneShape(lanes[i]);
+    return { lane: i, status, mapboxLane, bottomWidth: bottom(widths[i]), ratio, k: shape.k, closing: shape.closing };
   });
+  return { rows, reason, countFrom };
 }

@@ -90,7 +90,7 @@ export default function App() {
   const lanes: ActiveLanes = laneSource
     ? { source: laneSource, label: sources[laneSource]?.label ?? laneSource, polygons: set?.polygons ?? null, confidence: set?.confidence ?? null }
     : { source: frame.polygonSource ?? null, label: "labeled", polygons: frame.lanePolygons, confidence: null };
-  const debugRows = debug && nav && lanes.polygons ? laneDebug(nav, lanes.polygons) : null;
+  const debugInfo = debug && nav && lanes.polygons ? laneDebug(nav, lanes.polygons) : null;
 
   return (
     <div className="mx-auto max-w-7xl p-4 md:p-6">
@@ -167,10 +167,10 @@ export default function App() {
               ))}
             </div>
           </div>
-          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} lanes={lanes} debug={debugRows} />
+          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} lanes={lanes} debug={debugInfo?.rows ?? null} />
           <NavCard nav={nav} />
           {lanesOn && <LaneGuidance nav={nav} />}
-          {debug && <LaneDebug nav={nav} lanes={lanes} rows={debugRows ?? []} />}
+          {debug && <LaneDebug nav={nav} lanes={lanes} rows={debugInfo?.rows ?? []} reason={debugInfo?.reason ?? null} countFrom={debugInfo?.countFrom ?? null} />}
           <Controls
             data={data}
             index={index}
