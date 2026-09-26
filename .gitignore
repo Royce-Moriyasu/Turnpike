@@ -9,3 +9,4 @@ venv/
 .DS_Store
 pipeline/data/ordered/
 vision_debug/
+vision_debug*/
