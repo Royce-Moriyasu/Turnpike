@@ -1,0 +1,1873 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-26T18:23:46+00:00",
+  "method": "opencv-hough-v4",
+  "imageSize": [
+    2048,
+    1152
+  ],
+  "rows": [
+    1.0,
+    0.95,
+    0.9,
+    0.86,
+    0.83
+  ],
+  "frames": {
+    "940755019976735": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.988,
+            0.883,
+            0.778,
+            0.694,
+            0.631
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.004
+        }
+      ],
+      "debug": {
+        "segments": 19,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "no line found left of the car, lane numbers unreliable"
+      }
+    },
+    "354855846651660": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.446,
+            0.469,
+            0.491,
+            0.509,
+            0.523
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.152
+        },
+        {
+          "x": [
+            0.973,
+            0.811,
+            0.717,
+            0.69,
+            0.699
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.294
+        }
+      ],
+      "debug": {
+        "segments": 27,
+        "route": "north",
+        "dropped": 1,
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "1311428959344081": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.901,
+            0.819,
+            0.737,
+            0.671,
+            0.622
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.28
+        }
+      ],
+      "debug": {
+        "segments": 25,
+        "route": "north",
+        "dropped": 2,
+        "countedFrom": "left",
+        "reason": "no line found left of the car, lane numbers unreliable"
+      }
+    },
+    "1049580408958329": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.589,
+            0.563,
+            0.538,
+            0.517,
+            0.502
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.4
+        },
+        {
+          "x": [
+            0.925,
+            0.84,
+            0.753,
+            0.68,
+            0.624
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.47
+        }
+      ],
+      "debug": {
+        "segments": 32,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "no line found left of the car, lane numbers unreliable"
+      }
+    },
+    "689180478772785": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.975,
+            0.875,
+            0.774,
+            0.694,
+            0.634
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.5
+        }
+      ],
+      "debug": {
+        "segments": 43,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "no line found left of the car, lane numbers unreliable"
+      }
+    },
+    "1051634542234780": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.2,
+            0.255,
+            0.311,
+            0.355,
+            0.388
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.089
+        },
+        {
+          "x": [
+            null,
+            0.604,
+            0.568,
+            0.539,
+            0.517
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.164
+        },
+        {
+          "x": [
+            0.97,
+            0.871,
+            0.768,
+            0.683,
+            0.619
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.597
+        }
+      ],
+      "debug": {
+        "segments": 35,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "484076496492610": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.212,
+            0.269,
+            0.321,
+            0.36,
+            0.388
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.83
+        },
+        {
+          "x": [
+            0.658,
+            0.615,
+            0.573,
+            0.54,
+            0.516
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.94
+        },
+        {
+          "x": [
+            0.993,
+            0.883,
+            0.773,
+            0.685,
+            0.62
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.727
+        }
+      ],
+      "debug": {
+        "segments": 62,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "169317962092165": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.214,
+            0.264,
+            0.313,
+            0.353,
+            0.383
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.733
+        },
+        {
+          "x": [
+            0.652,
+            0.61,
+            0.567,
+            0.533,
+            0.507
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.865
+        },
+        {
+          "x": [
+            0.987,
+            0.877,
+            0.767,
+            0.679,
+            0.613
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.637
+        }
+      ],
+      "debug": {
+        "segments": 35,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "1124801011671114": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.202,
+            0.254,
+            0.306,
+            0.348,
+            0.379
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.255
+        },
+        {
+          "x": [
+            0.69,
+            0.635,
+            0.58,
+            0.535,
+            0.502
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.003
+        },
+        {
+          "x": [
+            0.988,
+            0.879,
+            0.769,
+            0.682,
+            0.616
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.754
+        }
+      ],
+      "debug": {
+        "segments": 46,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "7176471462394944": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.213,
+            0.264,
+            0.315,
+            0.356,
+            0.386
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.674
+        },
+        {
+          "x": [
+            0.648,
+            0.609,
+            0.568,
+            0.533,
+            0.506
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.801
+        },
+        {
+          "x": [
+            0.996,
+            0.884,
+            0.772,
+            0.682,
+            0.614
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.615
+        }
+      ],
+      "debug": {
+        "segments": 72,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "525819832202751": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.23,
+            0.278,
+            0.327,
+            0.366,
+            0.395
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.721
+        },
+        {
+          "x": [
+            0.653,
+            0.611,
+            0.568,
+            0.535,
+            0.51
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.902
+        },
+        {
+          "x": [
+            0.968,
+            0.866,
+            0.758,
+            0.667,
+            0.596
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.806
+        }
+      ],
+      "debug": {
+        "segments": 33,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "994228878185755": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.986,
+            0.878,
+            0.77,
+            0.684,
+            0.62
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.636
+        }
+      ],
+      "debug": {
+        "segments": 52,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "no line found left of the car, lane numbers unreliable"
+      }
+    },
+    "2788869688083814": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            0.28,
+            0.329,
+            0.368,
+            0.398
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.182
+        },
+        {
+          "x": [
+            0.68,
+            0.635,
+            0.59,
+            0.553,
+            0.526
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.303
+        }
+      ],
+      "debug": {
+        "segments": 43,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "497255855121814": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.711,
+            0.654,
+            0.596,
+            0.55,
+            0.515
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.05
+        },
+        {
+          "x": [
+            0.89,
+            0.789,
+            0.689,
+            0.608,
+            0.548
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.016
+        },
+        {
+          "x": [
+            null,
+            0.984,
+            0.847,
+            0.738,
+            0.657
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.027
+        }
+      ],
+      "debug": {
+        "segments": 46,
+        "route": "north",
+        "dropped": 2,
+        "countedFrom": "left",
+        "reason": "no line found left of the car, lane numbers unreliable"
+      }
+    },
+    "483174736521106": {
+      "confidence": 0.071,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            0.292,
+            0.336,
+            0.371,
+            0.398
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.113
+        },
+        {
+          "x": [
+            0.676,
+            0.634,
+            0.593,
+            0.56,
+            0.535
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.393
+        },
+        {
+          "x": [
+            0.829,
+            0.745,
+            0.661,
+            0.593,
+            0.542
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.071
+        },
+        {
+          "x": [
+            0.994,
+            0.889,
+            0.784,
+            0.7,
+            0.637
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.077
+        }
+      ],
+      "debug": {
+        "segments": 44,
+        "route": "north",
+        "countedFrom": "left"
+      }
+    },
+    "749728276431707": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.686,
+            0.641,
+            0.597,
+            0.561,
+            0.534
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.44
+        }
+      ],
+      "debug": {
+        "segments": 23,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "no line found left of the car, lane numbers unreliable"
+      }
+    },
+    "1422180624863025": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.248,
+            0.295,
+            0.342,
+            0.379,
+            0.407
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.901
+        },
+        {
+          "x": [
+            0.684,
+            0.639,
+            0.596,
+            0.562,
+            0.538
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.825
+        }
+      ],
+      "debug": {
+        "segments": 21,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "494623058708545": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.259,
+            0.302,
+            0.347,
+            0.383,
+            0.41
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.903
+        },
+        {
+          "x": [
+            1.03,
+            0.92,
+            0.803,
+            0.705,
+            0.628
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.61
+        }
+      ],
+      "debug": {
+        "segments": 43,
+        "route": "north",
+        "dropped": 1,
+        "reason": "lane width 0.77 at bottom is out of range",
+        "countedFrom": "left"
+      }
+    },
+    "1084181202127649": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.284,
+            0.324,
+            0.363,
+            0.395,
+            0.419
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.41
+        },
+        {
+          "x": [
+            null,
+            0.659,
+            0.608,
+            0.567,
+            0.536
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.124
+        },
+        {
+          "x": [
+            0.975,
+            0.865,
+            0.755,
+            0.667,
+            0.6
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.008
+        }
+      ],
+      "debug": {
+        "segments": 58,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "280281800918643": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.27,
+            0.313,
+            0.355,
+            0.388,
+            0.414
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.611
+        },
+        {
+          "x": [
+            null,
+            0.643,
+            0.596,
+            0.558,
+            0.53
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.596
+        },
+        {
+          "x": [
+            1.031,
+            0.921,
+            0.805,
+            0.708,
+            0.633
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.515
+        }
+      ],
+      "debug": {
+        "segments": 38,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "154525470279752": {
+      "confidence": 0.124,
+      "boundaries": [
+        {
+          "x": [
+            0.24,
+            0.284,
+            0.33,
+            0.369,
+            0.399
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.836
+        },
+        {
+          "x": [
+            0.661,
+            0.62,
+            0.579,
+            0.547,
+            0.522
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.78
+        },
+        {
+          "x": [
+            1.088,
+            0.975,
+            0.852,
+            0.747,
+            0.663
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.165
+        }
+      ],
+      "debug": {
+        "segments": 41,
+        "route": "north",
+        "countedFrom": "left"
+      }
+    },
+    "1799404123598083": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.166,
+            0.227,
+            0.288,
+            0.337,
+            0.373
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.625
+        },
+        {
+          "x": [
+            0.614,
+            0.581,
+            0.549,
+            0.523,
+            0.504
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.455
+        },
+        {
+          "x": [
+            1.047,
+            0.947,
+            0.834,
+            0.733,
+            0.652
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.408
+        }
+      ],
+      "debug": {
+        "segments": 35,
+        "route": "north",
+        "dropped": 1,
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "5380894818610735": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.239,
+            0.292,
+            0.345,
+            0.387,
+            0.419
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.014
+        }
+      ],
+      "debug": {
+        "segments": 68,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "754481875530988": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.423,
+            0.427,
+            0.432,
+            0.436,
+            0.439
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.485
+        },
+        {
+          "x": [
+            0.974,
+            0.866,
+            0.758,
+            0.672,
+            0.607
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.563
+        }
+      ],
+      "debug": {
+        "segments": 42,
+        "route": "north",
+        "dropped": 1,
+        "countedFrom": "left",
+        "reason": "lines for target lane 2 not found"
+      }
+    },
+    "1151140942363476": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "segments": 7,
+        "route": "north",
+        "reason": "no lines found"
+      }
+    },
+    "172160751802378": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "segments": 5,
+        "route": "north",
+        "reason": "no lines found"
+      }
+    },
+    "155484140237039": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "segments": 9,
+        "route": "north",
+        "reason": "no lines found"
+      }
+    },
+    "132173049325117": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.571,
+            0.545,
+            0.519,
+            0.499,
+            0.483
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.788
+        },
+        {
+          "x": [
+            0.736,
+            0.675,
+            0.615,
+            0.566,
+            0.529
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.768
+        },
+        {
+          "x": [
+            1.055,
+            0.925,
+            0.796,
+            0.692,
+            0.614
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.025
+        }
+      ],
+      "debug": {
+        "segments": 27,
+        "route": "north",
+        "dropped": 1,
+        "countedFrom": "left",
+        "reason": "no line found left of the car, lane numbers unreliable"
+      }
+    },
+    "182643754090879": {
+      "confidence": 0.511,
+      "boundaries": [
+        {
+          "x": [
+            0.426,
+            0.428,
+            0.43,
+            0.431,
+            0.432
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.767
+        },
+        {
+          "x": [
+            0.596,
+            0.563,
+            0.529,
+            0.502,
+            0.482
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.784
+        }
+      ],
+      "debug": {
+        "segments": 23,
+        "route": "north",
+        "dropped": 2,
+        "countedFrom": "left"
+      }
+    },
+    "373417314306458": {
+      "confidence": 0.427,
+      "boundaries": [
+        {
+          "x": [
+            0.286,
+            0.317,
+            0.347,
+            0.371,
+            0.389
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.641
+        },
+        {
+          "x": [
+            0.475,
+            0.466,
+            0.456,
+            0.449,
+            0.443
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.699
+        }
+      ],
+      "debug": {
+        "segments": 27,
+        "route": "north",
+        "countedFrom": "left"
+      }
+    },
+    "379583843980480": {
+      "confidence": 0.013,
+      "boundaries": [
+        {
+          "x": [
+            0.113,
+            0.192,
+            0.272,
+            0.336,
+            0.383
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.013
+        },
+        {
+          "x": [
+            0.337,
+            0.357,
+            0.377,
+            0.393,
+            0.405
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.598
+        },
+        {
+          "x": [
+            null,
+            0.675,
+            0.613,
+            0.563,
+            0.526
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.11
+        },
+        {
+          "x": [
+            1.056,
+            0.932,
+            0.808,
+            0.709,
+            0.635
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.11
+        }
+      ],
+      "debug": {
+        "segments": 37,
+        "route": "north",
+        "countedFrom": "left"
+      }
+    },
+    "490549489091873": {
+      "confidence": 0.435,
+      "boundaries": [
+        {
+          "x": [
+            0.26,
+            0.297,
+            0.334,
+            0.363,
+            0.386
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.487
+        },
+        {
+          "x": [
+            0.684,
+            0.634,
+            0.584,
+            0.545,
+            0.515
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.435
+        },
+        {
+          "x": [
+            1.003,
+            0.889,
+            0.78,
+            0.695,
+            0.632
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.566
+        }
+      ],
+      "debug": {
+        "segments": 36,
+        "route": "north",
+        "countedFrom": "left"
+      }
+    },
+    "525346512582354": {
+      "confidence": 0.392,
+      "boundaries": [
+        {
+          "x": [
+            0.179,
+            0.232,
+            0.286,
+            0.329,
+            0.361
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.548
+        },
+        {
+          "x": [
+            0.638,
+            0.6,
+            0.563,
+            0.533,
+            0.511
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.392
+        },
+        {
+          "x": [
+            1.008,
+            0.897,
+            0.786,
+            0.698,
+            0.631
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.384
+        }
+      ],
+      "debug": {
+        "segments": 44,
+        "route": "north",
+        "countedFrom": "left"
+      }
+    },
+    "977064226564086": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.125,
+            0.193,
+            0.26,
+            0.314,
+            0.354
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.556
+        },
+        {
+          "x": [
+            1.007,
+            0.9,
+            0.792,
+            0.706,
+            0.641
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.147
+        }
+      ],
+      "debug": {
+        "segments": 27,
+        "route": "north",
+        "reason": "lane width 0.88 at bottom is out of range",
+        "countedFrom": "left"
+      }
+    },
+    "654753859162003": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.576,
+            0.554,
+            0.533,
+            0.516,
+            0.503
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.705
+        },
+        {
+          "x": [
+            1.002,
+            0.893,
+            0.783,
+            0.695,
+            0.629
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.345
+        }
+      ],
+      "debug": {
+        "segments": 45,
+        "route": "north",
+        "countedFrom": "left",
+        "reason": "no line found left of the car, lane numbers unreliable"
+      }
+    },
+    "652394722654505": {
+      "confidence": 0.731,
+      "boundaries": [
+        {
+          "x": [
+            0.123,
+            0.195,
+            0.268,
+            0.327,
+            0.372
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.731
+        },
+        {
+          "x": [
+            0.584,
+            0.561,
+            0.538,
+            0.52,
+            0.506
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.833
+        },
+        {
+          "x": [
+            1.083,
+            0.96,
+            0.838,
+            0.739,
+            0.666
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.422
+        }
+      ],
+      "debug": {
+        "segments": 33,
+        "route": "north",
+        "dropped": 3,
+        "countedFrom": "left"
+      }
+    },
+    "1135769180156036": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.155,
+            0.219,
+            0.288,
+            0.349,
+            0.397
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.815
+        },
+        {
+          "x": [
+            0.956,
+            0.861,
+            0.761,
+            0.678,
+            0.614
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.634
+        }
+      ],
+      "debug": {
+        "segments": 67,
+        "route": "north",
+        "dropped": 1,
+        "reason": "lane width 0.80 at bottom is out of range",
+        "countedFrom": "left"
+      }
+    },
+    "149502924183820": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.18,
+            0.248,
+            0.312,
+            0.359,
+            0.392
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.627
+        },
+        {
+          "x": [
+            0.991,
+            0.88,
+            0.77,
+            0.681,
+            0.615
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.003
+        }
+      ],
+      "debug": {
+        "segments": 134,
+        "route": "north",
+        "reason": "lane width 0.81 at bottom is out of range",
+        "countedFrom": "left"
+      }
+    },
+    "658068828682070": {
+      "confidence": 0.049,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            0.212,
+            0.286,
+            0.346,
+            0.39
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.049
+        },
+        {
+          "x": [
+            0.599,
+            0.57,
+            0.542,
+            0.521,
+            0.505
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.836
+        },
+        {
+          "x": [
+            1.038,
+            0.913,
+            0.788,
+            0.688,
+            0.613
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.151
+        }
+      ],
+      "debug": {
+        "segments": 72,
+        "route": "north",
+        "dropped": 1,
+        "countedFrom": "left"
+      }
+    },
+    "337539458390495": {
+      "confidence": 0.63,
+      "boundaries": [
+        {
+          "x": [
+            0.188,
+            0.244,
+            0.3,
+            0.345,
+            0.379
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.63
+        },
+        {
+          "x": [
+            0.613,
+            0.583,
+            0.556,
+            0.537,
+            0.524
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.742
+        },
+        {
+          "x": [
+            0.986,
+            0.884,
+            0.782,
+            0.701,
+            0.64
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.437
+        }
+      ],
+      "debug": {
+        "segments": 57,
+        "route": "north",
+        "dropped": 4,
+        "countedFrom": "left"
+      }
+    },
+    "2027512867410072": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.209,
+            0.262,
+            0.316,
+            0.358,
+            0.391
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.697
+        }
+      ],
+      "debug": {
+        "segments": 39,
+        "route": "north",
+        "dropped": 1,
+        "countedFrom": "left",
+        "reason": "lines for target lane 0 not found"
+      }
+    },
+    "1755472991458046": {
+      "confidence": 0.497,
+      "boundaries": [
+        {
+          "x": [
+            0.165,
+            0.229,
+            0.292,
+            0.343,
+            0.381
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.497
+        },
+        {
+          "x": [
+            0.627,
+            0.594,
+            0.561,
+            0.535,
+            0.515
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.82
+        }
+      ],
+      "debug": {
+        "segments": 106,
+        "route": "north",
+        "dropped": 2,
+        "note": "no Mapbox lane data for this frame"
+      }
+    },
+    "633795277709182": {
+      "confidence": 0.086,
+      "boundaries": [
+        {
+          "x": [
+            0.168,
+            0.234,
+            0.299,
+            0.352,
+            0.391
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.086
+        },
+        {
+          "x": [
+            0.713,
+            0.66,
+            0.607,
+            0.564,
+            0.532
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.126
+        }
+      ],
+      "debug": {
+        "segments": 60,
+        "route": "north",
+        "dropped": 2,
+        "note": "no Mapbox lane data for this frame"
+      }
+    },
+    "707701070595956": {
+      "confidence": 0.042,
+      "boundaries": [
+        {
+          "x": [
+            0.195,
+            0.254,
+            0.313,
+            0.36,
+            0.395
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.179
+        },
+        {
+          "x": [
+            0.635,
+            0.601,
+            0.567,
+            0.54,
+            0.52
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.791
+        },
+        {
+          "x": [
+            1.03,
+            0.902,
+            0.774,
+            0.672,
+            0.595
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.042
+        }
+      ],
+      "debug": {
+        "segments": 133,
+        "route": "north",
+        "dropped": 3,
+        "note": "no Mapbox lane data for this frame"
+      }
+    },
+    "4985117674869918": {
+      "confidence": 0.008,
+      "boundaries": [
+        {
+          "x": [
+            0.182,
+            0.246,
+            0.31,
+            0.361,
+            0.4
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.158
+        },
+        {
+          "x": [
+            0.636,
+            0.6,
+            0.565,
+            0.536,
+            0.515
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.847
+        },
+        {
+          "x": [
+            0.929,
+            0.835,
+            0.74,
+            0.665,
+            0.608
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.008
+        }
+      ],
+      "debug": {
+        "segments": 158,
+        "route": "north",
+        "note": "no Mapbox lane data for this frame"
+      }
+    },
+    "3044239262491530": {
+      "confidence": 0.008,
+      "boundaries": [
+        {
+          "x": [
+            0.165,
+            0.232,
+            0.299,
+            0.353,
+            0.393
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.008
+        },
+        {
+          "x": [
+            0.624,
+            0.59,
+            0.558,
+            0.532,
+            0.514
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.923
+        },
+        {
+          "x": [
+            0.915,
+            0.813,
+            0.711,
+            0.629,
+            0.568
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.105
+        }
+      ],
+      "debug": {
+        "segments": 70,
+        "route": "north",
+        "dropped": 1,
+        "note": "no Mapbox lane data for this frame"
+      }
+    },
+    "325060823010028": {
+      "confidence": 0.135,
+      "boundaries": [
+        {
+          "x": [
+            0.16,
+            0.228,
+            0.297,
+            0.351,
+            0.392
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.135
+        },
+        {
+          "x": [
+            0.632,
+            0.599,
+            0.566,
+            0.54,
+            0.52
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.777
+        }
+      ],
+      "debug": {
+        "segments": 83,
+        "route": "north",
+        "dropped": 1,
+        "note": "no Mapbox lane data for this frame"
+      }
+    },
+    "1099295494249684": {
+      "confidence": 0.006,
+      "boundaries": [
+        {
+          "x": [
+            0.247,
+            0.295,
+            0.342,
+            0.381,
+            0.409
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.75
+        },
+        {
+          "x": [
+            0.641,
+            0.605,
+            0.571,
+            0.544,
+            0.524
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.854
+        },
+        {
+          "x": [
+            null,
+            0.966,
+            0.831,
+            0.723,
+            0.641
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.006
+        }
+      ],
+      "debug": {
+        "segments": 90,
+        "route": "north",
+        "dropped": 2,
+        "note": "no Mapbox lane data for this frame"
+      }
+    },
+    "110130878278417": {
+      "confidence": 0.531,
+      "boundaries": [
+        {
+          "x": [
+            0.178,
+            0.233,
+            0.295,
+            0.349,
+            0.392
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.531
+        },
+        {
+          "x": [
+            0.638,
+            0.603,
+            0.568,
+            0.541,
+            0.521
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.841
+        }
+      ],
+      "debug": {
+        "segments": 64,
+        "route": "north",
+        "dropped": 1,
+        "note": "no Mapbox lane data for this frame"
+      }
+    }
+  }
+}
