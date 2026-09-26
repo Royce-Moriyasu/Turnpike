@@ -175,10 +175,10 @@ export default function LabelTool() {
   const visibleLanes = Math.max(0, order.length - 1);
   const nav = frame.nav[routeKey];
   const navCount = nav?.lanes?.length ?? 0;
-  const { index: target, excluded } =
+  const { index: target, excluded, upcoming } =
     nav && nav.preferredLane !== null && navCount && visibleLanes
-      ? laneTarget(nav.preferredLane, navCount, lanesFromLines(order.map((i) => lines[i]), ROWS), nav.laneSide, nav.lanes)
-      : { index: null, excluded: new Set<number>() };
+      ? laneTarget(nav, lanesFromLines(order.map((i) => lines[i]), ROWS))
+      : { index: null, excluded: new Set<number>(), upcoming: new Set<number>() };
   const labeledCount = frames.filter((f) => file.frames[f.id]).length;
 
   const px = ([x, y]: Pt) => `${x * IMG_W},${y * IMG_H}`;
@@ -242,6 +242,7 @@ export default function LabelTool() {
             if (!pts) return null;
             const isTarget = k === target;
             const isBike = excluded.has(k);
+            const isUpcoming = upcoming.has(k);
             // Label at the lowest row where the lane's center is on screen (outer lanes often
             // leave the frame near the bottom); otherwise pin it inside the nearest edge.
             const [l, r] = [lines[li], lines[order[k + 1]]];
@@ -258,8 +259,8 @@ export default function LabelTool() {
               <g key={`lane-${k}`}>
                 <polygon
                   points={pts}
-                  fill={isTarget ? "var(--color-accent)" : isBike ? "#fbbc04" : "white"}
-                  fillOpacity={isTarget ? 0.4 : isBike ? 0.25 : 0.08}
+                  fill={isTarget ? "var(--color-accent)" : isBike || isUpcoming ? "#fbbc04" : "white"}
+                  fillOpacity={isTarget ? 0.4 : isBike || isUpcoming ? 0.25 : 0.08}
                 />
                 <text
                   x={cx * IMG_W}
@@ -272,7 +273,13 @@ export default function LabelTool() {
                   fontSize={34}
                   fontWeight={700}
                 >
-                  {isTarget ? `Lane ${k + 1} ★` : isBike ? `Lane ${k + 1}: bike/shoulder` : `Lane ${k + 1}`}
+                  {isTarget
+                    ? `Lane ${k + 1} ★`
+                    : isBike
+                      ? `Lane ${k + 1}: bike/shoulder`
+                      : isUpcoming
+                        ? `Lane ${k + 1}: turn lane ahead`
+                        : `Lane ${k + 1}`}
                 </text>
               </g>
             );
@@ -424,6 +431,11 @@ export default function LabelTool() {
           {excluded.size > 0 && (
             <Row label="Not counted">
               {[...excluded].map((k) => `Lane ${k + 1}`).join(", ")} (narrow: bike lane/shoulder)
+            </Row>
+          )}
+          {upcoming.size > 0 && (
+            <Row label="Not counted yet">
+              {[...upcoming].map((k) => `Lane ${k + 1}`).join(", ")} (turn lane opening ahead)
             </Row>
           )}
           <Row label="Demo will highlight">

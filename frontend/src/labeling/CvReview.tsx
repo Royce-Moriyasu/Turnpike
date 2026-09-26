@@ -220,10 +220,10 @@ export default function CvReview() {
   const nav = frame.nav[routeKey];
   const navCount = nav?.lanes?.length ?? 0;
   const cvLanes = Math.max(0, (det?.boundaries.length ?? 0) - 1);
-  const { index: target, excluded } =
+  const { index: target, excluded, upcoming } =
     det && nav && nav.preferredLane !== null && navCount && cvLanes
-      ? laneTarget(nav.preferredLane, navCount, lanesFromLines(det.boundaries, rows), nav.laneSide, nav.lanes)
-      : { index: null, excluded: new Set<number>() };
+      ? laneTarget(nav, lanesFromLines(det.boundaries, rows))
+      : { index: null, excluded: new Set<number>(), upcoming: new Set<number>() };
   const cmp = det && traced ? compare(traced, det.boundaries) : null;
 
   const allConf = data.frames.map((f) => cv.frames[f.id]?.confidence ?? null);
@@ -318,7 +318,7 @@ export default function CvReview() {
           ))}
           {show.target &&
             det &&
-            [...excluded].map((k) => {
+            [...excluded, ...upcoming].map((k) => {
               const poly = lanePoly(det.boundaries[k], det.boundaries[k + 1]);
               return poly ? <polygon key={`bike${k}`} points={poly} fill="#fbbc04" fillOpacity={0.3} /> : null;
             })}
@@ -431,6 +431,11 @@ export default function CvReview() {
               {excluded.size > 0 && (
                 <Row label="Not counted">
                   {[...excluded].map((k) => `CV lane ${k + 1}`).join(", ")} (bike lane/shoulder)
+                </Row>
+              )}
+              {upcoming.size > 0 && (
+                <Row label="Not counted yet">
+                  {[...upcoming].map((k) => `CV lane ${k + 1}`).join(", ")} (turn lane opening ahead)
                 </Row>
               )}
               <Row label="Would highlight">{target !== null ? `CV lane ${target + 1}` : "nothing"}</Row>

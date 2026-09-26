@@ -219,8 +219,8 @@ def frame_confidence(boundaries, nav):
     if not lanes or pref is None:
         return round(min(b["confidence"] for b in boundaries) * san, 3), why or "no Mapbox lane data"
     n = len(boundaries)
-    # count from the side of the maneuver, as the bake and frontend do
-    li = pref if nav.get("laneSide") == "left" else n - 2 - (len(lanes) - 1 - pref)
+    # count from the same side as the frontend: laneAnchor (bake: _lane_matching), else the turn side
+    li = pref if (nav.get("laneAnchor") or nav.get("laneSide")) == "left" else n - 2 - (len(lanes) - 1 - pref)
     if not (0 <= li and li + 1 < n):
         return 0.0, why or f"lines for target lane {pref} not found"
     target = min(boundaries[li]["confidence"], boundaries[li + 1]["confidence"])

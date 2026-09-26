@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-26T20:02:24+00:00",
+  "generatedAt": "2026-09-26T20:40:19+00:00",
   "method": "yolopv2-mask-tracks-v1",
   "imageSize": [
     2048,
@@ -1768,7 +1768,7 @@
       }
     },
     "373417314306458": {
-      "confidence": 0.325,
+      "confidence": 0.607,
       "boundaries": [
         {
           "x": [
@@ -1825,7 +1825,7 @@
       }
     },
     "379583843980480": {
-      "confidence": 0.177,
+      "confidence": 0.661,
       "boundaries": [
         {
           "x": [
@@ -1894,7 +1894,7 @@
       }
     },
     "490549489091873": {
-      "confidence": 0.514,
+      "confidence": 0.656,
       "boundaries": [
         {
           "x": [
@@ -2091,7 +2091,7 @@
       }
     },
     "654753859162003": {
-      "confidence": 0.503,
+      "confidence": 0.631,
       "boundaries": [
         {
           "x": [
@@ -2148,7 +2148,7 @@
       }
     },
     "652394722654505": {
-      "confidence": 0.547,
+      "confidence": 0.664,
       "boundaries": [
         {
           "x": [
@@ -2275,7 +2275,7 @@
       }
     },
     "149502924183820": {
-      "confidence": 0.468,
+      "confidence": 0.24,
       "boundaries": [
         {
           "x": [

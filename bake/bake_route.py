@@ -49,6 +49,16 @@ MAX_HEADING_DIFF = 60     # reject images facing away from the direction of trav
 MIN_FRAME_SPACING_M = 6
 MAX_FRAMES = 40
 LANE_LOOKAHEAD_M = 400    # only show lane guidance this close to the lane data point
+# Mapbox only has lane data at intersections, so the camera can see a different set of lanes
+# than the snapshot in use. Two corrections tell the frontend how to match them (laneAnchor,
+# laneAhead in the nav state):
+DIVERGE_BEHIND_M = 300    # after a ramp/fork this recent, the lanes describe only our branch
+TURN_LANES_AHEAD_M = 150  # turn lanes a snapshot this close adds may already be visible
+DIVERGE_TYPES = {"on ramp", "off ramp", "fork"}
+TURN_ARROWS = {
+    "right": {"right", "slight right", "sharp right"},
+    "left": {"left", "slight left", "sharp left", "uturn"},
+}
 
 GRAPH = "https://graph.mapillary.com"
 MLY_FIELDS = "id,computed_geometry,geometry,compass_angle,computed_compass_angle,captured_at,thumb_2048_url,is_pano"
@@ -249,6 +259,7 @@ class RouteModel:
                  for i, l in enumerate(lp["lanes"])] if lp else None
 
         return {
+            **self._lane_matching(s, lp),
             "instruction": instruction,
             "maneuverType": man["type"],
             "modifier": man.get("modifier"),
@@ -262,6 +273,59 @@ class RouteModel:
             "laneSource": {"lng": lp["location"][0], "lat": lp["location"][1],
                            "distanceM": round(max(0.0, lp["s"] - s), 1)} if lp else None,
         }
+
+
+    def _lane_matching(self, s: float, lp: dict | None) -> dict:
+        """How the frontend should line up visible lanes with this snapshot's lanes.
+
+        laneAnchor: the side to count lanes from. Normally the side of the turn ahead (laneSide).
+          Look-behind: shortly after a ramp or fork, the snapshot describes only the branch we took,
+          while the road we left is still in view on the other side, so count from the side we
+          branched to (e.g. just onto the I-95 ramp, SR 70 is still visible on the left).
+        laneAhead: {left, right} turn lanes that a snapshot just ahead adds on each edge but this one
+          doesn't list yet. The camera may already see them opening (e.g. the right-turn lane before
+          the Crossroads Pkwy signal), so they shouldn't be counted. Only turn lanes our route
+          doesn't use: if the route takes that turn, the lane is the target, not an extra.
+        """
+        if not lp:
+            return {"laneAnchor": None, "laneAhead": None}
+
+        anchor = lp["side"]
+        for k in range(len(self.steps) - 1, 0, -1):
+            if self.maneuver_s[k] > s + 1:
+                continue
+            if s - self.maneuver_s[k] > DIVERGE_BEHIND_M:
+                break
+            man = self.steps[k]["maneuver"]
+            if man["type"] in DIVERGE_TYPES and side_of(man.get("modifier")):
+                anchor = side_of(man.get("modifier"))
+                break
+
+        def edge_turn_lanes(lanes: list[dict], side: str) -> int:
+            n = 0
+            for lane in (reversed(lanes) if side == "right" else lanes):
+                arrows = set(lane.get("indications", []))
+                if arrows and arrows <= TURN_ARROWS[side]:
+                    n += 1
+                else:
+                    break
+            return n
+
+        ahead = None
+        for q in self.lane_points:
+            if q["s"] <= lp["s"] or len(q["lanes"]) <= len(lp["lanes"]):
+                continue
+            if q["s"] - s > TURN_LANES_AHEAD_M:
+                break
+            extra = {}
+            for side in ("left", "right"):
+                n = max(0, edge_turn_lanes(q["lanes"], side) - edge_turn_lanes(lp["lanes"], side))
+                added = range(len(q["lanes"]) - n, len(q["lanes"])) if side == "right" else range(n)
+                extra[side] = 0 if any(i in q["allowed"] for i in added) else n
+            if extra["left"] or extra["right"]:
+                ahead = extra
+                break
+        return {"laneAnchor": anchor, "laneAhead": ahead}
 
 
 TURN_WORDS = {

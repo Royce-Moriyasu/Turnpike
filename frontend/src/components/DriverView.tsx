@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ActiveLanes, Frame, NavState, Point } from "../types";
-import { laneTarget, placeholderLanes } from "../lanes";
+import { laneTarget, type LaneDebugRow } from "../lanes";
+import { STATUS_STYLE } from "./LaneDebug";
 
 interface Props {
   frame: Frame;
@@ -8,6 +9,7 @@ interface Props {
   offRoute: boolean;
   overlay: boolean; // false = standard GPS: no lane highlight
   lanes: ActiveLanes; // the selected lane source's geometry for this frame
+  debug?: LaneDebugRow[] | null; // lane debug view: outline and label every detected lane
 }
 
 const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
@@ -56,13 +58,14 @@ function centerAt(poly: Point[], y: number): number {
   return (Math.min(...pts) + Math.max(...pts)) / 2;
 }
 
-export default function DriverView({ frame, nav, offRoute, overlay, lanes }: Props) {
+export default function DriverView({ frame, nav, offRoute, overlay, lanes, debug }: Props) {
   const navCount = nav?.lanes?.length ?? 0;
-  const polygons = lanes.polygons ?? (navCount ? placeholderLanes(navCount) : []);
+  // Only detected lanes are drawn: no lanes for this frame means no highlight (Mapbox guidance still shows).
+  const polygons = lanes.polygons ?? [];
   // No target lane means no highlight, tag or badge: that is the whole "standard GPS" view.
   const target =
     overlay && nav && nav.preferredLane !== null && navCount
-      ? laneTarget(nav.preferredLane, navCount, polygons, nav.laneSide, nav.lanes).index
+      ? laneTarget(nav, polygons).index
       : null;
   const imminent = nav ? nav.distanceM < 120 : false;
 
@@ -106,7 +109,39 @@ export default function DriverView({ frame, nav, offRoute, overlay, lanes }: Pro
             />
           ) : null,
         )}
+        {debug &&
+          lanes.polygons &&
+          debug.map((row) => (
+            <polygon
+              key={`dbg${row.lane}`}
+              points={toPoints(lanes.polygons![row.lane])}
+              fill={STATUS_STYLE[row.status].color}
+              fillOpacity={row.status === "target" ? 0 : 0.12}
+              stroke={STATUS_STYLE[row.status].color}
+              strokeWidth={row.status === "target" ? 3 : 2}
+              strokeDasharray={row.status === "bike" || row.status === "upcoming" ? "6 4" : undefined}
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
       </svg>
+
+      {debug &&
+        lanes.polygons &&
+        debug.map((row) => {
+          const poly = lanes.polygons![row.lane];
+          const y = Math.min(0.97, Math.max(0.86, Math.max(...poly.map((p) => p[1])) - 0.015));
+          const x = Math.min(0.97, Math.max(0.03, centerAt(poly, y)));
+          return (
+            <div
+              key={`dbgl${row.lane}`}
+              className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded bg-black/75 px-1.5 py-0.5 font-mono text-[10px] font-bold md:text-xs"
+              style={{ left: `${x * 100}%`, top: `${((y - CROP_TOP) / (1 - CROP_TOP)) * 100}%`, color: STATUS_STYLE[row.status].color }}
+            >
+              L{row.lane + 1}
+              {row.mapboxLane !== null ? ` → M${row.mapboxLane + 1}` : ` · ${STATUS_STYLE[row.status].label}`}
+            </div>
+          );
+        })}
 
       {target !== null && (
         <div
@@ -131,9 +166,13 @@ export default function DriverView({ frame, nav, offRoute, overlay, lanes }: Pro
           Standard GPS
         </div>
       )}
-      {target !== null && (
+      {overlay && navCount > 0 && (
         <div className="absolute bottom-2 right-3 rounded bg-black/60 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white/60">
-          {lanes.polygons ? `${lanes.label} lanes` : `placeholder lane geometry (no ${lanes.label} lanes)`}
+          {!lanes.polygons
+            ? `No ${lanes.label} lanes detected`
+            : target === null
+              ? `No ${lanes.label} lane match`
+              : `${lanes.label} lanes`}
         </div>
       )}
     </div>

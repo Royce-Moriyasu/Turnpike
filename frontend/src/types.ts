@@ -17,7 +17,9 @@ export interface NavState {
   distanceM: number;
   lanes: Lane[] | null;
   preferredLane: number | null;
-  laneSide: "left" | "right" | null;
+  laneSide: "left" | "right" | null; // side of the turn ahead: which allowed lane is preferred
+  laneAnchor?: "left" | "right" | null; // side to count visible lanes from when matching (bake: _lane_matching)
+  laneAhead?: { left: number; right: number } | null; // turn lanes opening ahead that this snapshot doesn't list
   laneMovement?: string | null; // what the route does where these lanes apply, e.g. "straight"
   laneBasis?: "arrows" | "mapbox" | null; // how allowed lanes were decided
   laneToward?: string | null; // where the next turn leads, e.g. "I 95"
@@ -33,7 +35,7 @@ export interface LaneSet {
 
 /** The lanes the overlay is drawing, and where they came from. */
 export interface ActiveLanes {
-  source: string | null; // e.g. "yolop"; null = placeholder
+  source: string | null; // e.g. "yolop"
   label: string; // e.g. "YOLOPv2"
   polygons: Point[][] | null;
   confidence: number | null;

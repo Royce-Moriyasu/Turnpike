@@ -28,7 +28,7 @@ export default function DataPanel({ data, frame, nav, lanes }: Props) {
   const vision = lanes.polygons
     ? `${lanes.polygons.length} lanes · ${lanes.label}${lanes.confidence != null ? ` (conf ${lanes.confidence.toFixed(2)})` : ""}`
     : navCount
-      ? `placeholder (no ${lanes.label} lanes)`
+      ? `none detected (${lanes.label})`
       : "—";
 
   return (

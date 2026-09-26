@@ -3,6 +3,8 @@ import type { ActiveLanes, DemoRoute } from "./types";
 import DriverView from "./components/DriverView";
 import NavCard from "./components/NavCard";
 import LaneGuidance from "./components/LaneGuidance";
+import LaneDebug from "./components/LaneDebug";
+import { laneDebug } from "./lanes";
 import MiniMap from "./components/MiniMap";
 import DataPanel from "./components/DataPanel";
 import Controls from "./components/Controls";
@@ -17,6 +19,7 @@ export default function App() {
   const [playing, setPlaying] = useState(false);
   const [lanesOn, setLanesOn] = useState(true); // false = "before": a standard GPS with no lane guidance
   const [laneSource, setLaneSource] = useState<string | null>(null); // which lane geometry to draw (V cycles)
+  const [debug, setDebug] = useState(false); // lane debug view: every detected lane and how it was matched (D)
 
   useEffect(() => {
     fetch("/demo_route.json")
@@ -58,6 +61,7 @@ export default function App() {
         e.preventDefault();
         setPlaying((p) => !p);
       } else if (e.key.toLowerCase() === "g") setLanesOn((on) => !on);
+      else if (e.key.toLowerCase() === "d") setDebug((on) => !on);
       else if (e.key.toLowerCase() === "v" && sourceKeys) {
         const keys = sourceKeys.split(",");
         setLaneSource((cur) => keys[(keys.indexOf(cur ?? "") + 1) % keys.length]);
@@ -86,6 +90,7 @@ export default function App() {
   const lanes: ActiveLanes = laneSource
     ? { source: laneSource, label: sources[laneSource]?.label ?? laneSource, polygons: set?.polygons ?? null, confidence: set?.confidence ?? null }
     : { source: frame.polygonSource ?? null, label: "labeled", polygons: frame.lanePolygons, confidence: null };
+  const debugRows = debug && nav && lanes.polygons ? laneDebug(nav, lanes.polygons) : null;
 
   return (
     <div className="mx-auto max-w-7xl p-4 md:p-6">
@@ -129,6 +134,16 @@ export default function App() {
                     </button>
                   ))}
                 </div>
+                <button
+                  onClick={() => setDebug((on) => !on)}
+                  aria-pressed={debug}
+                  title="Show every detected lane and how it was matched (D)"
+                  className={`rounded-lg px-3 py-1.5 text-sm font-medium ring-1 ${
+                    debug ? "bg-amber-400/20 text-amber-200 ring-amber-400/50" : "text-white/60 ring-white/10 hover:text-white"
+                  }`}
+                >
+                  Debug
+                </button>
               </div>
             ) : (
               <span />
@@ -152,9 +167,10 @@ export default function App() {
               ))}
             </div>
           </div>
-          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} lanes={lanes} />
+          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} lanes={lanes} debug={debugRows} />
           <NavCard nav={nav} />
           {lanesOn && <LaneGuidance nav={nav} />}
+          {debug && <LaneDebug nav={nav} lanes={lanes} rows={debugRows ?? []} />}
           <Controls
             data={data}
             index={index}

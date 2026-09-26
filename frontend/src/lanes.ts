@@ -35,28 +35,6 @@ export function formatDistance(m: number): string {
   return `${(m / 1609.34).toFixed(1)} mi`;
 }
 
-/**
- * Stand-in lane geometry until real polygons exist (fallback_lanes.json or OpenCV):
- * n lanes fanned out from a vanishing point. Clearly approximate — the data panel says so.
- */
-export function placeholderLanes(n: number): Point[][] {
-  // Tuned to the Mapillary clip: horizon sits ~77% down the frame.
-  const vp: Point = [0.47, 0.775];
-  const top = 0.8;
-  const laneWidthAtBottom = 0.55;
-  const left = 0.5 - (laneWidthAtBottom * n) / 2;
-  const right = 0.5 + (laneWidthAtBottom * n) / 2;
-  const t = (1 - top) / (1 - vp[1]);
-  const bottomX = (i: number) => left + ((right - left) * i) / n;
-  const topX = (i: number) => bottomX(i) + (vp[0] - bottomX(i)) * t;
-  return Array.from({ length: n }, (_, i) => [
-    [bottomX(i), 1],
-    [bottomX(i + 1), 1],
-    [topX(i + 1), top],
-    [topX(i), top],
-  ]);
-}
-
 /** Lane polygons from boundary lines sorted left to right (the vision/README.md format). */
 export function lanesFromLines(lines: { x: (number | null)[] }[], rows: number[]): Point[][] {
   return lines.slice(0, -1).map((l, i) => {
@@ -130,21 +108,45 @@ export function bikeLikeLanes(
   return out;
 }
 
+/** The parts of a route's nav state that lane matching needs (see NavState). */
+export interface LaneMatchNav {
+  preferredLane: number | null;
+  lanes: { indications: string[] }[] | null;
+  laneSide: "left" | "right" | null;
+  laneAnchor?: "left" | "right" | null;
+  laneAhead?: { left: number; right: number } | null;
+}
+
 /**
- * Which visible lane to highlight: skips bike-like outer lanes, then matches Mapbox's lane to
- * the remaining travel lanes (see polygonIndexFor). Returns the index into `lanes`.
+ * Which visible lane to highlight, as an index into `lanes`. Before matching visible lanes to
+ * Mapbox's lanes it sets aside lanes Mapbox doesn't count:
+ *  - `excluded`: bike lanes / shoulders (bikeLikeLanes)
+ *  - `upcoming`: turn lanes already opening that the current snapshot doesn't list yet
+ *    (nav.laneAhead), taken from the matching edge only while we see more lanes than Mapbox has
+ * then counts from nav.laneAnchor (the side our road is on; falls back to the turn side).
  */
 export function laneTarget(
-  navIndex: number,
-  navCount: number,
+  nav: LaneMatchNav,
   lanes: Point[][],
-  side: "left" | "right" | null,
-  navLanes?: { indications: string[] }[] | null,
-): { index: number | null; excluded: Set<number> } {
-  const excluded = bikeLikeLanes(lanes, navCount, navLanes);
-  const travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i));
-  const t = polygonIndexFor(navIndex, navCount, travel.length, side);
-  return { index: t === null ? null : travel[t], excluded };
+): { index: number | null; excluded: Set<number>; upcoming: Set<number> } {
+  const navCount = nav.lanes?.length ?? 0;
+  const excluded = new Set<number>();
+  const upcoming = new Set<number>();
+  if (nav.preferredLane === null || !navCount || !lanes.length) return { index: null, excluded, upcoming };
+
+  bikeLikeLanes(lanes, navCount, nav.lanes).forEach((i) => excluded.add(i));
+  let travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i));
+  for (let k = 0; k < (nav.laneAhead?.right ?? 0) && travel.length > navCount; k++) upcoming.add(travel.pop()!);
+  for (let k = 0; k < (nav.laneAhead?.left ?? 0) && travel.length > navCount; k++) upcoming.add(travel.shift()!);
+  if (upcoming.size) {
+    // With the turn lane set aside, the new edge lane may itself be a bike lane: US "keyhole" bike
+    // lanes run between the through lanes and a right-turn lane (e.g. approaching Crossroads Pkwy).
+    bikeLikeLanes(travel.map((i) => lanes[i]), navCount, nav.lanes).forEach((j) => excluded.add(travel[j]));
+    travel = travel.filter((i) => !excluded.has(i));
+  }
+
+  const t = polygonIndexFor(nav.preferredLane, navCount, travel.length, nav.laneAnchor ?? nav.laneSide);
+  return { index: t === null ? null : travel[t], excluded, upcoming };
 }
 
 /**
@@ -160,4 +162,52 @@ export function polygonIndexFor(
 ): number | null {
   const idx = side === "left" ? navIndex : navIndex - (navCount - polyCount);
   return idx >= 0 && idx < polyCount ? idx : null;
+}
+
+// ---- Debug: why each visible lane was (or wasn't) matched ----
+
+export type LaneStatus = "target" | "counted" | "outside" | "bike" | "upcoming";
+
+export interface LaneDebugRow {
+  lane: number; // index into the visible lanes, left to right
+  status: LaneStatus; // outside = a travel lane with no Mapbox lane to match (lanes don't line up)
+  mapboxLane: number | null; // Mapbox lane index it was matched to
+  bottomWidth: number | null; // width at the lowest row it spans (0-1 of image width)
+  ratio: number | null; // widest ratio to its inward neighbor over shared rows (bike rule: all < BIKE_LANE_RATIO)
+}
+
+export const bikeLaneRatio = BIKE_LANE_RATIO;
+
+/** Per-lane explanation of laneTarget: what each visible lane was matched to, and why. */
+export function laneDebug(nav: LaneMatchNav, lanes: Point[][]): LaneDebugRow[] {
+  const { index, excluded, upcoming } = laneTarget(nav, lanes);
+  const navCount = nav.lanes?.length ?? 0;
+  const travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i) && !upcoming.has(i));
+  const side = nav.laneAnchor ?? nav.laneSide;
+  const offset = side === "left" ? 0 : navCount - travel.length; // Mapbox index = travel position + offset
+  const widths = lanes.map(widthsByRow);
+  const bottom = (w: Map<number, number>) => (w.size ? w.get(Math.max(...w.keys()))! : null);
+
+  return lanes.map((_, i) => {
+    // inward neighbor: toward the middle of the visible lanes (what the bike rule compares against)
+    const neighbor = lanes.length < 2 ? null : i < (lanes.length - 1) / 2 ? i + 1 : i - 1;
+    let ratio: number | null = null;
+    if (neighbor !== null) {
+      const shared = [...widths[i].keys()].filter((k) => widths[neighbor].has(k) && widths[neighbor].get(k)! > 0);
+      if (shared.length) ratio = Math.max(...shared.map((k) => widths[i].get(k)! / widths[neighbor].get(k)!));
+    }
+    const pos = travel.indexOf(i);
+    const m = pos === -1 ? null : pos + offset;
+    const mapboxLane = m !== null && m >= 0 && m < navCount ? m : null;
+    const status: LaneStatus = excluded.has(i)
+      ? "bike"
+      : upcoming.has(i)
+        ? "upcoming"
+        : i === index
+          ? "target"
+          : mapboxLane === null
+            ? "outside"
+            : "counted";
+    return { lane: i, status, mapboxLane, bottomWidth: bottom(widths[i]), ratio };
+  });
 }
