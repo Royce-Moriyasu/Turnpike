@@ -1,8 +1,0 @@
-{
-  "origin": [-80.398008073146, 27.414002250651],
-  "originBearing": 271,
-  "primaryRoute": "exit",
-  "routes": {
-    "exit": {"label": "Florida Turnpike N Exit 152", "destination": [-80.399311670705, 27.408684406935]}
-  }
-}

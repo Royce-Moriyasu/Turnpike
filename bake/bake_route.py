@@ -4,10 +4,6 @@
     python bake/bake_route.py --image-id <mapillary image id>   # fetch the sequence from Mapillary
     python bake/bake_route.py --synthetic                       # no imagery; frames sampled along the route
 
-New road (leaves the SR 70 demo untouched):
-    python bake/bake_route.py --config bake/routes/<name>.json --name <name> --frames <path>/frames.json
-    -> frontend/public/demo_route_<name>.json, frontend/public/route_<name>/, data/mapbox_<name>_<route>.json
-
 Mapbox responses are cached in data/mapbox_<route>.json (use --refresh to re-fetch).
 Lane polygons come from data/fallback_lanes.json (keyed by frame id) until OpenCV replaces them.
 Output: frontend/public/demo_route.json and frontend/public/route/<id>.jpg
@@ -30,8 +26,6 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 PUBLIC = ROOT / "frontend" / "public"
 IMG_DIR = PUBLIC / "route"
-IMG_URL = "/route"
-CACHE_PREFIX = "mapbox_"
 OUT = PUBLIC / "demo_route.json"
 PIPELINE_FRAMES = ROOT / "pipeline" / "data" / "frames.json"
 
@@ -380,7 +374,7 @@ def lane_reasons(nav: dict, others: dict[str, dict]) -> list[str]:
 # ---------------------------------------------------------------- data sources
 
 def load_mapbox(key: str, refresh: bool) -> dict:
-    cache = DATA / f"{CACHE_PREFIX}{key}.json"
+    cache = DATA / f"mapbox_{key}.json"
     if cache.exists() and not refresh:
         return json.loads(cache.read_text(encoding="utf-8"))
     token = os.getenv("MAPBOX_TOKEN") or sys.exit("MAPBOX_TOKEN not set (set it in this terminal, or add it to .env)")
@@ -478,7 +472,7 @@ def mapillary_frames(image_id: str, primary: RouteModel) -> tuple[str, list[dict
         download(c["url"], IMG_DIR / f"{c['id']}.jpg")
         captured = datetime.fromtimestamp(c["captured_at"] / 1000, tz=timezone.utc).isoformat() \
             if c["captured_at"] else None
-        frames.append({"id": c["id"], "image": f"{IMG_URL}/{c['id']}.jpg", "lng": c["lng"], "lat": c["lat"],
+        frames.append({"id": c["id"], "image": f"/route/{c['id']}.jpg", "lng": c["lng"], "lat": c["lat"],
                        "heading": c["heading"], "capturedAt": captured, "s": c["s"]})
     return seq, frames
 
@@ -528,7 +522,7 @@ def manifest_frames(path: Path, primary: RouteModel) -> tuple[str | None, list[d
             print(f"  {f['image_id']}: heading {heading} disagrees with route ({route_bearing:.0f}), using route")
             heading, source = round(route_bearing, 1), "route"
         frames.append({
-            "id": f["image_id"], "image": f"{IMG_URL}/{f['image_id']}.jpg", "lng": f["lon"], "lat": f["lat"],
+            "id": f["image_id"], "image": f"/route/{f['image_id']}.jpg", "lng": f["lon"], "lat": f["lat"],
             "heading": heading, "headingSource": source,
             "capturedAt": datetime.fromtimestamp(f["captured_at"] / 1000, tz=timezone.utc).isoformat(),
             "s": s,
@@ -547,7 +541,6 @@ def synthetic_frames(primary: RouteModel) -> list[dict]:
     return frames
 
 
-<<<<<<< HEAD
 def boundaries_to_polygons(frame: dict, rows: list[float]) -> list[list[list[float]]]:
     """Lane i = the space between boundary i and i+1 (vision/README.md format), as a polygon."""
     def bottom_x(b):
@@ -594,30 +587,6 @@ def load_lane_sources() -> tuple[dict[str, dict], dict[str, dict]]:
         info[key] = {"label": label, "method": data.get("method"),
                      "confidence": {fid: fr.get("confidence") for fid, fr in frames.items()}}
     return polygons, info
-=======
-# ---------------------------------------------------------------- config for other roads
-
-def apply_config(config_path: str | None, name: str | None) -> None:
-    """Point the script at a different road and/or different output files."""
-    global ORIGIN, ORIGIN_BEARING, ROUTES, PRIMARY_ROUTE, OUT, IMG_DIR, IMG_URL, CACHE_PREFIX
-    if config_path:
-        cfg = json.loads(Path(config_path).read_text(encoding="utf-8"))
-        ORIGIN = tuple(cfg["origin"])
-        ORIGIN_BEARING = cfg["originBearing"]
-        ROUTES = {k: {"label": r["label"], "origin": ORIGIN, "destination": tuple(r["destination"])}
-                  for k, r in cfg["routes"].items()}
-        PRIMARY_ROUTE = cfg["primaryRoute"]
-        if PRIMARY_ROUTE not in ROUTES:
-            sys.exit(f"primaryRoute '{PRIMARY_ROUTE}' is not one of the routes in {config_path}")
-        if not name:
-            sys.exit("--config needs --name too, so the SR 70 demo files are not overwritten")
-    if name:
-        OUT = PUBLIC / f"demo_route_{name}.json"
-        IMG_DIR = PUBLIC / f"route_{name}"
-        IMG_URL = f"/route_{name}"
-        CACHE_PREFIX = f"mapbox_{name}_"
-        print(f"  road '{name}': writing {OUT.relative_to(ROOT)} and {IMG_DIR.relative_to(ROOT)}/")
->>>>>>> bb0112ff092d362f64f1d623b0a0e3a2322c383d
 
 
 # ---------------------------------------------------------------- main
@@ -630,12 +599,7 @@ def main() -> None:
     src.add_argument("--image-id", help="any Mapillary image id from the clip (pKey= in the web URL)")
     src.add_argument("--synthetic", action="store_true", help="no imagery; sample frames along the route")
     ap.add_argument("--refresh", action="store_true", help="re-fetch Mapbox routes instead of using data/ cache")
-    ap.add_argument("--config", metavar="PATH",
-                    help="route config JSON for a different road (origin, bearing, routes, primaryRoute)")
-    ap.add_argument("--name", help="short name for this road; writes demo_route_<name>.json, route_<name>/ "
-                                   "and mapbox_<name>_*.json so the default demo is not overwritten")
     args = ap.parse_args()
-    apply_config(args.config, args.name)
 
     print("Loading routes")
     models = {k: RouteModel(k, load_mapbox(k, args.refresh)) for k in ROUTES}
