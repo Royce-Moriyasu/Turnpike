@@ -601,6 +601,18 @@ def load_lane_sources() -> tuple[dict[str, dict], dict[str, dict]]:
     return polygons, info
 
 
+def image_size(frames: list[dict]) -> list[int] | None:
+    """[width, height] of the clip's photos (the frontend sizes the view to their shape: phones
+    shoot 4:3, dashcams 16:9)."""
+    from PIL import Image
+    for f in frames:
+        path = IMG_DIR / f"{f['id']}.jpg"
+        if path.exists():
+            with Image.open(path) as im:
+                return list(im.size)
+    return None
+
+
 # ---------------------------------------------------------------- clip
 
 def use_clip(clip: Clip) -> None:
@@ -674,7 +686,8 @@ def main() -> None:
         "mode": "synthetic" if args.synthetic else "mapillary",
         "sequenceId": seq,
         "clip": {"name": CLIP.name, "title": CLIP.title},
-        "camera": {"vanishingPoint": list(CLIP.vanishing_point), "horizonY": CLIP.horizon},
+        "camera": {"vanishingPoint": list(CLIP.vanishing_point), "horizonY": CLIP.horizon,
+                   "imageSize": image_size(frames)},
         "primaryRoute": PRIMARY_ROUTE,
         "routes": {k: {"label": ROUTES[k]["label"], "geometry": m.line.coords,
                        "distanceM": round(m.line.length, 1)} for k, m in models.items()},

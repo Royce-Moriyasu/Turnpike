@@ -60,7 +60,13 @@ PATIENCE_ROWS = 30            # rows a track may go unmatched (dash gaps) before
 MIN_POINTS = 8
 MIN_SPAN = 0.05               # a track must cover at least this much of the image height
 MERGE_PX = 18                 # tracks whose fits agree this closely are the same line
-SAME_LINE = 0.02              # two final lines closer than this at the top rows = duplicate
+CURVE_GAIN = 0.85             # use a curved fit if it cuts the error by 15%+. detect_lanes.py asks for 30%, but
+                              # YOLOPv2's lines are 25-80 px thick, so their error stays high even when a
+                              # curve follows the line (on the Post Road clip most curving lines stayed straight)
+SAME_LINE = 0.02             # two final lines closer than this on average over the rows they share = duplicate
+MAX_FLATNESS = 5.0            # a line running sideways faster than this (image widths per image height) is
+                              # a stop bar or crosswalk: lane lines head for the vanishing point (edge lines
+                              # on SR 70 / clip2 / clip3 reach ~4.5; a stop bar at the Post Road light, 6.5)
 PAINT_PX = 16                 # how close photo paint must be to count toward solid/yellow (mask lines
                               # are thick and not always centered on the paint)
 SOLID_MIN = 0.85              # share of rows with paint to call a line solid
@@ -153,12 +159,13 @@ def track_lines(mask, s):
 
 
 def fit(ys, xs, s):
-    """Straight fit, or a gentle curve if it fits clearly better (as detect_lanes.refit)."""
+    """Straight fit, or a gentle curve if it fits better (as detect_lanes.refit, with a lower bar:
+    CURVE_GAIN)."""
     lin, rms, keep = dl.robust_fit(ys, xs, 1, s)
     poly = lin
     if keep.sum() >= 12:
         quad, rms_q, keep_q = dl.robust_fit(ys, xs, 2, s)
-        if rms_q < dl.CURVE_GAIN * rms and keep_q.sum() >= 0.9 * keep.sum():
+        if rms_q < CURVE_GAIN * rms and keep_q.sum() >= 0.9 * keep.sum():
             poly, rms, keep = quad, rms_q, keep_q
     return {"lin": lin, "poly": poly, "rms_px": rms / s, "ys": ys[keep], "xs": xs[keep]}
 
@@ -240,6 +247,30 @@ def describe(line, paint, yellow, h, w, s):
     return line_type, color, conf
 
 
+def flatness(xs):
+    """Steepest sideways run of a sampled line: |dx| / |dy| between consecutive report rows (image
+    widths per image height)."""
+    pts = [(r, x) for r, x in zip(ROWS, xs) if x is not None]
+    return max((abs((x2 - x1) / (r2 - r1)) for (r1, x1), (r2, x2) in zip(pts, pts[1:])), default=0.0)
+
+
+def same_line(xs, other):
+    """Two sampled lines are one line: within SAME_LINE of each other on average over the rows both
+    have. Not just at the top row: near the horizon every line converges (on a camera pitched up, the
+    top row can be only ~8% of the image below it), so separate lines can meet there."""
+    gaps = [abs(a - b) for a, b in zip(xs, other) if a is not None and b is not None]
+    return bool(gaps) and sum(gaps) / len(gaps) < SAME_LINE
+
+
+def x_at(line, y):
+    """The line's x at row y: its fit where it was detected; beyond either end, straight on along
+    the fit's direction there (a curve's formula swings off quickly past the paint it was fit to)."""
+    y_lo, y_hi = line["ys"].min(), line["ys"].max()
+    end = min(max(y, y_lo), y_hi)
+    slope = np.polyval(np.polyder(line["poly"]), end)
+    return float(np.polyval(line["poly"], end) + slope * (y - end))
+
+
 def sample(line, h, w):
     y_lo, y_hi = line["ys"].min(), line["ys"].max()
     xs = []
@@ -248,9 +279,28 @@ def sample(line, h, w):
         if y > y_hi + EXTRAPOLATE * h or y < y_lo - EXTRAPOLATE * h:
             xs.append(None)
             continue
-        x = float(np.polyval(line["poly"], y)) / w
+        x = x_at(line, y) / w
         xs.append(round(x, 3) if X_LIMIT[0] <= x <= X_LIMIT[1] else None)
     return xs
+
+
+VEHICLE_MIN_CONF = 0.4        # vehicle boxes counted as road (same filters as the app's DriverView)
+VEHICLE_MAX_WIDTH = 0.6
+
+
+def with_vehicles(drivable, vehicles):
+    """The drivable mask with detected vehicles filled in as road. YOLOPv2's drivable area stops at
+    a car, so a lane with a car in it (e.g. queued at a light) would score as not drivable and be
+    dropped (lanes.ts DRIVABLE_MIN); cars sit on the road, so the road under their box counts."""
+    if drivable is None or not vehicles:
+        return drivable
+    out = drivable.copy()
+    h, w = out.shape
+    for v in vehicles:
+        x0, y0, x1, y1 = v["box"]
+        if v["confidence"] >= VEHICLE_MIN_CONF and x1 - x0 <= VEHICLE_MAX_WIDTH:
+            out[int(y0 * h):int(y1 * h) + 1, int(x0 * w):int(x1 * w) + 1] = 255
+    return out
 
 
 def lane_drivable(boundaries, drivable, h, w):
@@ -310,10 +360,10 @@ def process(img, mask, drivable, frame, route_key):
         xs = sample(ln, h, w)
         if sum(x is not None for x in xs) < 2:
             continue
-        top = next((x for x in reversed(xs) if x is not None), None)
-        if kept and top is not None and boundaries[-1]["x"][-1] is not None \
-                and abs(top - boundaries[-1]["x"][-1]) < SAME_LINE:
+        if kept and same_line(xs, boundaries[-1]["x"]):
             continue  # duplicate of the previous line
+        if flatness(xs) > MAX_FLATNESS:
+            continue  # stop bar / crosswalk, not a lane line
         line_type, color, conf = describe(ln, cv2.bitwise_or(white, yellow), yellow, h, w, s)
         boundaries.append({"x": xs, "type": line_type, "color": color, "confidence": round(conf, 3)})
         kept.append(ln)
@@ -378,6 +428,8 @@ def main():
     demo = json.loads(clip.demo.read_text(encoding="utf-8"))
     cv_frames = (json.loads(clip.detected.read_text(encoding="utf-8")).get("frames", {})
                  if clip.detected.exists() else {})
+    vehicles = (json.loads(clip.vehicles.read_text(encoding="utf-8")).get("frames", {})
+                if clip.vehicles.exists() else {})  # from yolop_masks.py
     route_key = args.route or demo.get("primaryRoute") or "north"
     frames = demo["frames"]
     if args.debug:
@@ -400,7 +452,8 @@ def main():
             print(f"  [{i:2d}/{len(frames)}] {fid}  SKIPPED ({'image' if img is None else 'mask'} not found)")
             continue
         result["imageSize"] = result["imageSize"] or [img.shape[1], img.shape[0]]
-        drivable = cv2.imread(str(drivable_masks / f"{fid}.png"), cv2.IMREAD_GRAYSCALE)
+        drivable = with_vehicles(cv2.imread(str(drivable_masks / f"{fid}.png"), cv2.IMREAD_GRAYSCALE),
+                                 vehicles.get(fid))
         entry, kept = process(img, (mask >= 128).astype(np.uint8) * 255, drivable, frame, route_key)
         if args.debug:
             draw_debug(img, kept, entry, debug_dir / f"{i:03d}_{fid}.jpg")

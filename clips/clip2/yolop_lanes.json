@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-27T03:01:32+00:00",
+  "generatedAt": "2026-09-27T05:51:09+00:00",
   "method": "yolopv2-mask-tracks-v1",
   "imageSize": [
     1920,
@@ -71,13 +71,13 @@
           "x": [
             null,
             null,
-            -0.049,
-            0.091,
-            0.196
+            -0.045,
+            0.09,
+            0.197
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.122
+          "confidence": 0.137
         },
         {
           "x": [
@@ -121,13 +121,13 @@
           "x": [
             null,
             null,
-            -0.053,
+            -0.057,
             0.081,
-            0.181
+            0.176
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.032
+          "confidence": 0.035
         },
         {
           "x": [
@@ -170,18 +170,6 @@
           "x": [
             null,
             null,
-            null,
-            0.009,
-            0.176
-          ],
-          "type": "dashed",
-          "color": "white",
-          "confidence": 0.134
-        },
-        {
-          "x": [
-            null,
-            null,
             1.028,
             0.98,
             null
@@ -192,13 +180,11 @@
         }
       ],
       "debug": {
-        "tracks": 2,
+        "tracks": 1,
         "route": "right",
-        "reason": "lane width 0.97 at bottom is out of range"
+        "reason": "lines for target lane 1 not found"
       },
-      "drivable": [
-        null
-      ]
+      "drivable": []
     },
     "1224583429392562": {
       "confidence": 0.0,
@@ -298,12 +284,24 @@
             null,
             null,
             null,
-            -0.008,
-            0.202
+            0.195,
+            0.135
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.04
+          "confidence": 0.019
+        },
+        {
+          "x": [
+            null,
+            null,
+            null,
+            -0.004,
+            0.204
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.05
         },
         {
           "x": [
@@ -345,12 +343,13 @@
       "debug": {
         "tracks": 6,
         "route": "right",
-        "reason": "lane width 0.07 at bottom is out of range"
+        "reason": "lines cross"
       },
       "drivable": [
+        0.3,
         0.0,
         0.0,
-        1.0
+        0.83
       ]
     },
     "2507209356321160": {
@@ -396,7 +395,7 @@
           "x": [
             null,
             null,
-            1.015,
+            1.021,
             0.951,
             0.867
           ],
@@ -447,7 +446,7 @@
           "x": [
             null,
             null,
-            1.046,
+            1.057,
             0.951,
             0.837
           ],
@@ -497,7 +496,7 @@
           "x": [
             null,
             null,
-            1.094,
+            null,
             0.944,
             0.809
           ],
@@ -571,7 +570,7 @@
           "x": [
             null,
             null,
-            1.093,
+            null,
             0.947,
             0.813
           ],
@@ -587,7 +586,7 @@
       "drivable": [
         1.0,
         1.0,
-        0.93,
+        1.0,
         1.0
       ]
     },
@@ -646,7 +645,7 @@
           "x": [
             null,
             null,
-            1.09,
+            1.099,
             0.943,
             0.808
           ],
@@ -674,7 +673,7 @@
             null,
             null,
             null,
-            -0.089,
+            -0.099,
             0.059
           ],
           "type": "dashed",
@@ -686,12 +685,12 @@
             null,
             null,
             null,
-            -0.042,
-            0.118
+            -0.036,
+            0.117
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.161
+          "confidence": 0.188
         },
         {
           "x": [
@@ -757,7 +756,7 @@
       "debug": {
         "tracks": 7,
         "route": "right",
-        "reason": "lane width 0.05 at bottom is out of range"
+        "reason": "lane width 0.06 at bottom is out of range"
       },
       "drivable": [
         0.0,
@@ -811,7 +810,7 @@
           "x": [
             null,
             null,
-            1.04,
+            1.041,
             0.893,
             0.771
           ],
@@ -955,25 +954,13 @@
       ]
     },
     "1123503549343244": {
-      "confidence": 0.44,
+      "confidence": 0.352,
       "boundaries": [
         {
           "x": [
             null,
             null,
-            null,
-            -0.093,
-            0.064
-          ],
-          "type": "solid",
-          "color": "white",
-          "confidence": 0.22
-        },
-        {
-          "x": [
-            null,
-            null,
-            -0.005,
+            -0.006,
             0.099,
             0.206
           ],
@@ -1023,7 +1010,6 @@
         "route": "right"
       },
       "drivable": [
-        0.0,
         1.0,
         1.0,
         1.0
@@ -1037,7 +1023,7 @@
             null,
             null,
             null,
-            -0.086,
+            -0.096,
             0.069
           ],
           "type": "solid",
@@ -1061,7 +1047,7 @@
             null,
             null,
             null,
-            0.161,
+            0.156,
             0.275
           ],
           "type": "dashed",
@@ -1070,15 +1056,15 @@
         },
         {
           "x": [
-            0.148,
-            0.227,
-            0.306,
+            0.154,
+            0.228,
+            0.305,
             0.369,
-            0.417
+            0.418
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.455
+          "confidence": 0.542
         },
         {
           "x": [
@@ -1108,7 +1094,7 @@
       "debug": {
         "tracks": 6,
         "route": "right",
-        "reason": "lane width 0.13 at bottom is out of range"
+        "reason": "lane width 0.14 at bottom is out of range"
       },
       "drivable": [
         0.0,

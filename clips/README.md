@@ -25,6 +25,8 @@ clip list `frontend/public/clips/index.json`.
    ```bash
    .venv/Scripts/python.exe pipeline/fetch_mapillary.py <image id> <name>
    ```
+   Long sequence? Fetch only a window around that image, e.g. 10 frames before it and 60 after:
+   `pipeline/fetch_mapillary.py <image id> <name> --before 10 --after 60`.
    Or bring your own: `images/` plus a `frames.json` like
    `{"frames": [{"image_id", "lat", "lon", "compass_angle", "captured_at" (ms), "file": "images/<id>.jpg"}]}`.
 

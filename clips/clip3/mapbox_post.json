@@ -1,0 +1,171 @@
+{
+ "code": "Ok",
+ "waypoints": [
+  {"location": [-71.447469, 41.711436], "name": "Main Avenue", "distance": 3.062},
+  {"location": [-71.449261, 41.710861], "name": "Post Road", "distance": 4.697}
+ ],
+ "routes": [
+  {
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [-71.447469, 41.711436], [-71.447652, 41.711445], [-71.447776, 41.711444], [-71.447915, 41.711454],
+     [-71.448054, 41.711463], [-71.448482, 41.711514], [-71.448887, 41.71162], [-71.448904, 41.711544],
+     [-71.448924, 41.711441], [-71.448941, 41.711344], [-71.448997, 41.711246], [-71.449035, 41.711179],
+     [-71.449261, 41.710861]
+    ]
+   },
+   "distance": 211.534,
+   "duration": 40.724,
+   "weight": 42.814,
+   "weight_name": "auto",
+   "legs": [
+    {
+     "steps": [
+      {
+       "geometry": {
+        "type": "LineString",
+        "coordinates": [
+         [-71.447469, 41.711436], [-71.447652, 41.711445], [-71.447776, 41.711444], [-71.447915, 41.711454],
+         [-71.448054, 41.711463], [-71.448482, 41.711514], [-71.448887, 41.71162]
+        ]
+       },
+       "mode": "driving",
+       "driving_side": "right",
+       "distance": 120.448,
+       "duration": 24.056,
+       "weight": 24.106,
+       "name": "Main Avenue",
+       "ref": "RI 113",
+       "maneuver": {
+        "location": [-71.447469, 41.711436],
+        "bearing_before": 0,
+        "bearing_after": 274,
+        "instruction": "Drive west on Main Avenue/RI 113.",
+        "type": "depart"
+       },
+       "intersections": [
+        {
+         "location": [-71.447469, 41.711436], "geometry_index": 0, "admin_index": 0, "duration": 1.781, "weight": 1.781,
+         "out": 0, "entry": [true], "bearings": [274], "mapbox_streets_v8": {"class": "primary"}
+        },
+        {
+         "location": [-71.447652, 41.711445], "geometry_index": 1, "admin_index": 0, "turn_weight": 0.05, "duration": 2.182,
+         "weight": 2.232, "in": 1, "out": 2, "entry": [false, false, true], "bearings": [53, 94, 269],
+         "mapbox_streets_v8": {"class": "primary"}
+        },
+        {
+         "location": [-71.447776, 41.711444], "geometry_index": 2, "admin_index": 0, "duration": 2.457, "weight": 2.457,
+         "in": 0, "out": 1, "entry": [false, true], "bearings": [89, 276], "mapbox_streets_v8": {"class": "primary"},
+         "lanes": [
+          {"active": true, "valid": true, "valid_indication": "left", "indications": ["left"]},
+          {"active": false, "valid": false, "indications": ["straight"]},
+          {"active": false, "valid": false, "indications": ["straight"]}
+         ]
+        },
+        {
+         "location": [-71.447915, 41.711454], "geometry_index": 3, "admin_index": 0, "duration": 2.455, "weight": 2.455,
+         "in": 0, "out": 1, "entry": [false, true], "bearings": [96, 275], "mapbox_streets_v8": {"class": "primary"},
+         "lanes": [
+          {"active": true, "valid": true, "valid_indication": "left", "indications": ["left"]},
+          {"active": false, "valid": false, "indications": ["straight"]},
+          {"active": false, "valid": false, "indications": ["straight"]}
+         ]
+        },
+        {
+         "location": [-71.448054, 41.711463], "geometry_index": 4, "admin_index": 0,
+         "in": 0, "out": 1, "entry": [false, true], "bearings": [95, 279], "mapbox_streets_v8": {"class": "primary"},
+         "lanes": [
+          {"active": true, "valid": true, "valid_indication": "left", "indications": ["left"]},
+          {"active": false, "valid": false, "indications": ["straight"]},
+          {"active": false, "valid": false, "indications": ["straight"]}
+         ]
+        }
+       ]
+      },
+      {
+       "geometry": {
+        "type": "LineString",
+        "coordinates": [
+         [-71.448887, 41.71162], [-71.448904, 41.711544], [-71.448924, 41.711441], [-71.448941, 41.711344],
+         [-71.448997, 41.711246], [-71.449035, 41.711179], [-71.449261, 41.710861]
+        ]
+       },
+       "mode": "driving",
+       "driving_side": "right",
+       "distance": 91.086,
+       "duration": 16.669,
+       "weight": 18.708,
+       "name": "Post Road",
+       "maneuver": {
+        "location": [-71.448887, 41.71162],
+        "bearing_before": 289,
+        "bearing_after": 188,
+        "modifier": "left",
+        "instruction": "Turn left onto Post Road.",
+        "type": "turn"
+       },
+       "intersections": [
+        {
+         "location": [-71.448887, 41.71162], "geometry_index": 6, "admin_index": 0, "traffic_signal": true,
+         "turn_weight": 7.5, "duration": 1.235, "weight": 8.735, "in": 1, "out": 2, "entry": [true, false, true, true],
+         "bearings": [6, 109, 189, 298], "mapbox_streets_v8": {"class": "primary"},
+         "lanes": [
+          {"active": true, "valid": true, "valid_indication": "left", "indications": ["left"]},
+          {"active": false, "valid": false, "indications": ["straight"]},
+          {"active": false, "valid": false, "indications": ["straight", "right"]}
+         ]
+        },
+        {
+         "location": [-71.448904, 41.711544], "geometry_index": 7, "admin_index": 0, "traffic_signal": true,
+         "turn_weight": 0.5, "duration": 1.303, "weight": 1.803, "in": 0, "out": 2, "entry": [false, true, true, false],
+         "bearings": [9, 115, 188, 300], "mapbox_streets_v8": {"class": "primary"}
+        },
+        {
+         "location": [-71.448924, 41.711441], "geometry_index": 8, "admin_index": 0, "turn_weight": 0.5,
+         "duration": 2.559, "weight": 3.059, "in": 0, "out": 2, "entry": [false, false, true, false],
+         "bearings": [8, 106, 195, 287], "mapbox_streets_v8": {"class": "primary"}
+        },
+        {
+         "location": [-71.448997, 41.711246], "geometry_index": 10, "admin_index": 0, "duration": 0.911, "weight": 0.911,
+         "in": 0, "out": 1, "entry": [false, true], "bearings": [16, 203], "mapbox_streets_v8": {"class": "primary"}
+        },
+        {
+         "location": [-71.449035, 41.711179], "geometry_index": 11, "admin_index": 0, "turn_weight": 0.5,
+         "in": 0, "out": 2, "entry": [false, true, true, true], "bearings": [23, 45, 208, 293],
+         "mapbox_streets_v8": {"class": "primary"}
+        }
+       ]
+      },
+      {
+       "geometry": {"type": "LineString", "coordinates": [[-71.449261, 41.710861], [-71.449261, 41.710861]]},
+       "mode": "driving",
+       "driving_side": "right",
+       "distance": 0,
+       "duration": 0,
+       "weight": 0,
+       "name": "Post Road",
+       "maneuver": {
+        "location": [-71.449261, 41.710861],
+        "bearing_before": 208,
+        "bearing_after": 0,
+        "instruction": "You have arrived at your destination.",
+        "type": "arrive"
+       },
+       "intersections": [
+        {"location": [-71.449261, 41.710861], "geometry_index": 12, "admin_index": 0, "in": 0, "entry": [true], "bearings": [28]}
+       ]
+      }
+     ],
+     "summary": "Main Avenue, Post Road",
+     "distance": 211.534,
+     "duration": 40.724,
+     "weight": 42.814,
+     "admins": [{"iso_3166_1": "US", "iso_3166_1_alpha3": "USA"}],
+     "via_waypoints": []
+    }
+   ]
+  }
+ ],
+ "uuid": "1ivU-9pA1XzeSGiqsifMOJWI8JpffgKsY67TbX34S-w_Jnvj_vdYJw=="
+}

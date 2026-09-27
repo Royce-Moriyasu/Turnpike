@@ -1,0 +1,10 @@
+{
+  "title": "Left onto Post Road (Warwick, RI)",
+  "origin": [-71.447469, 41.711436],
+  "originBearing": 274,
+  "primaryRoute": "post",
+  "routes": {
+    "post": {"label": "Post Road · left turn", "destination": [-71.449261, 41.710861]}
+  },
+  "camera": {"vanishingPoint": [0.62, 0.68]}
+}

@@ -1,0 +1,1285 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-27T05:51:11+00:00",
+  "method": "yolopv2-mask-tracks-v1",
+  "imageSize": [
+    2048,
+    1536
+  ],
+  "rows": [
+    1.0,
+    0.929,
+    0.858,
+    0.801,
+    0.758
+  ],
+  "frames": {
+    "1195675635436918": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            0.012,
+            0.148,
+            0.274,
+            0.419
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.143
+        },
+        {
+          "x": [
+            0.508,
+            0.463,
+            0.431,
+            0.426,
+            0.433
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            0.893,
+            0.778,
+            0.652,
+            0.54,
+            0.45
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.869,
+            0.654,
+            0.492
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 8,
+        "route": "post"
+      },
+      "drivable": [
+        0.82,
+        0.68,
+        0.65
+      ]
+    },
+    "1815742002603802": {
+      "confidence": 0.011,
+      "boundaries": [
+        {
+          "x": [
+            0.046,
+            0.161,
+            0.286,
+            0.399,
+            0.487
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.199
+        },
+        {
+          "x": [
+            0.559,
+            0.54,
+            0.522,
+            0.507,
+            0.496
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.015
+        },
+        {
+          "x": [
+            1.0,
+            0.856,
+            0.713,
+            0.598,
+            0.511
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "post"
+      },
+      "drivable": [
+        0.63,
+        0.81
+      ]
+    },
+    "1362481261474927": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.129,
+            0.222,
+            0.315,
+            0.389,
+            0.445
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.109
+        },
+        {
+          "x": [
+            0.068,
+            0.171,
+            0.28,
+            0.376,
+            0.449
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.167
+        },
+        {
+          "x": [
+            0.674,
+            0.626,
+            0.582,
+            0.553,
+            0.532
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.028
+        },
+        {
+          "x": [
+            1.099,
+            0.951,
+            0.792,
+            0.655,
+            0.548
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.965,
+            0.764,
+            0.612
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "post",
+        "reason": "lines cross"
+      },
+      "drivable": [
+        0.0,
+        0.62,
+        0.78,
+        0.72
+      ]
+    },
+    "1023074595877102": {
+      "confidence": 0.003,
+      "boundaries": [
+        {
+          "x": [
+            0.185,
+            0.261,
+            0.338,
+            0.4,
+            0.447
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.054
+        },
+        {
+          "x": [
+            0.681,
+            0.632,
+            0.583,
+            0.544,
+            0.515
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.003
+        },
+        {
+          "x": [
+            null,
+            0.936,
+            0.767,
+            0.632,
+            0.529
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.931,
+            0.733,
+            0.562
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 7,
+        "route": "post"
+      },
+      "drivable": [
+        0.66,
+        0.85,
+        0.77
+      ]
+    },
+    "691619576712816": {
+      "confidence": 0.007,
+      "boundaries": [
+        {
+          "x": [
+            0.193,
+            0.262,
+            0.339,
+            0.409,
+            0.464
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.124
+        },
+        {
+          "x": [
+            0.72,
+            0.649,
+            0.59,
+            0.554,
+            0.533
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.007
+        },
+        {
+          "x": [
+            null,
+            0.963,
+            0.786,
+            0.672,
+            0.603
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.967,
+            0.778,
+            0.634
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "post"
+      },
+      "drivable": [
+        0.81,
+        0.94,
+        0.85
+      ]
+    },
+    "9914841351893364": {
+      "confidence": 0.109,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            0.01,
+            0.171,
+            0.304,
+            0.405
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.275
+        },
+        {
+          "x": [
+            0.142,
+            0.223,
+            0.31,
+            0.386,
+            0.444
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.109
+        },
+        {
+          "x": [
+            0.736,
+            0.661,
+            0.597,
+            0.559,
+            0.537
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.008
+        },
+        {
+          "x": [
+            null,
+            0.998,
+            0.818,
+            0.689,
+            0.601
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            1.018,
+            0.82,
+            0.67
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "post"
+      },
+      "drivable": [
+        0.0,
+        0.73,
+        0.99,
+        0.93
+      ]
+    },
+    "3581842918791751": {
+      "confidence": 0.014,
+      "boundaries": [
+        {
+          "x": [
+            0.183,
+            0.255,
+            0.326,
+            0.384,
+            0.427
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.049
+        },
+        {
+          "x": [
+            0.748,
+            0.673,
+            0.606,
+            0.565,
+            0.541
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.014
+        },
+        {
+          "x": [
+            null,
+            1.038,
+            0.852,
+            0.717,
+            0.625
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.002
+        },
+        {
+          "x": [
+            null,
+            null,
+            1.097,
+            0.874,
+            0.706
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "post"
+      },
+      "drivable": [
+        0.75,
+        1.0,
+        1.0
+      ]
+    },
+    "609491938812844": {
+      "confidence": 0.132,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            -0.07,
+            0.163,
+            0.339
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.21
+        },
+        {
+          "x": [
+            0.155,
+            0.23,
+            0.313,
+            0.391,
+            0.451
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.132
+        },
+        {
+          "x": [
+            0.746,
+            0.672,
+            0.608,
+            0.568,
+            0.544
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.015
+        },
+        {
+          "x": [
+            null,
+            1.03,
+            0.849,
+            0.715,
+            0.62
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.002
+        },
+        {
+          "x": [
+            null,
+            null,
+            1.092,
+            0.867,
+            0.698
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "post"
+      },
+      "drivable": [
+        0.12,
+        0.73,
+        1.0,
+        1.0
+      ]
+    },
+    "1220151522803261": {
+      "confidence": 0.092,
+      "boundaries": [
+        {
+          "x": [
+            -0.098,
+            0.053,
+            0.207,
+            0.334,
+            0.431
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.376
+        },
+        {
+          "x": [
+            0.171,
+            0.249,
+            0.336,
+            0.409,
+            null
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.092
+        },
+        {
+          "x": [
+            0.743,
+            0.678,
+            0.613,
+            0.561,
+            null
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.005
+        },
+        {
+          "x": [
+            null,
+            1.028,
+            0.846,
+            0.713,
+            0.619
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.002
+        },
+        {
+          "x": [
+            null,
+            null,
+            1.052,
+            0.853,
+            0.702
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "post"
+      },
+      "drivable": [
+        0.18,
+        0.71,
+        0.98,
+        1.0
+      ]
+    },
+    "1197470968698353": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            -0.048,
+            0.09,
+            0.231,
+            0.348,
+            0.437
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.339
+        },
+        {
+          "x": [
+            0.26,
+            0.318,
+            0.376,
+            0.422,
+            null
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.053
+        },
+        {
+          "x": [
+            0.194,
+            0.266,
+            0.344,
+            0.413,
+            0.465
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.127
+        },
+        {
+          "x": [
+            0.752,
+            0.687,
+            0.624,
+            0.576,
+            0.54
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.016
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "post",
+        "reason": "lines cross"
+      },
+      "drivable": [
+        0.28,
+        0.28,
+        0.66
+      ]
+    },
+    "694086876360101": {
+      "confidence": 0.055,
+      "boundaries": [
+        {
+          "x": [
+            -0.053,
+            0.079,
+            0.211,
+            0.316,
+            0.396
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.159
+        },
+        {
+          "x": [
+            0.253,
+            0.308,
+            0.363,
+            0.407,
+            0.44
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.055
+        },
+        {
+          "x": [
+            0.753,
+            0.685,
+            0.616,
+            0.561,
+            0.519
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.005
+        },
+        {
+          "x": [
+            null,
+            1.009,
+            0.832,
+            0.697,
+            0.595
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "post"
+      },
+      "drivable": [
+        0.1,
+        0.77,
+        0.87
+      ]
+    },
+    "667646202697865": {
+      "confidence": 0.007,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            0.019,
+            0.157,
+            0.266,
+            0.349
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.053
+        },
+        {
+          "x": [
+            0.213,
+            0.266,
+            0.32,
+            0.363,
+            0.395
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.007
+        },
+        {
+          "x": [
+            0.72,
+            0.65,
+            0.58,
+            0.524,
+            0.482
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            0.957,
+            0.79,
+            0.66,
+            null
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "post"
+      },
+      "drivable": [
+        0.07,
+        0.77,
+        0.93
+      ]
+    },
+    "533348073166671": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "tracks": 0,
+        "route": "post",
+        "reason": "no lines found"
+      },
+      "drivable": []
+    },
+    "659273800290729": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "tracks": 0,
+        "route": "post",
+        "reason": "no lines found"
+      },
+      "drivable": []
+    },
+    "660484373287846": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "tracks": 0,
+        "route": "post",
+        "reason": "no lines found"
+      },
+      "drivable": []
+    },
+    "1011212803930411": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "tracks": 0,
+        "route": "post",
+        "reason": "no lines found"
+      },
+      "drivable": []
+    },
+    "1454297062206628": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "tracks": 0,
+        "route": "post",
+        "reason": "no lines found"
+      },
+      "drivable": []
+    },
+    "4041068069451299": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "tracks": 0,
+        "route": "post",
+        "reason": "no lines found"
+      },
+      "drivable": []
+    },
+    "705811618553682": {
+      "confidence": 0.0,
+      "boundaries": [],
+      "debug": {
+        "tracks": 1,
+        "route": "post",
+        "reason": "no lines found"
+      },
+      "drivable": []
+    },
+    "1359914528612190": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            0.725,
+            0.393,
+            0.162,
+            0.031
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "post",
+        "reason": "no Mapbox lane data"
+      },
+      "drivable": []
+    },
+    "678036268146117": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.108,
+            0.097,
+            0.087,
+            0.078,
+            0.072
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            0.796,
+            0.58,
+            0.381,
+            0.246,
+            0.152
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.719,
+            0.45,
+            0.389
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 3,
+        "route": "post",
+        "reason": "lane width 0.69 at bottom is out of range"
+      },
+      "drivable": [
+        0.77,
+        0.77
+      ]
+    },
+    "1050386037150020": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.164,
+            0.155,
+            0.188,
+            0.257,
+            0.334
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            0.971,
+            0.733,
+            0.542,
+            null
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            1.029,
+            0.772,
+            0.566,
+            0.411
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            0.967,
+            0.763,
+            0.599,
+            0.475
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 5,
+        "route": "post",
+        "reason": "lane width 0.82 at bottom is out of range"
+      },
+      "drivable": [
+        0.84,
+        0.13,
+        0.21
+      ]
+    },
+    "657440833704718": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.091,
+            0.159,
+            0.266,
+            0.396,
+            0.515
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.224
+        },
+        {
+          "x": [
+            1.064,
+            0.913,
+            0.761,
+            0.639,
+            0.548
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            0.969,
+            0.808,
+            0.668,
+            0.556
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "post",
+        "reason": "lane width 0.97 at bottom is out of range"
+      },
+      "drivable": [
+        0.84,
+        0.23
+      ]
+    },
+    "1165775095295417": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.047,
+            0.154,
+            0.28,
+            0.403,
+            0.509
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.181
+        },
+        {
+          "x": [
+            null,
+            0.95,
+            0.783,
+            0.648,
+            0.547
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 4,
+        "route": "post",
+        "reason": "lane width 0.80 at bottom is out of range"
+      },
+      "drivable": [
+        0.87
+      ]
+    },
+    "1115427553673627": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.085,
+            0.199,
+            0.312,
+            0.404,
+            0.473
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.276
+        },
+        {
+          "x": [
+            1.071,
+            0.899,
+            0.725,
+            0.584,
+            0.477
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            0.973,
+            0.77,
+            0.606,
+            0.483
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            0.921,
+            0.739,
+            0.593,
+            0.483
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "post",
+        "reason": "lane width 0.99 at bottom is out of range"
+      },
+      "drivable": [
+        0.87,
+        0.17,
+        0.2
+      ]
+    },
+    "1698573667418489": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            0.102,
+            0.196,
+            0.289,
+            0.364,
+            0.42
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.117
+        },
+        {
+          "x": [
+            null,
+            0.994,
+            0.784,
+            0.616,
+            0.489
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            1.081,
+            0.91,
+            0.739,
+            0.601,
+            0.498
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 6,
+        "route": "post",
+        "reason": "lane width 0.80 at bottom is out of range"
+      },
+      "drivable": [
+        0.92,
+        0.2
+      ]
+    },
+    "2969202643246897": {
+      "confidence": 0.0,
+      "boundaries": [
+        {
+          "x": [
+            null,
+            null,
+            0.323,
+            0.364,
+            0.392
+          ],
+          "type": "dashed",
+          "color": "yellow",
+          "confidence": 0.002
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.861,
+            0.621,
+            0.439
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            0.924,
+            0.749,
+            0.615,
+            0.519
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.988,
+            0.724,
+            0.525
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        },
+        {
+          "x": [
+            null,
+            null,
+            0.903,
+            0.715,
+            0.574
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.0
+        }
+      ],
+      "debug": {
+        "tracks": 7,
+        "route": "post",
+        "reason": "lines cross"
+      },
+      "drivable": [
+        0.95,
+        0.35,
+        0.37,
+        0.37
+      ]
+    }
+  }
+}

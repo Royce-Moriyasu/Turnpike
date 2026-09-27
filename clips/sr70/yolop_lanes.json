@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-27T03:01:29+00:00",
+  "generatedAt": "2026-09-27T05:51:06+00:00",
   "method": "yolopv2-mask-tracks-v1",
   "imageSize": [
     2048,
@@ -43,7 +43,7 @@
         },
         {
           "x": [
-            0.728,
+            0.729,
             0.72,
             0.709,
             0.698,
@@ -83,7 +83,7 @@
           "x": [
             null,
             null,
-            -0.065,
+            -0.08,
             0.051,
             0.19
           ],
@@ -117,15 +117,15 @@
         },
         {
           "x": [
-            0.822,
+            0.821,
             0.77,
             0.717,
             0.675,
-            0.644
+            0.643
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.125
+          "confidence": 0.131
         },
         {
           "x": [
@@ -146,7 +146,7 @@
       },
       "drivable": [
         1.0,
-        1.0,
+        0.92,
         0.99,
         0.0
       ]
@@ -180,15 +180,15 @@
         },
         {
           "x": [
-            0.516,
-            0.516,
+            0.513,
+            0.514,
             0.515,
             0.515,
             0.514
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.472
+          "confidence": 0.501
         },
         {
           "x": [
@@ -232,15 +232,15 @@
       "boundaries": [
         {
           "x": [
-            0.09,
+            0.089,
             0.167,
             0.245,
-            0.306,
-            0.353
+            0.307,
+            0.352
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.67
+          "confidence": 0.698
         },
         {
           "x": [
@@ -268,7 +268,7 @@
         },
         {
           "x": [
-            1.053,
+            1.054,
             0.946,
             0.833,
             0.739,
@@ -307,7 +307,7 @@
         },
         {
           "x": [
-            0.612,
+            0.613,
             0.585,
             0.556,
             0.532,
@@ -332,7 +332,7 @@
         {
           "x": [
             null,
-            0.962,
+            0.971,
             0.851,
             0.751,
             0.67
@@ -345,7 +345,7 @@
       "debug": {
         "tracks": 4,
         "route": "north",
-        "reason": "lane width 0.09 at bottom is out of range"
+        "reason": "lane width 0.10 at bottom is out of range"
       },
       "drivable": [
         0.91,
@@ -408,13 +408,13 @@
           "x": [
             null,
             0.974,
-            0.841,
+            0.842,
             0.735,
-            0.655
+            0.654
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.51
+          "confidence": 0.546
         }
       ],
       "debug": {
@@ -425,8 +425,8 @@
       "drivable": [
         1.0,
         1.0,
-        0.9,
-        0.44
+        0.91,
+        0.43
       ]
     },
     "484076496492610": {
@@ -435,13 +435,13 @@
         {
           "x": [
             null,
-            -0.013,
-            -0.029,
-            0.025,
-            0.104
+            null,
+            -0.014,
+            0.064,
+            0.123
           ],
-          "type": "dashed",
-          "color": "white",
+          "type": "solid",
+          "color": "yellow",
           "confidence": 0.0
         },
         {
@@ -458,7 +458,7 @@
         },
         {
           "x": [
-            0.221,
+            0.222,
             0.273,
             0.322,
             0.361,
@@ -482,7 +482,7 @@
         },
         {
           "x": [
-            0.992,
+            0.99,
             0.882,
             0.772,
             0.684,
@@ -490,7 +490,7 @@
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.625
+          "confidence": 0.662
         },
         {
           "x": [
@@ -508,10 +508,10 @@
       "debug": {
         "tracks": 7,
         "route": "north",
-        "reason": "lane width 0.07 at bottom is out of range"
+        "reason": "lane width 0.05 at bottom is out of range"
       },
       "drivable": [
-        0.79,
+        1.0,
         1.0,
         0.99,
         0.87,
@@ -519,19 +519,19 @@
       ]
     },
     "169317962092165": {
-      "confidence": 0.212,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
             null,
             null,
-            0.025,
+            0.026,
             0.144,
             0.234
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.33
+          "confidence": 0.354
         },
         {
           "x": [
@@ -568,16 +568,30 @@
           "type": "dashed",
           "color": "white",
           "confidence": 0.212
+        },
+        {
+          "x": [
+            0.983,
+            0.874,
+            0.765,
+            0.678,
+            0.613
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.553
         }
       ],
       "debug": {
         "tracks": 5,
-        "route": "north"
+        "route": "north",
+        "reason": "lines cross"
       },
       "drivable": [
         1.0,
         0.99,
-        0.89
+        0.93,
+        0.48
       ]
     },
     "1124801011671114": {
@@ -586,8 +600,8 @@
         {
           "x": [
             null,
-            -0.093,
-            0.029,
+            null,
+            0.028,
             0.139,
             0.23
           ],
@@ -621,7 +635,7 @@
         },
         {
           "x": [
-            0.986,
+            0.987,
             0.878,
             0.767,
             0.677,
@@ -633,7 +647,7 @@
         },
         {
           "x": [
-            1.059,
+            1.063,
             0.957,
             0.838,
             0.732,
@@ -647,13 +661,13 @@
       "debug": {
         "tracks": 5,
         "route": "north",
-        "reason": "lane width 0.07 at bottom is out of range"
+        "reason": "lane width 0.08 at bottom is out of range"
       },
       "drivable": [
         1.0,
         1.0,
-        0.9,
-        0.59
+        0.97,
+        0.58
       ]
     },
     "7176471462394944": {
@@ -697,7 +711,7 @@
         },
         {
           "x": [
-            0.992,
+            0.993,
             0.883,
             0.768,
             0.672,
@@ -728,7 +742,7 @@
       "drivable": [
         1.0,
         1.0,
-        0.62,
+        0.79,
         0.22
       ]
     },
@@ -749,15 +763,15 @@
         },
         {
           "x": [
-            0.233,
+            0.23,
             0.281,
-            0.329,
+            0.33,
             0.368,
-            0.397
+            0.396
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.674
+          "confidence": 0.767
         },
         {
           "x": [
@@ -804,8 +818,8 @@
       "drivable": [
         1.0,
         1.0,
-        0.62,
-        0.7
+        0.92,
+        0.78
       ]
     },
     "994228878185755": {
@@ -825,27 +839,27 @@
         },
         {
           "x": [
-            0.248,
-            0.292,
+            0.25,
+            0.293,
             0.337,
             0.372,
             0.399
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.748
+          "confidence": 0.784
         },
         {
           "x": [
-            0.662,
+            0.66,
             0.621,
             0.581,
             0.548,
-            0.524
+            0.523
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.72
+          "confidence": 0.803
         },
         {
           "x": [
@@ -880,8 +894,8 @@
       "drivable": [
         1.0,
         1.0,
-        0.47,
-        0.57
+        0.88,
+        0.78
       ]
     },
     "2788869688083814": {
@@ -925,15 +939,15 @@
         },
         {
           "x": [
-            0.998,
+            1.001,
             0.889,
             0.78,
-            0.693,
-            0.627
+            0.695,
+            0.632
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.343
+          "confidence": 0.372
         },
         {
           "x": [
@@ -941,7 +955,7 @@
             0.987,
             0.849,
             0.746,
-            0.672
+            0.671
           ],
           "type": "dashed",
           "color": "white",
@@ -956,24 +970,36 @@
       "drivable": [
         0.98,
         0.98,
-        0.3,
-        0.26
+        0.84,
+        0.63
       ]
     },
     "497255855121814": {
-      "confidence": 0.614,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
             null,
             null,
-            0.022,
+            0.026,
             0.154,
             0.247
           ],
           "type": "dashed",
           "color": "yellow",
           "confidence": 0.299
+        },
+        {
+          "x": [
+            null,
+            -0.098,
+            0.053,
+            0.173,
+            0.263
+          ],
+          "type": "solid",
+          "color": "yellow",
+          "confidence": 0.255
         },
         {
           "x": [
@@ -1002,9 +1028,11 @@
       ],
       "debug": {
         "tracks": 4,
-        "route": "north"
+        "route": "north",
+        "reason": "lane width 0.03 at bottom is out of range"
       },
       "drivable": [
+        0.0,
         1.0,
         0.98
       ]
@@ -1018,7 +1046,7 @@
             null,
             0.041,
             0.156,
-            0.237
+            0.238
           ],
           "type": "solid",
           "color": "yellow",
@@ -1065,7 +1093,7 @@
           "x": [
             null,
             null,
-            -0.013,
+            -0.005,
             0.135,
             0.231
           ],
@@ -1087,7 +1115,7 @@
         },
         {
           "x": [
-            0.678,
+            0.679,
             0.637,
             0.595,
             0.562,
@@ -1095,19 +1123,19 @@
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.734
+          "confidence": 0.775
         },
         {
           "x": [
-            1.012,
+            1.017,
             0.905,
-            0.799,
-            0.713,
-            0.649
+            0.804,
+            0.724,
+            0.665
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.13
+          "confidence": 0.144
         },
         {
           "x": [
@@ -1150,15 +1178,15 @@
         },
         {
           "x": [
-            0.682,
-            0.639,
+            0.683,
+            0.64,
             0.597,
             0.563,
             0.538
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.757
+          "confidence": 0.797
         },
         {
           "x": [
@@ -1179,7 +1207,7 @@
       },
       "drivable": [
         0.99,
-        0.77
+        0.93
       ]
     },
     "494623058708545": {
@@ -1189,13 +1217,13 @@
           "x": [
             null,
             null,
-            0.039,
+            0.041,
             0.16,
-            0.252
+            0.251
           ],
           "type": "dashed",
           "color": "yellow",
-          "confidence": 0.329
+          "confidence": 0.363
         },
         {
           "x": [
@@ -1241,7 +1269,7 @@
       "drivable": [
         1.0,
         0.99,
-        0.3
+        1.0
       ]
     },
     "1084181202127649": {
@@ -1250,14 +1278,14 @@
         {
           "x": [
             null,
-            -0.086,
-            0.061,
-            0.178,
-            0.267
+            -0.061,
+            0.084,
+            0.194,
+            0.276
           ],
-          "type": "dashed",
+          "type": "solid",
           "color": "yellow",
-          "confidence": 0.266
+          "confidence": 0.325
         },
         {
           "x": [
@@ -1273,7 +1301,7 @@
         },
         {
           "x": [
-            0.704,
+            0.705,
             0.657,
             0.608,
             0.568,
@@ -1310,7 +1338,7 @@
         },
         {
           "x": [
-            0.277,
+            0.276,
             0.317,
             0.357,
             0.388,
@@ -1318,7 +1346,7 @@
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.801
+          "confidence": 0.838
         },
         {
           "x": [
@@ -1410,7 +1438,7 @@
         },
         {
           "x": [
-            0.66,
+            0.661,
             0.621,
             0.581,
             0.548,
@@ -1422,7 +1450,7 @@
         },
         {
           "x": [
-            0.998,
+            0.999,
             0.894,
             0.785,
             0.695,
@@ -1512,7 +1540,7 @@
         },
         {
           "x": [
-            0.95,
+            0.951,
             0.857,
             0.759,
             0.677,
@@ -1526,13 +1554,13 @@
           "x": [
             null,
             null,
-            0.995,
-            0.853,
+            0.992,
+            0.854,
             0.746
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.189
+          "confidence": 0.235
         }
       ],
       "debug": {
@@ -1553,13 +1581,13 @@
           "x": [
             null,
             null,
-            -0.064,
+            -0.06,
             0.079,
             0.186
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.212
+          "confidence": 0.233
         },
         {
           "x": [
@@ -1622,7 +1650,7 @@
       ]
     },
     "754481875530988": {
-      "confidence": 0.563,
+      "confidence": 0.615,
       "boundaries": [
         {
           "x": [
@@ -1662,27 +1690,27 @@
         },
         {
           "x": [
-            0.83,
+            0.832,
             0.751,
-            0.672,
+            0.671,
             0.608,
             0.561
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.676
+          "confidence": 0.738
         },
         {
           "x": [
             null,
             null,
-            0.977,
-            0.84,
-            0.737
+            0.972,
+            0.842,
+            0.736
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.165
+          "confidence": 0.207
         }
       ],
       "debug": {
@@ -1703,7 +1731,7 @@
           "x": [
             null,
             null,
-            1.046,
+            1.044,
             0.883,
             0.774
           ],
@@ -1725,22 +1753,10 @@
         {
           "x": [
             null,
-            0.7,
-            0.371,
-            0.174,
-            0.064
-          ],
-          "type": "dashed",
-          "color": "white",
-          "confidence": 0.0
-        },
-        {
-          "x": [
-            null,
             null,
             0.937,
             0.843,
-            0.815
+            0.809
           ],
           "type": "dashed",
           "color": "white",
@@ -1750,11 +1766,9 @@
       "debug": {
         "tracks": 2,
         "route": "north",
-        "reason": "lane does not narrow toward the horizon"
+        "reason": "lines for target lane 3 not found"
       },
-      "drivable": [
-        1.0
-      ]
+      "drivable": []
     },
     "155484140237039": {
       "confidence": 0.016,
@@ -1774,7 +1788,7 @@
         {
           "x": [
             null,
-            1.035,
+            1.031,
             0.795,
             0.651,
             0.571
@@ -1854,6 +1868,18 @@
           "type": "solid",
           "color": "white",
           "confidence": 0.011
+        },
+        {
+          "x": [
+            0.908,
+            0.847,
+            0.785,
+            0.736,
+            0.699
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.014
         }
       ],
       "debug": {
@@ -1865,7 +1891,8 @@
         1.0,
         0.93,
         1.0,
-        1.0
+        1.0,
+        0.24
       ]
     },
     "182643754090879": {
@@ -1948,7 +1975,7 @@
         },
         {
           "x": [
-            0.288,
+            0.287,
             0.318,
             0.348,
             0.372,
@@ -1956,7 +1983,7 @@
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.607
+          "confidence": 0.636
         },
         {
           "x": [
@@ -1972,7 +1999,7 @@
         },
         {
           "x": [
-            0.866,
+            0.868,
             0.774,
             0.681,
             0.607,
@@ -1980,7 +2007,7 @@
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.701
+          "confidence": 0.776
         },
         {
           "x": [
@@ -2008,7 +2035,7 @@
       ]
     },
     "379583843980480": {
-      "confidence": 0.661,
+      "confidence": 0.692,
       "boundaries": [
         {
           "x": [
@@ -2036,15 +2063,15 @@
         },
         {
           "x": [
-            0.337,
-            0.358,
+            0.336,
+            0.357,
             0.378,
             0.395,
             0.407
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.661
+          "confidence": 0.692
         },
         {
           "x": [
@@ -2060,15 +2087,15 @@
         },
         {
           "x": [
-            1.09,
-            0.954,
+            1.087,
+            0.953,
             0.819,
-            0.71,
+            0.711,
             0.629
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.479
+          "confidence": 0.514
         }
       ],
       "debug": {
@@ -2083,7 +2110,7 @@
       ]
     },
     "490549489091873": {
-      "confidence": 0.656,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
@@ -2123,25 +2150,39 @@
         },
         {
           "x": [
-            1.004,
+            1.006,
             0.891,
             0.778,
-            0.688,
-            0.62
+            0.69,
+            0.624
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.358
+          "confidence": 0.382
+        },
+        {
+          "x": [
+            1.042,
+            0.921,
+            0.8,
+            0.703,
+            0.631
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.12
         }
       ],
       "debug": {
         "tracks": 5,
-        "route": "north"
+        "route": "north",
+        "reason": "lane width 0.04 at bottom is out of range"
       },
       "drivable": [
         0.96,
         1.0,
-        1.0
+        1.0,
+        0.0
       ]
     },
     "525346512582354": {
@@ -2164,12 +2205,12 @@
             0.181,
             0.235,
             0.288,
-            0.33,
+            0.331,
             0.362
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.619
+          "confidence": 0.637
         },
         {
           "x": [
@@ -2185,15 +2226,15 @@
         },
         {
           "x": [
-            1.008,
+            1.012,
             0.898,
-            0.787,
-            0.698,
-            0.631
+            0.786,
+            0.7,
+            0.635
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.336
+          "confidence": 0.371
         },
         {
           "x": [
@@ -2261,15 +2302,15 @@
         },
         {
           "x": [
-            0.98,
+            0.978,
             0.876,
             0.772,
-            0.688,
-            0.626
+            0.687,
+            0.624
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.414
+          "confidence": 0.441
         },
         {
           "x": [
@@ -2297,31 +2338,31 @@
       ]
     },
     "654753859162003": {
-      "confidence": 0.631,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
-            -0.095,
+            -0.093,
             0.019,
-            0.133,
-            0.224,
+            0.132,
+            0.223,
             0.292
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.503
+          "confidence": 0.52
         },
         {
           "x": [
-            0.108,
+            0.11,
             0.182,
-            0.256,
+            0.255,
             0.315,
-            0.359
+            0.36
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.631
+          "confidence": 0.723
         },
         {
           "x": [
@@ -2346,20 +2387,34 @@
           "type": "solid",
           "color": "white",
           "confidence": 0.447
+        },
+        {
+          "x": [
+            1.027,
+            0.91,
+            0.793,
+            0.699,
+            0.629
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.144
         }
       ],
       "debug": {
         "tracks": 5,
-        "route": "north"
+        "route": "north",
+        "reason": "lane width 0.07 at bottom is out of range"
       },
       "drivable": [
-        0.24,
+        0.25,
         0.98,
-        1.0
+        1.0,
+        0.0
       ]
     },
     "652394722654505": {
-      "confidence": 0.664,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
@@ -2375,15 +2430,15 @@
         },
         {
           "x": [
-            0.074,
-            0.154,
+            0.075,
+            0.155,
             0.235,
             0.3,
             0.348
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.664
+          "confidence": 0.699
         },
         {
           "x": [
@@ -2408,16 +2463,30 @@
           "type": "solid",
           "color": "white",
           "confidence": 0.441
+        },
+        {
+          "x": [
+            1.021,
+            0.907,
+            0.794,
+            0.703,
+            0.635
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.113
         }
       ],
       "debug": {
         "tracks": 5,
-        "route": "north"
+        "route": "north",
+        "reason": "lane width 0.07 at bottom is out of range"
       },
       "drivable": [
         0.0,
         0.97,
-        1.0
+        1.0,
+        0.0
       ]
     },
     "1135769180156036": {
@@ -2473,15 +2542,27 @@
         },
         {
           "x": [
-            0.961,
+            0.96,
             0.86,
             0.759,
             0.678,
-            0.618
+            0.616
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.439
+          "confidence": 0.452
+        },
+        {
+          "x": [
+            1.023,
+            0.906,
+            0.788,
+            0.694,
+            0.624
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.145
         }
       ],
       "debug": {
@@ -2493,11 +2574,12 @@
         0.0,
         0.0,
         0.99,
-        1.0
+        1.0,
+        0.0
       ]
     },
     "149502924183820": {
-      "confidence": 0.24,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
@@ -2537,7 +2619,7 @@
         },
         {
           "x": [
-            0.603,
+            0.601,
             0.574,
             0.545,
             0.522,
@@ -2545,7 +2627,7 @@
           ],
           "type": "dashed",
           "color": "white",
-          "confidence": 0.721
+          "confidence": 0.787
         },
         {
           "x": [
@@ -2558,21 +2640,35 @@
           "type": "solid",
           "color": "white",
           "confidence": 0.462
+        },
+        {
+          "x": [
+            1.03,
+            0.908,
+            0.786,
+            0.689,
+            0.616
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.145
         }
       ],
       "debug": {
         "tracks": 6,
-        "route": "north"
+        "route": "north",
+        "reason": "lane width 0.07 at bottom is out of range"
       },
       "drivable": [
         0.0,
         0.0,
         1.0,
-        1.0
+        1.0,
+        0.0
       ]
     },
     "658068828682070": {
-      "confidence": 0.224,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
@@ -2609,19 +2705,33 @@
           "type": "solid",
           "color": "white",
           "confidence": 0.433
+        },
+        {
+          "x": [
+            1.042,
+            0.918,
+            0.797,
+            0.703,
+            0.632
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.4
         }
       ],
       "debug": {
         "tracks": 6,
-        "route": "north"
+        "route": "north",
+        "reason": "lane width 0.06 at bottom is out of range"
       },
       "drivable": [
         1.0,
-        1.0
+        1.0,
+        0.0
       ]
     },
     "337539458390495": {
-      "confidence": 0.208,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
@@ -2637,7 +2747,7 @@
         },
         {
           "x": [
-            0.614,
+            0.613,
             0.584,
             0.557,
             0.538,
@@ -2658,19 +2768,33 @@
           "type": "solid",
           "color": "white",
           "confidence": 0.288
+        },
+        {
+          "x": [
+            1.047,
+            0.929,
+            0.811,
+            0.717,
+            0.646
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.185
         }
       ],
       "debug": {
         "tracks": 5,
-        "route": "north"
+        "route": "north",
+        "reason": "lane width 0.06 at bottom is out of range"
       },
       "drivable": [
         0.94,
-        1.0
+        1.0,
+        0.0
       ]
     },
     "2027512867410072": {
-      "confidence": 0.108,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
@@ -2686,7 +2810,7 @@
         },
         {
           "x": [
-            0.69,
+            0.688,
             0.649,
             0.622,
             0.61,
@@ -2698,24 +2822,38 @@
         },
         {
           "x": [
-            1.037,
+            1.036,
             0.931,
             0.834,
             0.762,
-            0.711
+            0.709
           ],
           "type": "solid",
           "color": "white",
           "confidence": 0.061
+        },
+        {
+          "x": [
+            1.092,
+            0.977,
+            0.867,
+            0.787,
+            0.73
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.033
         }
       ],
       "debug": {
         "tracks": 6,
-        "route": "north"
+        "route": "north",
+        "reason": "lane width 0.06 at bottom is out of range"
       },
       "drivable": [
         1.0,
-        1.0
+        1.0,
+        0.03
       ]
     },
     "1755472991458046": {
@@ -2723,7 +2861,7 @@
       "boundaries": [
         {
           "x": [
-            0.183,
+            0.182,
             0.237,
             0.296,
             0.346,
@@ -2747,7 +2885,7 @@
         },
         {
           "x": [
-            0.759,
+            0.757,
             0.738,
             0.728,
             0.727,
@@ -2778,11 +2916,11 @@
       "drivable": [
         0.93,
         0.0,
-        0.77
+        0.76
       ]
     },
     "633795277709182": {
-      "confidence": 0.429,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
@@ -2807,19 +2945,32 @@
           "type": "solid",
           "color": "white",
           "confidence": 0.659
+        },
+        {
+          "x": [
+            0.671,
+            0.629,
+            0.586,
+            0.553,
+            0.527
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.62
         }
       ],
       "debug": {
         "tracks": 4,
         "route": "north",
-        "reason": "no Mapbox lane data"
+        "reason": "lane width 0.06 at bottom is out of range"
       },
       "drivable": [
-        1.0
+        1.0,
+        0.0
       ]
     },
     "707701070595956": {
-      "confidence": 0.288,
+      "confidence": 0.0,
       "boundaries": [
         {
           "x": [
@@ -2844,15 +2995,28 @@
           "type": "solid",
           "color": "white",
           "confidence": 0.689
+        },
+        {
+          "x": [
+            0.698,
+            0.65,
+            0.602,
+            0.563,
+            0.534
+          ],
+          "type": "dashed",
+          "color": "white",
+          "confidence": 0.544
         }
       ],
       "debug": {
         "tracks": 4,
         "route": "north",
-        "reason": "no Mapbox lane data"
+        "reason": "lane width 0.06 at bottom is out of range"
       },
       "drivable": [
-        0.99
+        0.99,
+        0.0
       ]
     },
     "4985117674869918": {
@@ -2893,19 +3057,19 @@
       ]
     },
     "3044239262491530": {
-      "confidence": 0.451,
+      "confidence": 0.506,
       "boundaries": [
         {
           "x": [
-            0.206,
+            0.207,
             0.261,
             0.315,
-            0.359,
-            0.392
+            0.36,
+            0.395
           ],
           "type": "solid",
           "color": "yellow",
-          "confidence": 0.451
+          "confidence": 0.506
         },
         {
           "x": [
@@ -2946,15 +3110,15 @@
         },
         {
           "x": [
-            0.633,
+            0.634,
             0.6,
             0.567,
-            0.541,
+            0.54,
             0.521
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.828
+          "confidence": 0.858
         }
       ],
       "debug": {
@@ -2967,31 +3131,31 @@
       ]
     },
     "1099295494249684": {
-      "confidence": 0.347,
+      "confidence": 0.417,
       "boundaries": [
         {
           "x": [
-            0.208,
-            0.264,
-            0.32,
-            0.365,
-            0.398
+            0.214,
+            0.265,
+            0.319,
+            0.364,
+            0.399
           ],
           "type": "solid",
           "color": "yellow",
-          "confidence": 0.347
+          "confidence": 0.417
         },
         {
           "x": [
-            0.64,
+            0.641,
             0.606,
             0.572,
             0.545,
-            0.524
+            0.525
           ],
           "type": "solid",
           "color": "white",
-          "confidence": 0.819
+          "confidence": 0.853
         }
       ],
       "debug": {

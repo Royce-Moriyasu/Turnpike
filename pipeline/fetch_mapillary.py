@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 import sys
@@ -35,14 +36,21 @@ def api_get(url, params=None):
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Download a Mapillary sequence (or part of it) into clips/<clip>/frames.json + images/. "
+                    "Add a clip.json there to bake it.")
+    parser.add_argument("image_id", help="any image in the sequence (pKey= in the web URL)")
+    parser.add_argument("clip", help="clip folder name under clips/")
+    parser.add_argument("--before", type=int, metavar="N",
+                        help="only fetch this many frames before image_id (with --after: a window around it)")
+    parser.add_argument("--after", type=int, metavar="N",
+                        help="only fetch this many frames after image_id")
+    args = parser.parse_args()
     if not TOKEN:
         sys.exit("MAPILLARY_TOKEN is not set. Set it in your terminal first.")
-    if len(sys.argv) != 3:
-        sys.exit("Usage: python3 pipeline/fetch_mapillary.py <image_id> <clip name>   "
-                 "(writes clips/<clip>/frames.json + images/; add a clip.json there to bake it)")
 
     global OUT_DIR, IMG_DIR
-    start_image_id, clip_name = sys.argv[1], sys.argv[2]
+    start_image_id, clip_name = args.image_id, args.clip
     OUT_DIR = REPO / "clips" / clip_name
     IMG_DIR = OUT_DIR / "images"
 
@@ -51,7 +59,16 @@ def main():
 
     listing = api_get(f"{API}/image_ids", {"sequence_id": sequence_id})
     image_ids = [item["id"] for item in listing["data"]]
-    print(f"Found {len(image_ids)} frames. Downloading...")
+    print(f"Found {len(image_ids)} frames in the sequence.")
+    if args.before is not None or args.after is not None:
+        # The listing is in capture order: take a window around the given image.
+        if start_image_id not in image_ids:
+            sys.exit(f"{start_image_id} is not in the sequence listing; can't take a window around it.")
+        at = image_ids.index(start_image_id)
+        image_ids = image_ids[max(0, at - (args.before or 0)): at + (args.after or 0) + 1]
+        print(f"Keeping {len(image_ids)}: {args.before or 0} before {start_image_id} and "
+              f"{args.after or 0} after (frames.json is re-sorted by capture time).")
+    print("Downloading...")
 
     IMG_DIR.mkdir(parents=True, exist_ok=True)
     frames = []
@@ -85,6 +102,10 @@ def main():
 
         time.sleep(0.1)
 
+    times = [frame["captured_at"] for frame in frames]
+    if (args.before is not None or args.after is not None) and times != sorted(times):
+        print("\nWarning: Mapillary listed this sequence out of capture order, so the --before/--after "
+              "window may not be one continuous stretch. Check frames.json, or fetch the whole sequence.")
     frames.sort(key=lambda frame: frame["captured_at"])
 
     output = {"sequence_id": sequence_id, "frame_count": len(frames), "frames": frames}
