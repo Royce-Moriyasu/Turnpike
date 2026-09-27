@@ -29,6 +29,12 @@ body {
   animation: lane-pulse 1.6s ease-in-out infinite;
 }
 
+.direction-arrow {
+  opacity: 0.62;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 3px #42ffae88);
+}
+
 /* Frame crossfade (DriverView). Origin is the vanishing point within the cropped view, so the
    outgoing frame zooms "down the road". Keep the duration under App's FRAME_MS. */
 @keyframes frame-in {

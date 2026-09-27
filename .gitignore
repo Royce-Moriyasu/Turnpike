@@ -9,9 +9,8 @@ venv/
 .DS_Store
 pipeline/data/ordered/
 vision_debug/
-
+vision_debug*/
 # Model weights are large; download them (see vision/weights/README.md)
 vision/weights/*.pt
-
-# Generated YOLOPv2 masks (regenerate with vision/yolop_masks.py)
-data/yolop/
+# Generated per-clip scratch, e.g. YOLOPv2 masks (regenerate with tools/build_clip.py)
+clips/*/_build/

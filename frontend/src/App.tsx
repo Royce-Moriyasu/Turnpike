@@ -4,26 +4,36 @@ import DriverView from "./components/DriverView";
 import NavCard from "./components/NavCard";
 import LaneGuidance from "./components/LaneGuidance";
 import LaneDebug from "./components/LaneDebug";
-import { laneDebug } from "./lanes";
+import { DEFAULT_HORIZON_Y, laneDebug, laneTarget } from "./lanes";
+import { demoUrl, loadClipIndex, openClip, pickClip, type ClipIndex } from "./clips";
 import MiniMap from "./components/MiniMap";
 import DataPanel from "./components/DataPanel";
 import Controls from "./components/Controls";
 
-const FRAME_MS = 700; // the clip was captured at ~1 frame/s; this plays at ~1.4x
+const FRAME_MS = 700; // SR 70 was captured at ~1 frame/s; this plays at ~1.4x
 
 export default function App() {
+  const [clips, setClips] = useState<ClipIndex | null>(null);
+  const [clip, setClip] = useState<string | null>(null);
   const [data, setData] = useState<DemoRoute | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [index, setIndexRaw] = useState(0);
   const [routeKey, setRouteKey] = useState("north");
   const [playing, setPlaying] = useState(false);
   const [lanesOn, setLanesOn] = useState(true); // false = "before": a standard GPS with no lane guidance
+  const [arrowOn, setArrowOn] = useState(true);
   const [laneSource, setLaneSource] = useState<string | null>(null); // which lane geometry to draw (V cycles)
   const [debug, setDebug] = useState(false); // lane debug view: every detected lane and how it was matched (D)
 
   useEffect(() => {
-    fetch("/demo_route.json")
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+    loadClipIndex()
+      .then((idx) => {
+        setClips(idx);
+        const name = pickClip(idx);
+        setClip(name);
+        return fetch(demoUrl(name));
+      })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`${r.url}: HTTP ${r.status}`))))
       .then((d: DemoRoute) => {
         setData(d);
         setRouteKey(d.primaryRoute);
@@ -76,8 +86,8 @@ export default function App() {
     return (
       <div className="mx-auto max-w-xl p-10 text-white/80">
         <h1 className="mb-3 text-2xl font-semibold">No demo data yet</h1>
-        <p className="mb-2">Couldn't load /demo_route.json ({error}). Generate it from the repo root:</p>
-        <pre className="rounded bg-white/10 p-3 text-sm">python bake/bake_route.py --image-id &lt;mapillary id&gt;</pre>
+        <p className="mb-2">Couldn't load the clip ({error}). Build it from the repo root:</p>
+        <pre className="rounded bg-white/10 p-3 text-sm">.venv/Scripts/python.exe tools/build_clip.py --all</pre>
       </div>
     );
   }
@@ -88,16 +98,60 @@ export default function App() {
   const offRoute = nav === null && frame.nav[data.primaryRoute] !== null;
   const set = laneSource ? frame.laneSets?.[laneSource] : undefined;
   const lanes: ActiveLanes = laneSource
-    ? { source: laneSource, label: sources[laneSource]?.label ?? laneSource, polygons: set?.polygons ?? null, confidence: set?.confidence ?? null }
+    ? {
+        source: laneSource,
+        label: sources[laneSource]?.label ?? laneSource,
+        polygons: set?.polygons ?? null,
+        confidence: set?.confidence ?? null,
+        drivable: set?.drivable ?? null,
+      }
     : { source: frame.polygonSource ?? null, label: "labeled", polygons: frame.lanePolygons, confidence: null };
-  const debugInfo = debug && nav && lanes.polygons ? laneDebug(nav, lanes.polygons) : null;
+  const horizonY = data.camera?.horizonY ?? DEFAULT_HORIZON_Y;
+  const debugInfo = debug && nav && lanes.polygons ? laneDebug(nav, lanes.polygons, horizonY, lanes.drivable) : null;
+  const previousFrame = data.frames[index - 1];
+  const previousNav = previousFrame?.nav[routeKey] ?? null;
+  const previousSet = previousFrame && laneSource ? previousFrame.laneSets?.[laneSource] : undefined;
+  const previousPolygons = previousFrame
+    ? (laneSource ? previousSet?.polygons : previousFrame.lanePolygons)
+    : null;
+  const previousMatch = previousNav && previousPolygons
+    ? laneTarget(previousNav, previousPolygons, horizonY, previousSet?.drivable ?? null)
+    : null;
+  const previousLane = previousMatch?.index != null ? previousPolygons![previousMatch.index] : null;
+  const currentMatch = nav && lanes.polygons ? laneTarget(nav, lanes.polygons, horizonY, lanes.drivable) : null;
+  const sameTargetLane = previousMatch?.index != null && previousMatch.index === currentMatch?.index &&
+    previousNav?.preferredLane === nav?.preferredLane;
+  const untakenTurnSide = sameTargetLane && previousFrame && previousNav &&
+    (previousNav.maneuverType === "fork" || previousNav.maneuverType === "turn")
+    ? Object.entries(previousFrame.nav).find(([key, alternate]) =>
+        key !== routeKey && alternate &&
+        (alternate.maneuverType === "fork" || alternate.maneuverType === "turn") &&
+        alternate.laneSide && alternate.laneSide !== previousNav.laneSide,
+      )?.[1]?.laneSide ?? null
+    : null;
 
   return (
     <div className="mx-auto max-w-7xl p-4 md:p-6">
       <header className="mb-4 flex items-baseline justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">
-          Turn<span className="text-accent">pike</span>
-        </h1>
+        <div className="flex items-baseline gap-4">
+          <h1 className="text-2xl font-bold tracking-tight">
+            Turn<span className="text-accent">pike</span>
+          </h1>
+          {clips && clips.clips.length > 1 && (
+            <select
+              value={clip ?? ""}
+              onChange={(e) => openClip(e.target.value)}
+              aria-label="Clip"
+              className="rounded-md bg-white/10 px-2 py-1 text-sm text-white/80"
+            >
+              {clips.clips.map((c) => (
+                <option key={c.name} value={c.name} className="bg-surface">
+                  {c.title}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
         <span className="text-sm text-white/50">
           Lane-level AR guidance from public road data
           {import.meta.env.DEV && (
@@ -148,26 +202,40 @@ export default function App() {
             ) : (
               <span />
             )}
-            <div className="flex rounded-lg bg-white/5 p-1" role="group" aria-label="Guidance mode (G)">
-              {[
-                { on: false, label: "Standard GPS" },
-                { on: true, label: "Turnpike lanes" },
-              ].map((m) => (
-                <button
-                  key={m.label}
-                  onClick={() => setLanesOn(m.on)}
-                  aria-pressed={lanesOn === m.on}
-                  title="Toggle with G"
-                  className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-                    lanesOn === m.on ? "bg-accent text-white" : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  {m.label}
-                </button>
-              ))}
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex rounded-lg bg-white/5 p-1" role="group" aria-label="Guidance mode (G)">
+                {[
+                  { on: false, label: "Standard GPS" },
+                  { on: true, label: "Turnpike lanes" },
+                ].map((m) => (
+                  <button
+                    key={m.label}
+                    onClick={() => setLanesOn(m.on)}
+                    aria-pressed={lanesOn === m.on}
+                    title="Toggle with G"
+                    className={`rounded-md px-3 py-1.5 text-sm font-medium ${
+                      lanesOn === m.on ? "bg-accent text-white" : "text-white/70 hover:text-white"
+                    }`}
+                  >
+                    {m.label}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={arrowOn}
+                onClick={() => setArrowOn((on) => !on)}
+                className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-sm font-medium text-white/80 hover:text-white"
+              >
+                Arrow
+                <span className={`relative h-5 w-9 rounded-full transition-colors ${arrowOn ? "bg-accent" : "bg-white/20"}`}>
+                  <span className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition-transform ${arrowOn ? "translate-x-4" : ""}`} />
+                </span>
+              </button>
             </div>
           </div>
-          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} lanes={lanes} debug={debugInfo?.rows ?? null} />
+          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} showArrow={arrowOn} lanes={lanes} previousLane={previousLane} untakenTurnSide={untakenTurnSide} debug={debugInfo?.rows ?? null} horizonY={horizonY} />
           <NavCard nav={nav} />
           {lanesOn && <LaneGuidance nav={nav} />}
           {debug && <LaneDebug nav={nav} lanes={lanes} rows={debugInfo?.rows ?? []} reason={debugInfo?.reason ?? null} countFrom={debugInfo?.countFrom ?? null} />}

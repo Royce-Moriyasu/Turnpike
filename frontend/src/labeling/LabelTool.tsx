@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, type MouseEvent, type ReactNode } from "react";
 import type { DemoRoute } from "../types";
-import { describeLane, laneTarget, lanesFromLines } from "../lanes";
+import { describeLane, laneTarget, lanesFromLines, DEFAULT_HORIZON_Y } from "../lanes";
+import { currentClip, demoUrl } from "../clips";
 import {
   bottomX,
   emptyLabelFile,
@@ -15,7 +16,7 @@ import {
 } from "./labels";
 
 // Show the road only; the horizon is at ~0.775 so everything useful is below this.
-const TOP = 0.62;
+const CLIP = currentClip();
 // UI frame numbers (1-based) that matter most for the demo.
 const HERO_FRAMES = [1, 21, 22, 23, 24, 25, 26, 28, 40];
 
@@ -32,8 +33,8 @@ export default function LabelTool() {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    fetch("/demo_route.json").then((r) => r.json()).then(setData);
-    fetch("/__labels")
+    fetch(demoUrl(CLIP)).then((r) => r.json()).then(setData);
+    fetch(`/__labels?clip=${CLIP}`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((f: LabelFile) => {
         if (!f.frames) return;
@@ -50,13 +51,13 @@ export default function LabelTool() {
       .finally(() => setLoaded(true));
   }, []);
 
-  // Autosave to data/fallback_lanes.json on every change (and once on load, which writes back
+  // Autosave to clips/<clip>/labels.json on every change (and once on load, which writes back
   // recomputed row samples for existing labels).
   useEffect(() => {
     if (!loaded || !apiOk) return;
     setStatus("Saving…");
     const t = setTimeout(() => {
-      fetch("/__labels", { method: "PUT", body: serialize(file) })
+      fetch(`/__labels?clip=${CLIP}`, { method: "PUT", body: serialize(file) })
         .then((r) => setStatus(r.ok ? "Saved ✓" : "Save failed"))
         .catch(() => setStatus("Save failed"));
     }, 400);
@@ -152,6 +153,10 @@ export default function LabelTool() {
 
   if (!data || !frame) return <div className="p-10 text-white/50">Loading…</div>;
 
+  // Road crop: from a little above the clip's horizon (SR 70: 0.62).
+  const horizonY = data.camera?.horizonY ?? DEFAULT_HORIZON_Y;
+  const TOP = Math.max(0, horizonY - 0.155);
+
   const onImageClick = (e: MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
     const pt: Pt = [
@@ -177,7 +182,7 @@ export default function LabelTool() {
   const navCount = nav?.lanes?.length ?? 0;
   const { index: target, excluded, upcoming } =
     nav && nav.preferredLane !== null && navCount && visibleLanes
-      ? laneTarget(nav, lanesFromLines(order.map((i) => lines[i]), ROWS))
+      ? laneTarget(nav, lanesFromLines(order.map((i) => lines[i]), ROWS), horizonY)
       : { index: null, excluded: new Set<number>(), upcoming: new Set<number>() };
   const labeledCount = frames.filter((f) => file.frames[f.id]).length;
 
@@ -379,7 +384,7 @@ export default function LabelTool() {
               disabled={!apiOk}
               onClick={() => {
                 setStatus("Baking…");
-                fetch("/__bake", { method: "POST" })
+                fetch(`/__bake?clip=${CLIP}`, { method: "POST" })
                   .then(async (r) => setStatus(r.ok ? "Baked ✓ (app updated)" : `Bake failed: ${(await r.text()).slice(0, 120)}`))
                   .catch(() => setStatus("Bake failed"));
               }}
@@ -402,7 +407,7 @@ export default function LabelTool() {
           <p className="text-xs leading-relaxed text-white/50">
             Click along a painted line to trace it (2 clicks for straight, more for curves), then press Enter.
             Start a new click to trace the next line. Click a point to re-select its line. ← → change frame.
-            Trace every visible line, including road edges. Labels save automatically to data/fallback_lanes.json.
+            Trace every visible line, including road edges. Labels save automatically to clips/{CLIP}/labels.json.
           </p>
         </div>
 

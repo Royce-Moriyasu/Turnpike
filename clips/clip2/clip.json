@@ -1,0 +1,10 @@
+{
+  "title": "Right turn at a stop sign (Sacramento, CA)",
+  "origin": [-121.53884360517, 38.62736567118],
+  "originBearing": 271,
+  "primaryRoute": "right",
+  "routes": {
+    "right": {"label": "Turn right · northbound", "destination": [-121.53944, 38.62900]}
+  },
+  "camera": {"vanishingPoint": [0.48, 0.23]}
+}
