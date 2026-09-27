@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ActiveLanes, Frame, NavState, Point } from "../types";
 import { laneTarget, type LaneDebugRow } from "../lanes";
 import { STATUS_STYLE } from "./LaneDebug";
@@ -19,7 +19,6 @@ const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
 // its frame is sky). Polygons stay in full-image coordinates and the SVG viewBox crops them the same way.
 const cropTopFor = (horizonY: number) => Math.min(0.6, Math.max(0, horizonY - 0.355));
 const IMAGE_ASPECT = 2048 / 1152;
-const TAG_Y = 0.9; // where the "your lane" tag sits on the road, in image coords
 
 const imgClass = "absolute inset-0 h-full w-full select-none object-cover object-bottom";
 
@@ -59,14 +58,50 @@ function centerAt(poly: Point[], y: number): number {
   return (Math.min(...pts) + Math.max(...pts)) / 2;
 }
 
+/** Keep the highlight mounted and move it between nearby detections. */
+function useSmoothLane(next: Point[] | null): Point[] | null {
+  const [current, setCurrent] = useState<Point[] | null>(next);
+  const currentRef = useRef<Point[] | null>(next);
+
+  useEffect(() => {
+    const from = currentRef.current;
+    if (!next || !from || from.length !== next.length ||
+        Math.abs(centerAt(from, 0.85) - centerAt(next, 0.85)) > 0.12 ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      currentRef.current = next;
+      setCurrent(next);
+      return;
+    }
+
+    const start = performance.now();
+    let request: number;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / 450);
+      const eased = t * t * (3 - 2 * t);
+      const points: Point[] = from.map(([x, y], i) => [
+        x + (next[i][0] - x) * eased,
+        y + (next[i][1] - y) * eased,
+      ]);
+      currentRef.current = points;
+      setCurrent(points);
+      if (t < 1) request = requestAnimationFrame(tick);
+    };
+    request = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(request);
+  }, [next]);
+
+  return current;
+}
+
 export default function DriverView({ frame, nav, offRoute, overlay, lanes, debug, horizonY }: Props) {
   const CROP_TOP = cropTopFor(horizonY);
   const navCount = nav?.lanes?.length ?? 0;
   // Only detected lanes are drawn: no lanes for this frame means no highlight (Mapbox guidance still shows).
   const polygons = lanes.polygons ?? [];
-  // No target lane means no highlight, tag or badge: that is the whole "standard GPS" view.
+  // No target lane means no highlight: that is the whole "standard GPS" view.
   const match = overlay && nav && nav.preferredLane !== null && navCount ? laneTarget(nav, polygons, horizonY) : null;
   const target = match?.index ?? null;
+  const highlightedLane = useSmoothLane(target !== null ? polygons[target] : null);
   const imminent = nav ? nav.distanceM < 120 : false;
 
   return (
@@ -85,8 +120,7 @@ export default function DriverView({ frame, nav, offRoute, overlay, lanes, debug
       )}
 
       <svg
-        key={`overlay-${frame.id}`}
-        className="frame-in absolute inset-0 h-full w-full"
+        className="absolute inset-0 h-full w-full"
         viewBox={`0 ${CROP_TOP} 1 ${1 - CROP_TOP}`}
         preserveAspectRatio="none"
       >
@@ -96,18 +130,15 @@ export default function DriverView({ frame, nav, offRoute, overlay, lanes, debug
             <stop offset="100%" stopColor="var(--color-accent)" stopOpacity={0} />
           </linearGradient>
         </defs>
-        {polygons.map((poly, i) =>
-          i === target ? (
+        {highlightedLane && (
             <polygon
-              key={i}
-              points={toPoints(poly)}
+              points={toPoints(highlightedLane)}
               fill="url(#lane-fill)"
               stroke="var(--color-accent-soft)"
               strokeWidth={2}
               vectorEffect="non-scaling-stroke"
               className="lane-pulse"
             />
-          ) : null,
         )}
         {debug &&
           lanes.polygons &&
@@ -142,19 +173,6 @@ export default function DriverView({ frame, nav, offRoute, overlay, lanes, debug
             </div>
           );
         })}
-
-      {target !== null && (
-        <div
-          key={`tag-${frame.id}`}
-          className="frame-in pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-lg ring-2 ring-white md:text-sm"
-          style={{
-            left: `${Math.min(0.88, Math.max(0.12, centerAt(polygons[target], TAG_Y))) * 100}%`,
-            top: `${((TAG_Y - CROP_TOP) / (1 - CROP_TOP)) * 100}%`,
-          }}
-        >
-          ▲ Your lane
-        </div>
-      )}
 
       {offRoute && (
         <div className="absolute inset-x-0 top-0 bg-red-600/85 py-2 text-center text-sm font-semibold">
