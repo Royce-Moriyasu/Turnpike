@@ -31,6 +31,7 @@ export interface NavState {
 export interface LaneSet {
   polygons: Point[][] | null;
   confidence: number | null;
+  drivable?: (number | null)[] | null; // share of each polygon that is drivable road (YOLOPv2 only)
 }
 
 /** The lanes the overlay is drawing, and where they came from. */
@@ -39,6 +40,7 @@ export interface ActiveLanes {
   label: string; // e.g. "YOLOPv2"
   polygons: Point[][] | null;
   confidence: number | null;
+  drivable?: (number | null)[] | null; // per polygon, see LaneSet
 }
 
 export interface Frame {

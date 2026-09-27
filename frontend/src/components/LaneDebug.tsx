@@ -1,5 +1,5 @@
 import type { ActiveLanes, NavState } from "../types";
-import { arrowFor, bikeLaneRatio, laneShapeLimits, type LaneDebugRow, type LaneStatus } from "../lanes";
+import { arrowFor, bikeLaneRatio, DRIVABLE_MIN, laneShapeLimits, type LaneDebugRow, type LaneStatus } from "../lanes";
 
 // Shared with DriverView's debug overlay.
 export const STATUS_STYLE: Record<LaneStatus, { color: string; label: string }> = {
@@ -10,6 +10,7 @@ export const STATUS_STYLE: Record<LaneStatus, { color: string; label: string }> 
   upcoming: { color: "#fa7b17", label: "turn lane ahead" },
   shape: { color: "#ea4335", label: "odd shape" },
   otherRoad: { color: "#80868b", label: "other roadway" },
+  offRoad: { color: "#80868b", label: "not drivable" },
 };
 
 interface Props {
@@ -80,6 +81,12 @@ export default function LaneDebug({ nav, lanes, rows, reason, countFrom }: Props
               >
                 narrows ahead
               </th>
+              <th
+                className="text-right font-normal"
+                title={`share of the lane YOLOPv2 calls drivable road; below ${DRIVABLE_MIN} it isn't our road`}
+              >
+                drivable
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -101,6 +108,9 @@ export default function LaneDebug({ nav, lanes, rows, reason, countFrom }: Props
                 </td>
                 <td className={`text-right ${r.closing !== null && r.closing > laneShapeLimits.closing ? "text-red-300" : ""}`}>
                   {r.closing === null ? "—" : Number.isFinite(r.closing) ? `${r.closing.toFixed(2)}×` : "∞"}
+                </td>
+                <td className={`text-right ${r.drivable !== null && r.drivable < DRIVABLE_MIN ? "text-red-300" : ""}`}>
+                  {r.drivable === null ? "—" : `${Math.round(r.drivable * 100)}%`}
                 </td>
               </tr>
             ))}

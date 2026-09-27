@@ -97,10 +97,16 @@ export default function App() {
   const offRoute = nav === null && frame.nav[data.primaryRoute] !== null;
   const set = laneSource ? frame.laneSets?.[laneSource] : undefined;
   const lanes: ActiveLanes = laneSource
-    ? { source: laneSource, label: sources[laneSource]?.label ?? laneSource, polygons: set?.polygons ?? null, confidence: set?.confidence ?? null }
+    ? {
+        source: laneSource,
+        label: sources[laneSource]?.label ?? laneSource,
+        polygons: set?.polygons ?? null,
+        confidence: set?.confidence ?? null,
+        drivable: set?.drivable ?? null,
+      }
     : { source: frame.polygonSource ?? null, label: "labeled", polygons: frame.lanePolygons, confidence: null };
   const horizonY = data.camera?.horizonY ?? DEFAULT_HORIZON_Y;
-  const debugInfo = debug && nav && lanes.polygons ? laneDebug(nav, lanes.polygons, horizonY) : null;
+  const debugInfo = debug && nav && lanes.polygons ? laneDebug(nav, lanes.polygons, horizonY, lanes.drivable) : null;
 
   return (
     <div className="mx-auto max-w-7xl p-4 md:p-6">

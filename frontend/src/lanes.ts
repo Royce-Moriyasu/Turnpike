@@ -153,6 +153,7 @@ export interface LaneTargetResult {
   upcoming: Set<number>; // turn lanes opening ahead that the snapshot doesn't list yet
   implausible: Set<number>; // travel lanes failing the perspective check (laneShape)
   otherRoad: Set<number>; // lanes beyond a bike lane that separates our branch from the road we left
+  offRoad: Set<number>; // lanes that are mostly not drivable road (YOLOPv2's drivable area)
   counted: number[]; // the lanes matched to Mapbox's, left to right
   countFrom: "left" | "right" | null; // the side counted from
   reason: string | null; // why there is no target
@@ -186,10 +187,18 @@ export interface LaneMatchNav {
   laneAhead?: { left: number; right: number } | null;
 }
 
+// A lane with less than this share of drivable road (YOLOPv2's drivable area) isn't a lane we can
+// drive in: during a turn YOLOPv2 also finds the opposing roadway's lines across the median, and
+// those "lanes" cover no drivable area; so do gore islands at a fork. Kept low: turn lanes that are
+// just opening and shoulders score 0.3-0.6 and are handled by the other rules.
+export const DRIVABLE_MIN = 0.25;
+
 /**
  * Which visible lane to highlight, as an index into `lanes`. Before matching visible lanes to
  * Mapbox's lanes it sets aside lanes Mapbox doesn't count:
  *  - `excluded`: bike lanes / shoulders (bikeLikeLanes)
+ *  - `offRoad`: lanes that are mostly not drivable road (`drivable`: share per lane from the
+ *    detector, null = unknown), e.g. the opposing roadway seen across a median during a turn
  *  - `upcoming`: turn lanes already opening that the current snapshot doesn't list yet
  *    (nav.laneAhead), taken from the matching edge only while we see more lanes than Mapbox has
  * then counts from nav.laneAnchor (the side our road is on; falls back to the turn side).
@@ -198,21 +207,25 @@ export function laneTarget(
   nav: LaneMatchNav,
   lanes: Point[][],
   horizonY: number = DEFAULT_HORIZON_Y,
+  drivable: (number | null)[] | null = null,
 ): LaneTargetResult {
   const navCount = nav.lanes?.length ?? 0;
   const excluded = new Set<number>();
   const upcoming = new Set<number>();
   const implausible = new Set<number>();
   const otherRoad = new Set<number>();
+  const offRoad = new Set(
+    lanes.map((_, i) => i).filter((i) => drivable?.[i] != null && drivable[i]! < DRIVABLE_MIN),
+  );
   const result = (index: number | null, counted: number[], countFrom: "left" | "right" | null, reason: string | null) =>
-    ({ index, excluded, upcoming, implausible, otherRoad, counted, countFrom, reason });
+    ({ index, excluded, upcoming, implausible, otherRoad, offRoad, counted, countFrom, reason });
   if (nav.preferredLane === null || !navCount || !lanes.length) {
     return result(null, [], null, lanes.length ? "no Mapbox lane target" : "no lanes");
   }
 
   bikeLikeLanes(lanes, navCount, nav.lanes).forEach((i) => excluded.add(i));
   innerBikeLanes(lanes, horizonY).forEach((i) => excluded.add(i));
-  let travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i));
+  let travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i) && !offRoad.has(i));
   for (let k = 0; k < (nav.laneAhead?.right ?? 0) && travel.length > navCount; k++) upcoming.add(travel.pop()!);
   for (let k = 0; k < (nav.laneAhead?.left ?? 0) && travel.length > navCount; k++) upcoming.add(travel.shift()!);
   if (upcoming.size) {
@@ -278,7 +291,7 @@ export function polygonIndexFor(
 
 // ---- Debug: why each visible lane was (or wasn't) matched ----
 
-export type LaneStatus = "target" | "counted" | "outside" | "bike" | "upcoming" | "shape" | "otherRoad";
+export type LaneStatus = "target" | "counted" | "outside" | "bike" | "upcoming" | "shape" | "otherRoad" | "offRoad";
 
 export interface LaneDebugRow {
   lane: number; // index into the visible lanes, left to right
@@ -288,6 +301,7 @@ export interface LaneDebugRow {
   ratio: number | null; // widest ratio to its inward neighbor over shared rows (bike rule: all < BIKE_LANE_RATIO)
   k: number | null; // perspective check (laneShape)
   closing: number | null;
+  drivable: number | null; // share of the lane that is drivable road (offRoad below DRIVABLE_MIN)
 }
 
 export const bikeLaneRatio = BIKE_LANE_RATIO;
@@ -297,8 +311,10 @@ export function laneDebug(
   nav: LaneMatchNav,
   lanes: Point[][],
   horizonY: number = DEFAULT_HORIZON_Y,
+  drivable: (number | null)[] | null = null,
 ): { rows: LaneDebugRow[]; reason: string | null; countFrom: "left" | "right" | null } {
-  const { index, excluded, upcoming, implausible, otherRoad, counted, countFrom, reason } = laneTarget(nav, lanes, horizonY);
+  const { index, excluded, upcoming, implausible, otherRoad, offRoad, counted, countFrom, reason } =
+    laneTarget(nav, lanes, horizonY, drivable);
   const navCount = nav.lanes?.length ?? 0;
   const travel = counted;
   const offset = countFrom === "left" ? 0 : navCount - travel.length; // Mapbox index = travel position + offset
@@ -318,6 +334,8 @@ export function laneDebug(
     const mapboxLane = m !== null && m >= 0 && m < navCount ? m : null;
     const status: LaneStatus = excluded.has(i)
       ? "bike"
+      : offRoad.has(i)
+      ? "offRoad"
       : upcoming.has(i)
         ? "upcoming"
         : otherRoad.has(i)
@@ -330,7 +348,10 @@ export function laneDebug(
                 ? "outside"
                 : "counted";
     const shape = laneShape(lanes[i], horizonY);
-    return { lane: i, status, mapboxLane, bottomWidth: bottom(widths[i]), ratio, k: shape.k, closing: shape.closing };
+    return {
+      lane: i, status, mapboxLane, bottomWidth: bottom(widths[i]), ratio, k: shape.k, closing: shape.closing,
+      drivable: drivable?.[i] ?? null,
+    };
   });
   return { rows, reason, countFrom };
 }

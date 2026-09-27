@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-27T00:23:28.950291+00:00",
+ "generatedAt": "2026-09-27T02:37:41.515841+00:00",
  "mode": "mapillary",
  "sequenceId": "2pmhLcUPneYz0A69sKZWik",
  "clip": {
@@ -169,7 +169,11 @@
        ]
       ]
      ],
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": [
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -352,7 +356,11 @@
        ]
       ]
      ],
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": [
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -511,7 +519,11 @@
        ]
       ]
      ],
-     "confidence": 0.156
+     "confidence": 0.156,
+     "drivable": [
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -609,7 +621,8 @@
    "laneSets": {
     "yolop": {
      "polygons": null,
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": []
     }
    },
    "polygonSource": null,
@@ -670,7 +683,8 @@
    "laneSets": {
     "yolop": {
      "polygons": null,
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": null
     }
    },
    "polygonSource": null,
@@ -731,7 +745,8 @@
    "laneSets": {
     "yolop": {
      "polygons": null,
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": null
     }
    },
    "polygonSource": null,
@@ -792,7 +807,8 @@
    "laneSets": {
     "yolop": {
      "polygons": null,
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": null
     }
    },
    "polygonSource": null,
@@ -853,7 +869,8 @@
    "laneSets": {
     "yolop": {
      "polygons": null,
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": null
     }
    },
    "polygonSource": null,
@@ -967,7 +984,11 @@
        ]
       ]
      ],
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": [
+      0.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -1144,7 +1165,12 @@
        ]
       ]
      ],
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": [
+      0.0,
+      0.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -1355,7 +1381,12 @@
        ]
       ]
      ],
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": [
+      0.0,
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -1556,7 +1587,11 @@
        ]
       ]
      ],
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": [
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -1739,7 +1774,11 @@
        ]
       ]
      ],
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": [
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -1982,7 +2021,13 @@
        ]
       ]
      ],
-     "confidence": 0.275
+     "confidence": 0.275,
+     "drivable": [
+      1.0,
+      1.0,
+      0.93,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -2293,7 +2338,13 @@
        ]
       ]
      ],
-     "confidence": 0.404
+     "confidence": 0.404,
+     "drivable": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -2606,7 +2657,14 @@
        ]
       ]
      ],
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": [
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -2885,7 +2943,12 @@
        ]
       ]
      ],
-     "confidence": 0.351
+     "confidence": 0.351,
+     "drivable": [
+      1.0,
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -3136,7 +3199,12 @@
        ]
       ]
      ],
-     "confidence": 0.395
+     "confidence": 0.395,
+     "drivable": [
+      1.0,
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -3387,7 +3455,12 @@
        ]
       ]
      ],
-     "confidence": 0.336
+     "confidence": 0.336,
+     "drivable": [
+      1.0,
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -3664,7 +3737,13 @@
        ]
       ]
      ],
-     "confidence": 0.44
+     "confidence": 0.44,
+     "drivable": [
+      0.0,
+      1.0,
+      1.0,
+      1.0
+     ]
     }
    },
    "polygonSource": "yolop",
@@ -3935,7 +4014,13 @@
        ]
       ]
      ],
-     "confidence": 0.0
+     "confidence": 0.0,
+     "drivable": [
+      0.0,
+      1.0,
+      1.0,
+      0.92
+     ]
     }
    },
    "polygonSource": "yolop",

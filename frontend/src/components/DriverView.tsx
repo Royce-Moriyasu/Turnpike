@@ -65,7 +65,7 @@ export default function DriverView({ frame, nav, offRoute, overlay, lanes, debug
   // Only detected lanes are drawn: no lanes for this frame means no highlight (Mapbox guidance still shows).
   const polygons = lanes.polygons ?? [];
   // No target lane means no highlight, tag or badge: that is the whole "standard GPS" view.
-  const match = overlay && nav && nav.preferredLane !== null && navCount ? laneTarget(nav, polygons, horizonY) : null;
+  const match = overlay && nav && nav.preferredLane !== null && navCount ? laneTarget(nav, polygons, horizonY, lanes.drivable) : null;
   const target = match?.index ?? null;
   const imminent = nav ? nav.distanceM < 120 : false;
 
