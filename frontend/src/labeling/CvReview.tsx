@@ -1,12 +1,14 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { DemoRoute } from "../types";
-import { describeLane, laneTarget, lanesFromLines } from "../lanes";
+import { describeLane, laneTarget, lanesFromLines, DEFAULT_HORIZON_Y } from "../lanes";
+import { currentClip, demoUrl } from "../clips";
 import { IMG_H, IMG_W, type LabelFile } from "./labels";
 
-// Read-only review of the OpenCV output (data/detected_lanes.json, see vision/README.md) frame by
+// Read-only review of a clip's detected lanes (clips/<clip>/detected_lanes.json or yolop_lanes.json,
+// see vision/README.md) frame by
 // frame, against the hand-traced lanes where they exist.
 
-const TOP = 0.62; // same road crop as the labeling tool
+const CLIP = currentClip();
 const GOOD = 0.6; // confidence the bake is expected to trust
 const MATCH_MAX = 0.06; // a CV line farther than this (0-1) from a traced line doesn't count as a match
 
@@ -33,7 +35,7 @@ const frameFromHash = () => Math.max(1, Number(location.hash.split("=")[1]) || 1
 
 // ---- YOLOPv2 masks (vision/yolop_masks.py), served by the dev server ----
 const YOLOP_VIEW = "band";
-const maskUrl = (kind: "lane" | "drivable", id: string) => `/__yolop/${YOLOP_VIEW}/${kind}/${id}.png`;
+const maskUrl = (kind: "lane" | "drivable", id: string) => `/__yolop/${CLIP}/${YOLOP_VIEW}/${kind}/${id}.png`;
 const COVER_TOL = 15; // px either side of a traced line
 const COVER_MIN = 0.6; // share of a traced line's rows the mask must hit to count as covered
 
@@ -164,15 +166,15 @@ export default function CvReview() {
   const [detSource, setDetSource] = useState<"yolop" | "opencv">("yolop");
 
   useEffect(() => {
-    fetch("/demo_route.json").then((r) => r.json()).then(setData);
-    fetch("/__labels")
+    fetch(demoUrl(CLIP)).then((r) => r.json()).then(setData);
+    fetch(`/__labels?clip=${CLIP}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((f) => f?.frames && setLabels(f));
   }, []);
 
   useEffect(() => {
     setError(null);
-    fetch(`/__detected?source=${detSource}`)
+    fetch(`/__detected?clip=${CLIP}&source=${detSource}`)
       .then(async (r) => (r.ok ? r.json() : Promise.reject(await r.text())))
       .then(setCv)
       .catch((e) => setError(String(e)));
@@ -213,6 +215,10 @@ export default function CvReview() {
     );
   if (!data || !cv) return <div className="p-10 text-white/50">Loading…</div>;
 
+  // Road crop: from a little above the clip's horizon (SR 70: 0.62), as in the labeling tool.
+  const horizonY = data.camera?.horizonY ?? DEFAULT_HORIZON_Y;
+  const TOP = Math.max(0, horizonY - 0.155);
+
   const frame = data.frames[index];
   const det = cv.frames[frame.id];
   const traced = labels?.frames[frame.id]?.boundaries ?? null;
@@ -222,7 +228,7 @@ export default function CvReview() {
   const cvLanes = Math.max(0, (det?.boundaries.length ?? 0) - 1);
   const { index: target, excluded, upcoming } =
     det && nav && nav.preferredLane !== null && navCount && cvLanes
-      ? laneTarget(nav, lanesFromLines(det.boundaries, rows))
+      ? laneTarget(nav, lanesFromLines(det.boundaries, rows), horizonY)
       : { index: null, excluded: new Set<number>(), upcoming: new Set<number>() };
   const cmp = det && traced ? compare(traced, det.boundaries) : null;
 

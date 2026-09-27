@@ -10,13 +10,14 @@ interface Props {
   overlay: boolean; // false = standard GPS: no lane highlight
   lanes: ActiveLanes; // the selected lane source's geometry for this frame
   debug?: LaneDebugRow[] | null; // lane debug view: outline and label every detected lane
+  horizonY: number; // the clip's camera (demo.camera.horizonY)
 }
 
 const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
 
-// The clip is mostly sky; show only the bottom of each frame. Polygons stay in
-// full-image coordinates and the SVG viewBox crops them the same way.
-const CROP_TOP = 0.42;
+// Show the road, not the sky: crop to just above the horizon (SR 70's camera looks down, so most of
+// its frame is sky). Polygons stay in full-image coordinates and the SVG viewBox crops them the same way.
+const cropTopFor = (horizonY: number) => Math.min(0.6, Math.max(0, horizonY - 0.355));
 const IMAGE_ASPECT = 2048 / 1152;
 const TAG_Y = 0.9; // where the "your lane" tag sits on the road, in image coords
 
@@ -58,12 +59,13 @@ function centerAt(poly: Point[], y: number): number {
   return (Math.min(...pts) + Math.max(...pts)) / 2;
 }
 
-export default function DriverView({ frame, nav, offRoute, overlay, lanes, debug }: Props) {
+export default function DriverView({ frame, nav, offRoute, overlay, lanes, debug, horizonY }: Props) {
+  const CROP_TOP = cropTopFor(horizonY);
   const navCount = nav?.lanes?.length ?? 0;
   // Only detected lanes are drawn: no lanes for this frame means no highlight (Mapbox guidance still shows).
   const polygons = lanes.polygons ?? [];
   // No target lane means no highlight, tag or badge: that is the whole "standard GPS" view.
-  const match = overlay && nav && nav.preferredLane !== null && navCount ? laneTarget(nav, polygons) : null;
+  const match = overlay && nav && nav.preferredLane !== null && navCount ? laneTarget(nav, polygons, horizonY) : null;
   const target = match?.index ?? null;
   const imminent = nav ? nav.distanceM < 120 : false;
 

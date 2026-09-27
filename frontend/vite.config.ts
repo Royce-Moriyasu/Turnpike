@@ -1,83 +1,121 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { execFile } from "node:child_process";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const LABELS = path.join(repoRoot, "data", "fallback_lanes.json");
-const DETECTED = path.join(repoRoot, "data", "detected_lanes.json");
-const YOLOP_LANES = path.join(repoRoot, "data", "yolop_lanes.json");
+// The repo's virtual environment if there is one (it has the bake's packages), else PATH's python.
+const venvPython = path.join(repoRoot, ".venv", process.platform === "win32" ? "Scripts/python.exe" : "bin/python");
+const PYTHON = existsSync(venvPython) ? venvPython : "python";
 
-/** Dev-only endpoints for the labeling tool: read/write data/fallback_lanes.json and re-run the bake. */
+class HttpError extends Error {
+  constructor(public status: number, message: string) {
+    super(message);
+  }
+}
+
+/** The clip folder named by ?clip= (see tools/clip.py). Only existing clips/<name>/ folders are allowed. */
+function clipDir(url: string | undefined): { name: string; dir: string } {
+  const name = new URL(url ?? "/", "http://dev").searchParams.get("clip") ?? "sr70";
+  const dir = path.join(repoRoot, "clips", name);
+  if (!/^[a-z0-9_-]+$/i.test(name) || !existsSync(path.join(dir, "clip.json"))) {
+    throw new HttpError(400, `unknown clip '${name}'`);
+  }
+  return { name, dir };
+}
+
+/** Dev-only endpoints for the labeling tool and CV review page, per clip (?clip=<name>). */
 function labelingApi(): Plugin {
   return {
     name: "labeling-api",
     apply: "serve",
     configureServer(server) {
-      server.middlewares.use("/__labels", async (req, res) => {
-        try {
+      const handle = (fn: (req: IncomingMessage, res: ServerResponse) => Promise<void>) =>
+        async (req: IncomingMessage, res: ServerResponse) => {
+          try {
+            await fn(req, res);
+          } catch (e) {
+            res.statusCode = e instanceof HttpError ? e.status : 500;
+            res.end(e instanceof Error ? e.message : String(e));
+          }
+        };
+
+      // Hand-traced lanes: clips/<clip>/labels.json (the labeling tool reads and autosaves it).
+      server.middlewares.use(
+        "/__labels",
+        handle(async (req, res) => {
+          const file = path.join(clipDir(req.url).dir, "labels.json");
           if (req.method === "GET") {
             res.setHeader("Content-Type", "application/json");
-            res.end(await readFile(LABELS, "utf-8"));
+            res.end(existsSync(file) ? await readFile(file, "utf-8") : "{}");
           } else if (req.method === "PUT") {
             let body = "";
             for await (const chunk of req) body += chunk;
             JSON.parse(body); // never write malformed JSON over the labels
-            await writeFile(LABELS, body);
+            await writeFile(file, body);
             res.end("ok");
           } else {
-            res.statusCode = 405;
-            res.end();
+            throw new HttpError(405, "GET or PUT");
           }
-        } catch (e) {
-          res.statusCode = 500;
-          res.end(String(e));
-        }
-      });
+        }),
+      );
+
       // Read-only: detected lane lines for the CV review page (#cv). ?source=yolop for the
       // YOLOPv2-based lines (vision/yolop_lanes.py), otherwise the OpenCV output.
-      server.middlewares.use("/__detected", async (req, res) => {
-        const yolop = new URL(req.url ?? "/", "http://dev").searchParams.get("source") === "yolop";
-        try {
+      server.middlewares.use(
+        "/__detected",
+        handle(async (req, res) => {
+          const { name, dir } = clipDir(req.url);
+          const yolop = new URL(req.url ?? "/", "http://dev").searchParams.get("source") === "yolop";
+          const file = path.join(dir, yolop ? "yolop_lanes.json" : "detected_lanes.json");
+          if (!existsSync(file)) {
+            throw new HttpError(
+              404,
+              yolop
+                ? `clips/${name}/yolop_lanes.json not found: run tools/build_clip.py ${name}`
+                : `clips/${name}/detected_lanes.json not found: run tools/build_clip.py ${name} --opencv`,
+            );
+          }
           res.setHeader("Content-Type", "application/json");
-          res.end(await readFile(yolop ? YOLOP_LANES : DETECTED, "utf-8"));
-        } catch {
-          res.statusCode = 404;
-          res.end(yolop
-            ? "data/yolop_lanes.json not found: run vision/yolop_masks.py, then vision/yolop_lanes.py"
-            : "data/detected_lanes.json not found: run python vision/detect_lanes.py");
-        }
-      });
-      // Read-only: YOLOPv2 masks from vision/yolop_masks.py, e.g. /__yolop/band/lane/<frame id>.png
-      server.middlewares.use("/__yolop", async (req, res) => {
-        const m = /^\/(band|full|road)\/(lane|drivable)\/(\d+)\.png$/.exec(req.url ?? "");
-        if (!m) {
-          res.statusCode = 400;
-          return res.end();
-        }
-        try {
-          const png = await readFile(path.join(repoRoot, "data", "yolop", m[1], m[2], `${m[3]}.png`));
+          res.end(await readFile(file, "utf-8"));
+        }),
+      );
+
+      // Read-only: YOLOPv2 masks, e.g. /__yolop/<clip>/band/lane/<frame id>.png
+      server.middlewares.use(
+        "/__yolop",
+        handle(async (req, res) => {
+          const m = /^\/([a-z0-9_-]+)\/(band|full|road)\/(lane|drivable)\/(\d+)\.png$/i.exec(req.url ?? "");
+          if (!m) throw new HttpError(400, "expected /__yolop/<clip>/<view>/<lane|drivable>/<id>.png");
+          const { dir } = clipDir(`/?clip=${m[1]}`);
+          const file = path.join(dir, "_build", "yolop", m[2], m[3], `${m[4]}.png`);
+          if (!existsSync(file)) throw new HttpError(404, "no mask");
           res.setHeader("Content-Type", "image/png");
           res.setHeader("Cache-Control", "no-cache");
-          res.end(req.method === "HEAD" ? undefined : png);
-        } catch {
-          res.statusCode = 404;
-          res.end();
-        }
-      });
-      server.middlewares.use("/__bake", (req, res) => {
-        if (req.method !== "POST") {
-          res.statusCode = 405;
-          return res.end();
-        }
-        execFile("python", ["bake/bake_route.py", "--frames"], { cwd: repoRoot }, (err, stdout, stderr) => {
-          res.statusCode = err ? 500 : 200;
-          res.end(err ? stderr || String(err) : stdout);
-        });
-      });
+          res.end(req.method === "HEAD" ? undefined : await readFile(file));
+        }),
+      );
+
+      // Re-bake one clip (the labeling tool's "Re-bake demo" button).
+      server.middlewares.use(
+        "/__bake",
+        handle(async (req, res) => {
+          if (req.method !== "POST") throw new HttpError(405, "POST");
+          const { name } = clipDir(req.url);
+          await new Promise<void>((resolve) =>
+            execFile(PYTHON, ["bake/bake_route.py", "--clip", name], { cwd: repoRoot }, (err, stdout, stderr) => {
+              res.statusCode = err ? 500 : 200;
+              res.end(err ? stderr || String(err) : stdout);
+              resolve();
+            }),
+          );
+        }),
+      );
     },
   };
 }

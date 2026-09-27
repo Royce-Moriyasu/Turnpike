@@ -71,4 +71,6 @@ export interface DemoRoute {
   frames: Frame[];
   attribution: string[];
   laneSources?: Record<string, { label: string; method: string | null }>; // in preference order
+  clip?: { name: string; title: string };
+  camera?: { vanishingPoint: [number, number]; horizonY: number }; // from the clip's clip.json
 }

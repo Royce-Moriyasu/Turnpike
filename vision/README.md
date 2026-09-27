@@ -1,6 +1,6 @@
 # Vision output format
 
-The OpenCV pipeline writes `data/detected_lanes.json`. It reports **where the painted lane lines are**,
+Lane detectors write per clip: OpenCV to `clips/<clip>/detected_lanes.json`, YOLOPv2 to `clips/<clip>/yolop_lanes.json`, hand tracing to `clips/<clip>/labels.json`. It reports **where the painted lane lines are**,
 and nothing else. It never decides which lane is correct: the bake combines this with Mapbox lane data.
 
 See [`detected_lanes.example.json`](detected_lanes.example.json) for a full example using real frames.
@@ -19,7 +19,7 @@ See [`detected_lanes.example.json`](detected_lanes.example.json) for a full exam
   "imageSize": [2048, 1152],     // pixels, for reference
   "rows": [1.0, 0.95, 0.9, 0.86, 0.83],   // heights every line is sampled at, bottom first
   "frames": {
-    "<frame id>": {              // Mapillary image id, same as demo_route.json
+    "<frame id>": {              // Mapillary image id, same as the clip's demo.json
       "confidence": 0.86,        // 0–1, can we trust this frame's lines?
       "boundaries": [            // painted lines, sorted LEFT -> RIGHT by x at the bottom row
         { "x": [...], "type": "solid|dashed", "color": "white|yellow", "confidence": 0.92 }

@@ -3,39 +3,46 @@
 Lane-level AR navigation from public road data. Mapbox tells us which lane to be in, vision finds
 that lane in the driver's view, and we highlight it on the road.
 
-Demo route: SR 70 (Okeechobee Rd) eastbound onto I-95 in Fort Pierce, FL. The North and South routes
-share the approach, so the same frames highlight a different lane depending on the destination.
+Clips (drives) live in `clips/`; the app switches between them from its clip menu:
+- **sr70**: SR 70 (Okeechobee Rd) eastbound onto I-95 in Fort Pierce, FL. The North and South routes
+  share the approach, so the same frames highlight a different lane depending on the destination.
 
 ## Layout
 
 ```
-bake/       Python: Mapbox route + Mapillary sequence -> frontend/public/demo_route.json
-data/       Cached Mapbox responses, fallback_lanes.json (hand-labeled lane polygons)
+clips/      One folder per drive: clip.json, frames.json + images/, labels, cached Mapbox routes,
+            detected lanes. See clips/README.md to add one.
+tools/      clip.py (where a clip's files live), build_clip.py (build a clip end to end)
+bake/       Mapbox route + photos + lanes -> frontend/public/clips/<clip>/demo.json
+vision/     Lane detectors: YOLOPv2 (yolop_masks.py -> yolop_lanes.py) and OpenCV (detect_lanes.py)
+pipeline/   fetch_mapillary.py: download a Mapillary sequence into a clip folder
 frontend/   Vite + React + TypeScript + Tailwind
-vision/     OpenCV lane detection (writes the same format as fallback_lanes.json)
 ```
 
 ## Setup
 
 ```bash
-cp .env.example .env                       # add MAPBOX_TOKEN and MAPILLARY_TOKEN
-python -m pip install -r bake/requirements.txt
+cp .env.example .env        # add MAPBOX_TOKEN and MAPILLARY_TOKEN (or set them in your terminal)
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install -r vision/requirements.txt -r bake/requirements.txt -r pipeline/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
 cd frontend && npm install
 ```
+
+YOLOPv2 needs its weights in `vision/weights/` (see `vision/weights/README.md`).
 
 ## Run
 
 ```bash
-# 1. Bake the demo data (any image id from the Mapillary clip: the pKey= value in its URL)
-python bake/bake_route.py --image-id <mapillary image id>
-#    ...or without imagery, to test navigation logic:
-python bake/bake_route.py --synthetic
-
-# 2. Frontend
-cd frontend && npm run dev                 # http://localhost:5173
+.venv/Scripts/python.exe tools/build_clip.py --all     # bake + YOLOPv2 lanes for every clip
+cd frontend && npm run dev                             # http://localhost:5173
 ```
 
-Keys: `←`/`→` step frames, `Space` plays/pauses.
+The built clips are committed, so the app runs without Python. Rebuild a clip after changing its
+photos, `clip.json`, the detectors or the bake (`tools/build_clip.py <clip>`; `--bake-only` for just the
+bake). Changes to the frontend's matching rules (`frontend/src/lanes.ts`) need only a browser refresh.
+
+Keys: `←`/`→` step frames, `Space` plays/pauses, `G` standard GPS vs lanes, `V` lane source, `D` lane debug.
+Dev tools (dev server only): **Label this frame** (`#label`, hand tracing) and **CV review** (`#cv`).
 
 ## How the lane is chosen
 
@@ -50,27 +57,21 @@ arrows (`indications`, e.g. `left | through | through | through | right`). For e
    leftmost before a keep-left fork.
 
 Mapbox's own `active`/`valid` flags are only used when no lane's arrows match. We don't trust them
-first because Mapbox infers them where OpenStreetMap has no lane tags. On our route that inference
-wrongly marked the rightmost through lane on SR 70 as I-95 South only, when the real footage shows it
-is the lane that reaches I-95 North. See `choose_lane()` in `bake/bake_route.py`.
+first because Mapbox infers them where OpenStreetMap has no lane tags. On SR 70 that inference
+wrongly marked the rightmost through lane as I-95 South only, when the real footage shows it is the
+lane that reaches I-95 North. See `choose_lane()` in `bake/bake_route.py`.
 
-## Lane polygons (vision contract)
+The frontend then matches Mapbox's lanes to the detected lanes (`laneTarget()` in
+`frontend/src/lanes.ts`): it sets aside bike lanes and turn lanes that are opening but not yet in the
+snapshot, counts from the side our road is on, and only highlights when the lane shapes it counted
+across are plausible for the clip's camera. The debug view (`D`) shows each step.
 
-`data/fallback_lanes.json`, keyed by frame id. Each frame is a list of visible lane polygons, sorted
-left → right, points in normalized image coordinates (0–1, origin top-left):
+## Lane geometry (detector output)
 
-```json
-{
-  "1234567890": [
-    [[0.10, 1.0], [0.42, 1.0], [0.49, 0.58], [0.45, 0.58]],
-    [[0.42, 1.0], [0.78, 1.0], [0.53, 0.58], [0.49, 0.58]]
-  ]
-}
-```
-
-If a frame shows fewer lanes than the Mapbox data, the frontend aligns them from the maneuver side
-(it counts from the right edge for right-side maneuvers). Re-run the bake after editing polygons.
-Frames with no polygons get placeholder geometry, labeled as such in the UI.
+Every detector writes the same format (`vision/README.md`): per frame, the painted lines left → right,
+each sampled at fixed image rows (`x` per row, 0–1 of the image width), with a confidence. The bake
+turns consecutive lines into lane polygons, one set per detector, and the app's lane switch (`V`)
+picks between YOLOPv2, OpenCV and hand-traced.
 
 ## Data sources
 

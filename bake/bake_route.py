@@ -1,16 +1,13 @@
-"""Bake the demo: Mapbox lane guidance + a Mapillary image sequence -> demo_route.json.
+"""Bake a clip: Mapbox lane guidance + the clip's photos + detected lanes -> the app's JSON.
 
-    python bake/bake_route.py --frames                          # images from pipeline/data/frames.json
-    python bake/bake_route.py --image-id <mapillary image id>   # fetch the sequence from Mapillary
-    python bake/bake_route.py --synthetic                       # no imagery; frames sampled along the route
+    python bake/bake_route.py --clip sr70                  # photos from clips/sr70/frames.json
+    python bake/bake_route.py --clip sr70 --image-id <id>  # fetch a Mapillary sequence instead
+    python bake/bake_route.py --clip sr70 --synthetic      # no photos; frames sampled along the route
 
-New road (leaves the SR 70 demo untouched):
-    python bake/bake_route.py --config bake/routes/<name>.json --name <name> --frames <path>/frames.json
-    -> frontend/public/demo_route_<name>.json, frontend/public/route_<name>/, data/mapbox_<name>_<route>.json
-
-Mapbox responses are cached in data/mapbox_<route>.json (use --refresh to re-fetch).
-Lane polygons come from data/fallback_lanes.json (keyed by frame id) until OpenCV replaces them.
-Output: frontend/public/demo_route.json and frontend/public/route/<id>.jpg
+Or run the whole pipeline (masks, lanes, bake) with tools/build_clip.py. A clip is a folder
+clips/<name>/ (see clips/README.md and tools/clip.py). The bake reads its clip.json, frames.json +
+images/, cached Mapbox routes (mapbox_<route>.json, fetched if missing or with --refresh) and lane
+files, and writes frontend/public/clips/<name>/demo.json + images/, then the clip index.
 """
 from __future__ import annotations
 
@@ -27,28 +24,20 @@ import requests
 from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "data"
-PUBLIC = ROOT / "frontend" / "public"
-IMG_DIR = PUBLIC / "route"
-IMG_URL = "/route"
-CACHE_PREFIX = "mapbox_"
-OUT = PUBLIC / "demo_route.json"
-PIPELINE_FRAMES = ROOT / "pipeline" / "data" / "frames.json"
+sys.path.insert(0, str(ROOT / "tools"))
+from clip import DEFAULT_CLIP, Clip, all_clips, write_index  # noqa: E402
 
 load_dotenv(ROOT / ".env")
 
-# SR 70 (Okeechobee Rd) eastbound onto I-95, Fort Pierce FL. Both routes share the
-# approach and split at the ramp fork, so the same frames get a different lane per route.
-# Origin is where the Mapillary clip is already eastbound on SR 70; the bearing keeps Mapbox
-# from snapping it onto the westbound side of the divided road.
-ORIGIN, ORIGIN_BEARING = (-80.398568, 27.41274), 70
-ROUTES = {
-    "north": {"label": "I-95 North · Daytona Beach",
-              "origin": ORIGIN, "destination": (-80.389239, 27.415502)},
-    "south": {"label": "I-95 South · West Palm Beach",
-              "origin": ORIGIN, "destination": (-80.389369, 27.414368)},
-}
-PRIMARY_ROUTE = "north"  # the Mapillary clip takes I-95 North
+# The clip being baked, and its route settings from clip.json (set by use_clip).
+CLIP: Clip | None = None
+ORIGIN: tuple[float, float] | None = None
+ORIGIN_BEARING: float | None = None  # keeps Mapbox from snapping the start onto the wrong side of a divided road
+ROUTES: dict[str, dict] = {}
+PRIMARY_ROUTE = ""  # the route the photos actually drive
+IMG_DIR: Path | None = None
+IMG_URL = ""
+OUT: Path | None = None
 
 MAX_OFF_ROUTE_M = 20      # frames farther than this from the route are dropped
 MAX_HEADING_DIFF = 60     # reject images facing away from the direction of travel
@@ -380,7 +369,7 @@ def lane_reasons(nav: dict, others: dict[str, dict]) -> list[str]:
 # ---------------------------------------------------------------- data sources
 
 def load_mapbox(key: str, refresh: bool) -> dict:
-    cache = DATA / f"{CACHE_PREFIX}{key}.json"
+    cache = CLIP.mapbox(key)
     if cache.exists() and not refresh:
         return json.loads(cache.read_text(encoding="utf-8"))
     token = os.getenv("MAPBOX_TOKEN") or sys.exit("MAPBOX_TOKEN not set (set it in this terminal, or add it to .env)")
@@ -438,8 +427,8 @@ def download(url: str, dest: Path) -> None:
 
 # ---------------------------------------------------------------- frames
 
-def thin(candidates: list[dict], span: float) -> list[dict]:
-    spacing = max(MIN_FRAME_SPACING_M, span / MAX_FRAMES)
+def thin(candidates: list[dict], span: float, max_frames: int = MAX_FRAMES) -> list[dict]:
+    spacing = max(MIN_FRAME_SPACING_M, span / max_frames)
     kept, last = [], -math.inf
     for c in candidates:
         if c["s"] - last >= spacing:
@@ -491,7 +480,9 @@ def manifest_frames(path: Path, primary: RouteModel) -> tuple[str | None, list[d
     replaces compass headings that disagree with the direction of travel.
     """
     manifest = json.loads(path.read_text(encoding="utf-8"))
-    base = path.parent.parent  # "file" paths are relative to pipeline/
+    def image_path(f):  # "file" paths are relative to the manifest's folder (older manifests: its parent)
+        p = path.parent / f["file"]
+        return p if p.exists() else path.parent.parent / f["file"]
 
     runs, run, last_s = [], [], -math.inf
     for f in sorted(manifest["frames"], key=lambda f: f["captured_at"]):
@@ -511,6 +502,10 @@ def manifest_frames(path: Path, primary: RouteModel) -> tuple[str | None, list[d
     if not runs:
         sys.exit(f"No frames in {path} are on the route.")
     best = max(runs, key=len)
+    max_frames = CLIP.config.get("maxFrames")
+    if max_frames and len(best) > max_frames:  # dense clips: keep evenly spaced frames along the route
+        thinned = thin([{"f": f, "s": s} for f, s in best], best[-1][1] - best[0][1], max_frames)
+        best = [(c["f"], c["s"]) for c in thinned]
     print(f"  {sum(map(len, runs))} frames on route in {len(runs)} run(s); using {len(best)}")
 
     IMG_DIR.mkdir(parents=True, exist_ok=True)
@@ -521,7 +516,7 @@ def manifest_frames(path: Path, primary: RouteModel) -> tuple[str | None, list[d
 
     frames = []
     for f, s in best:
-        shutil.copy2(base / f["file"], IMG_DIR / f"{f['image_id']}.jpg")
+        shutil.copy2(image_path(f), IMG_DIR / f"{f['image_id']}.jpg")
         heading, source = f.get("compass_angle"), "camera"
         route_bearing = primary.line.bearing_at(s)
         if heading is None or angle_diff(heading, route_bearing) > MAX_HEADING_DIFF:
@@ -547,7 +542,6 @@ def synthetic_frames(primary: RouteModel) -> list[dict]:
     return frames
 
 
-<<<<<<< HEAD
 def boundaries_to_polygons(frame: dict, rows: list[float]) -> list[list[list[float]]]:
     """Lane i = the space between boundary i and i+1 (vision/README.md format), as a polygon."""
     def bottom_x(b):
@@ -573,19 +567,20 @@ def load_lane_polygons(path: Path) -> dict[str, list]:
             if (lanes := boundaries_to_polygons(fr, data["rows"]))}
 
 
-# Lane geometry sources, all in the vision/README.md boundary format. The frontend can switch
-# between them; the first one present is the default.
-LANE_SOURCES = {
-    "yolop": ("YOLOPv2", DATA / "yolop_lanes.json"),
-    "opencv": ("OpenCV", DATA / "detected_lanes.json"),
-    "labeled": ("Hand-traced", DATA / "fallback_lanes.json"),
-}
+# Lane geometry sources, all in the vision/README.md boundary format, from the clip folder. The
+# frontend can switch between them; the first one present is the default.
+def lane_source_files() -> dict[str, tuple[str, Path]]:
+    return {
+        "yolop": ("YOLOPv2", CLIP.yolop_lanes),
+        "opencv": ("OpenCV", CLIP.detected),
+        "labeled": ("Hand-traced", CLIP.labels),
+    }
 
 
 def load_lane_sources() -> tuple[dict[str, dict], dict[str, dict]]:
     """({source: {frame id: polygons}}, {source: {label, method, confidence by frame id}})."""
     polygons, info = {}, {}
-    for key, (label, path) in LANE_SOURCES.items():
+    for key, (label, path) in lane_source_files().items():
         if not path.exists():
             continue
         data = json.loads(path.read_text(encoding="utf-8"))
@@ -594,48 +589,40 @@ def load_lane_sources() -> tuple[dict[str, dict], dict[str, dict]]:
         info[key] = {"label": label, "method": data.get("method"),
                      "confidence": {fid: fr.get("confidence") for fid, fr in frames.items()}}
     return polygons, info
-=======
-# ---------------------------------------------------------------- config for other roads
 
-def apply_config(config_path: str | None, name: str | None) -> None:
-    """Point the script at a different road and/or different output files."""
-    global ORIGIN, ORIGIN_BEARING, ROUTES, PRIMARY_ROUTE, OUT, IMG_DIR, IMG_URL, CACHE_PREFIX
-    if config_path:
-        cfg = json.loads(Path(config_path).read_text(encoding="utf-8"))
-        ORIGIN = tuple(cfg["origin"])
-        ORIGIN_BEARING = cfg["originBearing"]
-        ROUTES = {k: {"label": r["label"], "origin": ORIGIN, "destination": tuple(r["destination"])}
-                  for k, r in cfg["routes"].items()}
-        PRIMARY_ROUTE = cfg["primaryRoute"]
-        if PRIMARY_ROUTE not in ROUTES:
-            sys.exit(f"primaryRoute '{PRIMARY_ROUTE}' is not one of the routes in {config_path}")
-        if not name:
-            sys.exit("--config needs --name too, so the SR 70 demo files are not overwritten")
-    if name:
-        OUT = PUBLIC / f"demo_route_{name}.json"
-        IMG_DIR = PUBLIC / f"route_{name}"
-        IMG_URL = f"/route_{name}"
-        CACHE_PREFIX = f"mapbox_{name}_"
-        print(f"  road '{name}': writing {OUT.relative_to(ROOT)} and {IMG_DIR.relative_to(ROOT)}/")
->>>>>>> bb0112ff092d362f64f1d623b0a0e3a2322c383d
+
+# ---------------------------------------------------------------- clip
+
+def use_clip(clip: Clip) -> None:
+    """Point the bake at a clip: its routes (clip.json) and output folder."""
+    global CLIP, ORIGIN, ORIGIN_BEARING, ROUTES, PRIMARY_ROUTE, OUT, IMG_DIR, IMG_URL
+    cfg = clip.config
+    CLIP = clip
+    ORIGIN = tuple(cfg["origin"])
+    ORIGIN_BEARING = cfg["originBearing"]
+    ROUTES = {k: {"label": r["label"], "origin": ORIGIN, "destination": tuple(r["destination"])}
+              for k, r in cfg["routes"].items()}
+    PRIMARY_ROUTE = cfg["primaryRoute"]
+    if PRIMARY_ROUTE not in ROUTES:
+        sys.exit(f"primaryRoute '{PRIMARY_ROUTE}' is not one of the routes in {clip.root / 'clip.json'}")
+    OUT, IMG_DIR, IMG_URL = clip.demo, clip.public_images, clip.images_url
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    print(f"Clip '{clip.name}': writing {OUT.relative_to(ROOT)} and {IMG_DIR.relative_to(ROOT)}/")
 
 
 # ---------------------------------------------------------------- main
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    src = ap.add_mutually_exclusive_group(required=True)
-    src.add_argument("--frames", nargs="?", const=str(PIPELINE_FRAMES), metavar="PATH",
-                     help="use a frames.json manifest (default: pipeline/data/frames.json)")
+    ap.add_argument("--clip", default=DEFAULT_CLIP,
+                    help=f"clip folder under clips/ (default {DEFAULT_CLIP}; available: {', '.join(all_clips())})")
+    src = ap.add_mutually_exclusive_group()
+    src.add_argument("--frames", metavar="PATH", help="a frames.json manifest (default: the clip's frames.json)")
     src.add_argument("--image-id", help="any Mapillary image id from the clip (pKey= in the web URL)")
     src.add_argument("--synthetic", action="store_true", help="no imagery; sample frames along the route")
-    ap.add_argument("--refresh", action="store_true", help="re-fetch Mapbox routes instead of using data/ cache")
-    ap.add_argument("--config", metavar="PATH",
-                    help="route config JSON for a different road (origin, bearing, routes, primaryRoute)")
-    ap.add_argument("--name", help="short name for this road; writes demo_route_<name>.json, route_<name>/ "
-                                   "and mapbox_<name>_*.json so the default demo is not overwritten")
+    ap.add_argument("--refresh", action="store_true", help="re-fetch Mapbox routes instead of using the clip's cache")
     args = ap.parse_args()
-    apply_config(args.config, args.name)
+    use_clip(Clip(args.clip))
 
     print("Loading routes")
     models = {k: RouteModel(k, load_mapbox(k, args.refresh)) for k in ROUTES}
@@ -644,10 +631,10 @@ def main() -> None:
     print("Building frames")
     if args.synthetic:
         seq, frames = None, synthetic_frames(primary)
-    elif args.frames:
-        seq, frames = manifest_frames(Path(args.frames), primary)
-    else:
+    elif args.image_id:
         seq, frames = mapillary_frames(args.image_id, primary)
+    else:
+        seq, frames = manifest_frames(Path(args.frames) if args.frames else CLIP.frames, primary)
 
     lane_polys, lane_info = load_lane_sources()
     print("Lane sources: " + ", ".join(f"{k} ({len(p)} frames)" for k, p in lane_polys.items()))
@@ -661,7 +648,7 @@ def main() -> None:
                 nav["laneReasons"] = lane_reasons(nav, {k: o for k, o in f["nav"].items() if k != key and o})
         f["progressM"] = round(f.pop("s"), 1)
         # Every source's geometry, so the frontend can switch between them; lanePolygons is the
-        # first source (in LANE_SOURCES order) that has lanes for this frame.
+        # first source (in lane_source_files order) that has lanes for this frame.
         f["laneSets"] = {k: {"polygons": polys.get(f["id"]), "confidence": lane_info[k]["confidence"].get(f["id"])}
                          for k, polys in lane_polys.items()}
         f["polygonSource"] = next((k for k, v in f["laneSets"].items() if v["polygons"]), None)
@@ -671,6 +658,8 @@ def main() -> None:
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "mode": "synthetic" if args.synthetic else "mapillary",
         "sequenceId": seq,
+        "clip": {"name": CLIP.name, "title": CLIP.title},
+        "camera": {"vanishingPoint": list(CLIP.vanishing_point), "horizonY": CLIP.horizon},
         "primaryRoute": PRIMARY_ROUTE,
         "routes": {k: {"label": ROUTES[k]["label"], "geometry": m.line.coords,
                        "distanceM": round(m.line.length, 1)} for k, m in models.items()},
@@ -682,7 +671,7 @@ def main() -> None:
         ],
     }
     OUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
-    print(f"Wrote {OUT.relative_to(ROOT)} with {len(frames)} frames")
+    print(f"Wrote {OUT.relative_to(ROOT)} with {len(frames)} frames; clip index: {write_index().relative_to(ROOT)}")
     for f in frames:
         row = []
         for key in ROUTES:

@@ -63,7 +63,7 @@ function widthsByRow(poly: Point[]): Map<number, number> {
   return widths;
 }
 
-// Perspective check. On a flat road a lane's width in the image at row y is k * (y - HORIZON_Y),
+// Perspective check. On a flat road a lane's width in the image at row y is k * (y - horizon),
 // with the same k for every lane, since lanes are all ~3.6 m wide. Measured on this clip's
 // hand-traced lanes: k median 2.0 (10-90%: 1.5-2.7), and it stays within a factor of ~1.6 across a
 // lane's rows because both edges head for the vanishing point.
@@ -74,7 +74,7 @@ function widthsByRow(poly: Point[]): Map<number, number> {
 //    splits). Real, so it's judged by its width at the far end, where it's fully formed.
 //  - Otherwise the median k must be a lane's: not several lanes merged, not a sliver. The range is
 //    wide on purpose: the ramp's real lanes near the fork measure 0.9-1.3.
-const HORIZON_Y = 0.775;
+export const DEFAULT_HORIZON_Y = 0.775; // SR 70's camera; each clip's is in its demo.json (camera.horizonY)
 const LANE_K_RANGE: [number, number] = [0.7, 3.5];
 const LANE_CLOSING = 2.0;
 const MIN_ROW_DEPTH = 0.03; // rows closer to the horizon than this are too squashed to measure
@@ -85,9 +85,9 @@ export interface LaneShape {
   ok: boolean;
 }
 
-export function laneShape(poly: Point[]): LaneShape {
+export function laneShape(poly: Point[], horizonY: number = DEFAULT_HORIZON_Y): LaneShape {
   const ks = [...widthsByRow(poly)]
-    .map(([key, w]) => [key / 1000 - HORIZON_Y, w] as const)
+    .map(([key, w]) => [key / 1000 - horizonY, w] as const)
     .filter(([depth]) => depth >= MIN_ROW_DEPTH)
     .sort((a, b) => a[0] - b[0]) // top (far) row first
     .map(([depth, w]) => w / depth);
@@ -163,8 +163,8 @@ export interface LaneTargetResult {
 // it doesn't depend on the camera.
 const INNER_BIKE_RATIO = 0.5;
 
-function innerBikeLanes(lanes: Point[][]): Set<number> {
-  const shapes = lanes.map(laneShape);
+function innerBikeLanes(lanes: Point[][], horizonY: number): Set<number> {
+  const shapes = lanes.map((p) => laneShape(p, horizonY));
   const out = new Set<number>();
   for (let i = 1; i < lanes.length - 1; i++) {
     const { k, closing } = shapes[i];
@@ -197,6 +197,7 @@ export interface LaneMatchNav {
 export function laneTarget(
   nav: LaneMatchNav,
   lanes: Point[][],
+  horizonY: number = DEFAULT_HORIZON_Y,
 ): LaneTargetResult {
   const navCount = nav.lanes?.length ?? 0;
   const excluded = new Set<number>();
@@ -210,7 +211,7 @@ export function laneTarget(
   }
 
   bikeLikeLanes(lanes, navCount, nav.lanes).forEach((i) => excluded.add(i));
-  innerBikeLanes(lanes).forEach((i) => excluded.add(i));
+  innerBikeLanes(lanes, horizonY).forEach((i) => excluded.add(i));
   let travel = lanes.map((_, i) => i).filter((i) => !excluded.has(i));
   for (let k = 0; k < (nav.laneAhead?.right ?? 0) && travel.length > navCount; k++) upcoming.add(travel.pop()!);
   for (let k = 0; k < (nav.laneAhead?.left ?? 0) && travel.length > navCount; k++) upcoming.add(travel.shift()!);
@@ -245,7 +246,7 @@ export function laneTarget(
   }
 
   const t = polygonIndexFor(nav.preferredLane, navCount, travel.length, side);
-  travel.forEach((i) => !laneShape(lanes[i]).ok && implausible.add(i));
+  travel.forEach((i) => !laneShape(lanes[i], horizonY).ok && implausible.add(i));
   if (t === null) return result(null, travel, side, "lanes don't line up with Mapbox's");
 
   // Evidence rules: only highlight when the count that reached the target can be trusted.
@@ -295,8 +296,9 @@ export const bikeLaneRatio = BIKE_LANE_RATIO;
 export function laneDebug(
   nav: LaneMatchNav,
   lanes: Point[][],
+  horizonY: number = DEFAULT_HORIZON_Y,
 ): { rows: LaneDebugRow[]; reason: string | null; countFrom: "left" | "right" | null } {
-  const { index, excluded, upcoming, implausible, otherRoad, counted, countFrom, reason } = laneTarget(nav, lanes);
+  const { index, excluded, upcoming, implausible, otherRoad, counted, countFrom, reason } = laneTarget(nav, lanes, horizonY);
   const navCount = nav.lanes?.length ?? 0;
   const travel = counted;
   const offset = countFrom === "left" ? 0 : navCount - travel.length; // Mapbox index = travel position + offset
@@ -327,7 +329,7 @@ export function laneDebug(
               : mapboxLane === null
                 ? "outside"
                 : "counted";
-    const shape = laneShape(lanes[i]);
+    const shape = laneShape(lanes[i], horizonY);
     return { lane: i, status, mapboxLane, bottomWidth: bottom(widths[i]), ratio, k: shape.k, closing: shape.closing };
   });
   return { rows, reason, countFrom };

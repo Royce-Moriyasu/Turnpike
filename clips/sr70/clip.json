@@ -1,0 +1,11 @@
+{
+  "title": "SR 70 to I-95 (Fort Pierce, FL)",
+  "origin": [-80.398568, 27.41274],
+  "originBearing": 70,
+  "primaryRoute": "north",
+  "routes": {
+    "north": {"label": "I-95 North · Daytona Beach", "destination": [-80.389239, 27.415502]},
+    "south": {"label": "I-95 South · West Palm Beach", "destination": [-80.389369, 27.414368]}
+  },
+  "camera": {"vanishingPoint": [0.47, 0.775]}
+}

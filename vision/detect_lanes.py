@@ -1,21 +1,22 @@
 """
 detect_lanes.py
 
-Runs OpenCV lane-line detection on every frame listed in demo_route.json and
-writes data/detected_lanes.json in the format described in vision/README.md.
+Runs OpenCV lane-line detection on every frame of a baked clip (clips/<clip>/, see tools/clip.py)
+and writes clips/<clip>/detected_lanes.json in the format described in vision/README.md.
 
 It only reports WHERE the painted lines are. It never decides which lane is
 correct; the bake combines this file with the Mapbox lane data.
 
-Usage (from anywhere, paths are relative to the repo):
-    python3 vision/detect_lanes.py
-    python3 vision/detect_lanes.py --debug
+Usage (from anywhere, paths are relative to the repo; --clip picks the clip folder, default sr70):
+    python3 vision/detect_lanes.py --clip sr70
+    python3 vision/detect_lanes.py --clip sr70 --debug
     python3 vision/detect_lanes.py --images ~/turnpike/data/images --debug
 """
 
 import argparse
 import json
 import math
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -70,6 +71,8 @@ METHOD = "opencv-hough-v4"
 # -------------------------------------------------------------------------------------
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "tools"))
+from clip import DEFAULT_CLIP, Clip  # noqa: E402
 
 
 def build_masks(img, s):
@@ -477,12 +480,19 @@ def find_image(frame_id, dirs):
 
 def main():
     parser = argparse.ArgumentParser(description="Detect painted lane lines for every demo frame.")
-    parser.add_argument("--route-file", default=REPO / "frontend/public/demo_route.json", type=Path)
+    parser.add_argument("--clip", default=DEFAULT_CLIP, help=f"clip folder under clips/ (default {DEFAULT_CLIP}); "
+                        "sets the defaults below and the vanishing point from its clip.json")
+    parser.add_argument("--route-file", type=Path, help="baked clip JSON (default: the clip's demo.json)")
     parser.add_argument("--images", type=Path, help="folder of <frame id>.jpg images")
-    parser.add_argument("--out", default=REPO / "data/detected_lanes.json", type=Path)
+    parser.add_argument("--out", type=Path, help="output (default: clips/<clip>/detected_lanes.json)")
     parser.add_argument("--route", help="north or south (default: primaryRoute)")
     parser.add_argument("--debug", action="store_true", help="save overlay images to vision_debug/")
     args = parser.parse_args()
+    global VP
+    clip = Clip(args.clip)
+    VP = clip.vanishing_point
+    args.route_file = args.route_file or clip.demo
+    args.out = args.out or clip.detected
 
     demo = json.loads(args.route_file.read_text())
     route_key = args.route or demo.get("primaryRoute") or "north"
@@ -490,7 +500,7 @@ def main():
 
     image_dirs = [d.expanduser() for d in [
         args.images,
-        REPO / "frontend/public/route",
+        clip.public_images,
         Path("~/turnpike/data/images"),
     ] if d is not None]
 

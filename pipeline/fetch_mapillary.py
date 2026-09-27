@@ -19,8 +19,11 @@ FIELDS = ",".join([
     "thumb_2048_url",
 ])
 
-OUT_DIR = Path("data")
-IMG_DIR = OUT_DIR / "images"
+# Writes a clip folder: clips/<clip>/frames.json + images/ (see tools/clip.py). "file" paths in
+# frames.json are relative to that folder.
+REPO = Path(__file__).resolve().parent.parent
+OUT_DIR = None  # set in main from the clip name
+IMG_DIR = None
 
 
 def api_get(url, params=None):
@@ -34,10 +37,14 @@ def api_get(url, params=None):
 def main():
     if not TOKEN:
         sys.exit("MAPILLARY_TOKEN is not set. Set it in your terminal first.")
-    if len(sys.argv) != 2:
-        sys.exit("Usage: python3 fetch_mapillary.py <image_id>")
+    if len(sys.argv) != 3:
+        sys.exit("Usage: python3 pipeline/fetch_mapillary.py <image_id> <clip name>   "
+                 "(writes clips/<clip>/frames.json + images/; add a clip.json there to bake it)")
 
-    start_image_id = sys.argv[1]
+    global OUT_DIR, IMG_DIR
+    start_image_id, clip_name = sys.argv[1], sys.argv[2]
+    OUT_DIR = REPO / "clips" / clip_name
+    IMG_DIR = OUT_DIR / "images"
 
     sequence_id = api_get(f"{API}/{start_image_id}", {"fields": "sequence"})["sequence"]
     print(f"Sequence ID: {sequence_id}")
@@ -69,7 +76,7 @@ def main():
                 "lon": lon,
                 "compass_angle": angle,
                 "captured_at": meta["captured_at"],
-                "file": str(image_path),
+                "file": f"images/{image_id}.jpg",
             })
             print(f"  [{i}/{len(image_ids)}] {image_id} ok")
 

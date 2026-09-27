@@ -2,7 +2,7 @@
 yolop_lanes.py
 
 Turns YOLOPv2 lane masks (from vision/yolop_masks.py) into lane lines and writes
-data/yolop_lanes.json in the same format as the hand labels and detect_lanes.py
+clips/<clip>/yolop_lanes.json in the same format as the hand labels and detect_lanes.py
 (see vision/README.md), so the bake and the React overlay can use it directly.
 
 Why not just feed the mask into detect_lanes.py? Its fitting is tuned for thin painted stripes
@@ -16,9 +16,12 @@ detect_lanes merges or drops them. The mask is clean, so a direct approach works
   3. Solid/dashed and white/yellow come from the photo's paint; confidence uses the same formula
      as detect_lanes.py, so the sources are comparable.
 
+Reads clips/<clip>/_build/yolop/band/lane/ and writes clips/<clip>/yolop_lanes.json. The tracking band
+and vanishing point come from the clip's camera (clip.json camera.vanishingPoint).
+
 Usage (from the repo root; run vision/yolop_masks.py first):
-    .venv/Scripts/python.exe vision/yolop_lanes.py
-    .venv/Scripts/python.exe vision/yolop_lanes.py --debug     # overlays in vision_debug/yolop_lanes/
+    .venv/Scripts/python.exe vision/yolop_lanes.py --clip sr70
+    .venv/Scripts/python.exe vision/yolop_lanes.py --clip sr70 --debug   # overlays in vision_debug/yolop_lanes/<clip>/
 """
 
 import argparse
@@ -32,16 +35,20 @@ import cv2
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 import detect_lanes as dl  # noqa: E402  (shared fitting, confidence and sanity helpers)
+from clip import DEFAULT_CLIP, Clip  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
-MASKS = REPO / "data/yolop/band/lane"
-OUT = REPO / "data/yolop_lanes.json"
 DEBUG = REPO / "vision_debug/yolop_lanes"
 METHOD = "yolopv2-mask-tracks-v1"
 
-ROWS = dl.ROWS                # heights reported, bottom first
-BAND_TOP = 0.81               # track up to here; above it the lines crowd into the horizon
+ROWS = dl.ROWS                # heights reported, bottom first (set per clip in use_camera)
+# SR 70's rows as fractions of the distance from its horizon (0.775) to the bottom of the image, so
+# other cameras sample the same part of the road: [1, 0.778, 0.556, 0.378, 0.244]
+ROW_DEPTHS = [(r - 0.775) / (1 - 0.775) for r in dl.ROWS]
+# Rows are set per clip from the camera's horizon in use_camera (values shown are SR 70's).
+BAND_TOP = 0.81               # track up to here (horizon + 0.035); above it the lines crowd together
 BAND_BOTTOM = 0.97            # ...and from here (below is dashboard)
 STEP_PX = 3                   # row step while tracking (at 1152 px tall)
 MAX_RUN_FRAC = 0.10           # a mask stripe wider than this share of the width is a merged blob
@@ -55,7 +62,7 @@ PAINT_PX = 16                 # how close photo paint must be to count toward so
                               # are thick and not always centered on the paint)
 SOLID_MIN = 0.85              # share of rows with paint to call a line solid
 SLIVER = 0.5                  # an inner lane narrower than this x both neighbors has a fake line
-SUPPORT_TOP = 0.86            # judge a line's mask support below this row, where lines are distinct
+SUPPORT_TOP = 0.86            # judge a line's mask support below this row (horizon + 0.085)
 MIN_SUPPORT = 0.25            # a line inside the frame there with less mask than this is a fake extension
 MIN_SUPPORT_ROWS = 5          # ...judged only if it is inside the frame on at least this many rows
 X_LIMIT = (-0.1, 1.1)         # report x only this far outside the frame (as detect_lanes.py)
@@ -279,19 +286,36 @@ def draw_debug(img, kept, entry, path):
     cv2.imwrite(str(path), cv2.resize(out, (w // 2, h // 2)))
 
 
+def use_camera(clip: Clip) -> None:
+    """Tracking rows and vanishing point from the clip's camera (clip.json)."""
+    global BAND_TOP, SUPPORT_TOP, ROWS
+    horizon = clip.horizon
+    ROWS = [round(horizon + f * (1 - horizon), 3) for f in ROW_DEPTHS]
+    BAND_TOP = round(horizon + 0.035, 4)
+    SUPPORT_TOP = round(horizon + 0.085, 4)
+    dl.VP = clip.vanishing_point  # used by the confidence (line points at the vanishing point)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Lane lines from YOLOPv2 lane masks.")
-    parser.add_argument("--route-file", default=REPO / "frontend/public/demo_route.json", type=Path)
-    parser.add_argument("--route", help="north or south (default: primaryRoute)")
-    parser.add_argument("--out", default=OUT, type=Path)
-    parser.add_argument("--debug", action="store_true", help=f"save overlays to {DEBUG.relative_to(REPO)}/")
+    parser.add_argument("--clip", default=DEFAULT_CLIP, help=f"clip folder under clips/ (default {DEFAULT_CLIP})")
+    parser.add_argument("--route", help="route key for the confidence's target lane (default: the clip's primaryRoute)")
+    parser.add_argument("--out", type=Path, help="output file (default: clips/<clip>/yolop_lanes.json)")
+    parser.add_argument("--debug", action="store_true", help=f"save overlays to {DEBUG.relative_to(REPO)}/<clip>/")
     args = parser.parse_args()
 
-    demo = json.loads(args.route_file.read_text(encoding="utf-8"))
+    clip = Clip(args.clip)
+    use_camera(clip)
+    masks = clip.masks("band", "lane")
+    out = args.out or clip.yolop_lanes
+    debug_dir = DEBUG / clip.name
+    if not clip.demo.exists():
+        sys.exit(f"{clip.demo.relative_to(REPO)} not found: bake the clip first (bake/bake_route.py --clip {clip.name})")
+    demo = json.loads(clip.demo.read_text(encoding="utf-8"))
     route_key = args.route or demo.get("primaryRoute") or "north"
     frames = demo["frames"]
     if args.debug:
-        DEBUG.mkdir(parents=True, exist_ok=True)
+        debug_dir.mkdir(parents=True, exist_ok=True)
 
     result = {
         "version": 1,
@@ -304,8 +328,8 @@ def main():
     print(f"Route: {route_key}   Frames: {len(frames)}")
     for i, frame in enumerate(frames, start=1):
         fid = frame["id"]
-        img = cv2.imread(str(REPO / "frontend/public/route" / f"{fid}.jpg"))
-        mask = cv2.imread(str(MASKS / f"{fid}.png"), cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread(str(clip.public_images / f"{fid}.jpg"))
+        mask = cv2.imread(str(masks / f"{fid}.png"), cv2.IMREAD_GRAYSCALE)
         if img is None or mask is None:
             print(f"  [{i:2d}/{len(frames)}] {fid}  SKIPPED ({'image' if img is None else 'mask'} not found)")
             continue
@@ -313,15 +337,15 @@ def main():
         entry, kept = process(img, (mask >= 128).astype(np.uint8) * 255, frame, route_key)
         result["frames"][fid] = entry
         if args.debug:
-            draw_debug(img, kept, entry, DEBUG / f"{i:03d}_{fid}.jpg")
+            draw_debug(img, kept, entry, debug_dir / f"{i:03d}_{fid}.jpg")
         print(f"  [{i:2d}/{len(frames)}] {fid}  lines: {len(entry['boundaries'])}  "
               f"conf: {entry['confidence']:.2f}  {entry['debug'].get('reason', '')}")
 
     if not result["frames"]:
-        sys.exit(f"No masks found in {MASKS}. Run vision/yolop_masks.py first.")
-    args.out.write_text(json.dumps(result, indent=2), encoding="utf-8")
+        sys.exit(f"No masks found in {masks}. Run vision/yolop_masks.py --clip {clip.name} first.")
+    out.write_text(json.dumps(result, indent=2), encoding="utf-8")
     good = sum(1 for f in result["frames"].values() if f["confidence"] >= 0.6)
-    print(f"\nWrote {args.out}  ({len(result['frames'])} frames, {good} with confidence >= 0.6)")
+    print(f"\nWrote {out.relative_to(REPO)}  ({len(result['frames'])} frames, {good} with confidence >= 0.6)")
 
 
 if __name__ == "__main__":
