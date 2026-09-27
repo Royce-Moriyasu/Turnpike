@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import type { DemoRoute, Frame, NavState } from "../types";
+import type { DemoRoute, Frame } from "../types";
 import MiniMap from "./MiniMap";
 import {
   ALTERNATE_HIT_LAYER, MAP_STYLE, addRouteLayers, boundsOf, calloutElement, destinationElement,
-  maneuverElement, pointAlong, shareAlong, positionElement, routeLayerData, setRouteLayerData,
+  shareAlong, positionElement, routeLayerData, setRouteLayerData,
 } from "./routeMapLayers";
 
 const TOKEN: string | undefined = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -21,12 +21,11 @@ interface Props {
   routeKey: string;
   setRouteKey: (key: string) => void;
   frame: Frame;
-  nav: NavState | null;
 }
 
 /**
  * The ROUTE panel: a Mapbox mini-map with the active route (colored by traffic when the bake has
- * it), alternates, ETA callouts and position/destination/maneuver markers. Without a Mapbox token
+ * it), alternates, ETA callouts and position/destination markers. Without a Mapbox token
  * it falls back to the plain SVG route (MiniMap).
  */
 export default function RouteMiniMap(props: Props) {
@@ -34,7 +33,7 @@ export default function RouteMiniMap(props: Props) {
   return <MapboxMiniMap {...props} token={TOKEN} />;
 }
 
-function MapboxMiniMap({ data, routeKey, setRouteKey, frame, nav, token }: Props & { token: string }) {
+function MapboxMiniMap({ data, routeKey, setRouteKey, frame, token }: Props & { token: string }) {
   const container = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markers = useRef<mapboxgl.Marker[]>([]);
@@ -91,7 +90,7 @@ function MapboxMiniMap({ data, routeKey, setRouteKey, frame, nav, token }: Props
     if (map && loaded) setRouteLayerData(map, routeLayerData(data, routeKey, frame.progressM));
   }, [loaded, data, routeKey, frame.progressM]);
 
-  // callouts, destination pin and next-maneuver badge
+  // callouts and destination pin
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -114,15 +113,11 @@ function MapboxMiniMap({ data, routeKey, setRouteKey, frame, nav, token }: Props
       add(new mapboxgl.Marker({ element: bubble, anchor: "top", offset: [0, 8] }).setLngLat(shareAlong(r.geometry, ALTERNATE_CALLOUT_AT)));
     }
     add(new mapboxgl.Marker({ element: destinationElement(), anchor: "bottom" }).setLngLat(active.geometry[active.geometry.length - 1]));
-    if (nav) {
-      add(new mapboxgl.Marker({ element: maneuverElement(nav.modifier) })
-        .setLngLat(pointAlong(active.geometry, frame.progressM + nav.distanceM)));
-    }
     return () => {
       markers.current.forEach((m) => m.remove());
       markers.current = [];
     };
-  }, [data, routeKey, active, nav, frame.nav, frame.progressM, setRouteKey]);
+  }, [data, routeKey, active, frame.nav, setRouteKey]);
 
   // current position and heading
   useEffect(() => {

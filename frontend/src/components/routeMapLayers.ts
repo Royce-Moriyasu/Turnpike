@@ -2,7 +2,7 @@
 import type { Feature, FeatureCollection, LineString } from "geojson";
 import type { GeoJSONSource, Map as MapboxMap } from "mapbox-gl";
 import type { Congestion, DemoRoute, MapRouteSummary } from "../types";
-import { arrowFor, formatDistance } from "../lanes";
+import { formatDistance } from "../lanes";
 
 // Swap to "mapbox://styles/mapbox/navigation-day-v1" (or light-v11) for a light map.
 export const MAP_STYLE = "mapbox://styles/mapbox/navigation-night-v1";
@@ -175,11 +175,6 @@ export function destinationElement(): HTMLDivElement {
       <path d="M13 35 C13 35 1 21 1 13 A12 12 0 0 1 25 13 C25 21 13 35 13 35 Z" fill="#ea4335" stroke="#a50e0e" stroke-width="1.5" />
       <circle cx="13" cy="13" r="4.5" fill="#7c1109" />
     </svg>`);
-}
-
-/** Small blue badge with the same arrow as the maneuver card. */
-export function maneuverElement(modifier: string | null): HTMLDivElement {
-  return el("route-maneuver", arrowFor(modifier ?? "straight"));
 }
 
 /** ETA card like Google Maps': blue for the active route, white for alternates. */

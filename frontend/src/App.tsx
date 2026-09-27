@@ -250,7 +250,7 @@ export default function App() {
           />
         </main>
         <aside className="space-y-4">
-          <RouteMiniMap data={data} routeKey={routeKey} setRouteKey={setRouteKey} frame={frame} nav={nav} />
+          <RouteMiniMap data={data} routeKey={routeKey} setRouteKey={setRouteKey} frame={frame} />
           <DataPanel data={data} frame={frame} nav={nav} lanes={lanes} />
         </aside>
       </div>
