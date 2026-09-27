@@ -15,12 +15,12 @@ import DataPanel from "./components/DataPanel";
 
 // Space around the video in the page layout (header, controls row, panel header, playback bar and the
 // top of the guidance panel), so the video grows into whatever height is left on screen.
-const VIDEO_RESERVED_PX = 330;
+const VIDEO_RESERVED_PX = 378;
 // ...in full screen, only the panel header and playback bar...
 const FULLSCREEN_RESERVED_PX = 110;
 // ...and in theater mode, the header, controls row, playback bar and the one-row guidance panel below
 // (map and data are beside the video).
-const THEATER_RESERVED_PX = 366;
+const THEATER_RESERVED_PX = 422;
 
 const FRAME_MS = 700; // at 1x speed. SR 70 was captured at ~1 frame/s, so 1x plays it at ~1.4x real time
 
@@ -162,7 +162,7 @@ export default function App() {
     : null;
 
   const status = laneStatus(lanesOn, nav, lanes, horizonY);
-  const headerLink = "flex h-7 items-center rounded-md border border-line bg-white/5 px-2.5 text-xs font-medium text-white/70 hover:bg-white/10 hover:text-white";
+  const headerLink = "flex h-11 items-center rounded-md border border-line bg-white/5 px-4 text-base font-medium text-white/70 hover:bg-white/10 hover:text-white";
 
   const toolbar = (
     <Toolbar
@@ -235,17 +235,20 @@ export default function App() {
 
   return (
     <div className={`mx-auto flex flex-col gap-3 p-3 md:p-4 ${theater ? "max-w-none" : "max-w-7xl"}`}>
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-xl font-bold tracking-tight">
-            Turn<span className="text-accent">pike</span>
+      <header className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-4">
+          <h1 className="flex items-center gap-3 text-4xl font-bold tracking-tight">
+            <img src="/turnpike-mark.png" alt="" className="h-16 w-auto" draggable={false} />
+            <span>
+              Turn<span className="text-accent">pike</span>
+            </span>
           </h1>
           {clips && clips.clips.length > 1 && (
             <select
               value={clip ?? ""}
               onChange={(e) => openClip(e.target.value)}
               aria-label="Clip"
-              className="h-7 rounded-md border border-line bg-white/5 px-2 text-xs font-medium text-white/80"
+              className="h-11 rounded-md border border-line bg-white/5 px-3 text-base font-medium text-white/80"
             >
               {clips.clips.map((c) => (
                 <option key={c.name} value={c.name} className="bg-surface">
@@ -255,6 +258,7 @@ export default function App() {
             </select>
           )}
           <Segmented
+            size="xl"
             ariaLabel="Route"
             value={routeKey}
             onChange={setRouteKey}
@@ -262,7 +266,7 @@ export default function App() {
           />
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-white/50">Lane-level AR guidance from public road data</span>
+          <span className="text-base text-white/50">Lane-level AR guidance from public road data</span>
           {import.meta.env.DEV && (
             <nav className="flex gap-2">
               <a href={`#label=${index + 1}`} className={headerLink}>Label this frame</a>
@@ -294,7 +298,7 @@ export default function App() {
             <GuidancePanel nav={nav} showLanes={lanesOn} />
             {laneDebugPanel}
           </main>
-          <aside className="flex min-h-0 flex-col gap-3 lg:h-0 lg:min-h-full lg:pt-10">
+          <aside className="flex min-h-0 flex-col gap-3 lg:h-0 lg:min-h-full lg:pt-12">
             {map("min-h-64 flex-1")}
             <DataPanel frame={frame} nav={nav} lanes={lanes} className="min-h-64 flex-1" />
           </aside>
