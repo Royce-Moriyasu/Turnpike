@@ -1,0 +1,8 @@
+{
+  "origin": [-121.53884360517, 38.62736567118],
+  "originBearing": 271,
+  "primaryRoute": "exit",
+  "routes": {
+    "exit": {"label": "Right turn north", "destination": [-121.53966981494, 38.632740877057]}
+  }
+}
