@@ -1,0 +1,535 @@
+{
+ "code": "Ok",
+ "waypoints": [
+  {
+   "location": [
+    -121.538844,
+    38.627332
+   ],
+   "name": "San Juan Road",
+   "distance": 3.735
+  },
+  {
+   "location": [
+    -121.539663,
+    38.632741
+   ],
+   "name": "El Centro Road",
+   "distance": 0.596
+  }
+ ],
+ "routes": [
+  {
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -121.538844,
+      38.627332
+     ],
+     [
+      -121.539314,
+      38.627333
+     ],
+     [
+      -121.539544,
+      38.627321
+     ],
+     [
+      -121.53948,
+      38.627498
+     ],
+     [
+      -121.539485,
+      38.628893
+     ],
+     [
+      -121.539486,
+      38.629317
+     ],
+     [
+      -121.5395,
+      38.630883
+     ],
+     [
+      -121.539566,
+      38.630984
+     ],
+     [
+      -121.53958,
+      38.631136
+     ],
+     [
+      -121.539654,
+      38.631735
+     ],
+     [
+      -121.539663,
+      38.632741
+     ]
+    ]
+   },
+   "distance": 666.803,
+   "duration": 53.159,
+   "weight": 49.711,
+   "weight_name": "auto",
+   "legs": [
+    {
+     "steps": [
+      {
+       "geometry": {
+        "type": "LineString",
+        "coordinates": [
+         [
+          -121.538844,
+          38.627332
+         ],
+         [
+          -121.539314,
+          38.627333
+         ],
+         [
+          -121.539544,
+          38.627321
+         ]
+        ]
+       },
+       "mode": "driving",
+       "driving_side": "right",
+       "distance": 60.946,
+       "duration": 6.138,
+       "weight": 6.098,
+       "name": "San Juan Road",
+       "maneuver": {
+        "location": [
+         -121.538844,
+         38.627332
+        ],
+        "bearing_before": 0,
+        "bearing_after": 270,
+        "instruction": "Drive west on San Juan Road.",
+        "type": "depart"
+       },
+       "intersections": [
+        {
+         "location": [
+          -121.538844,
+          38.627332
+         ],
+         "geometry_index": 0,
+         "admin_index": 0,
+         "out": 0,
+         "entry": [
+          true
+         ],
+         "bearings": [
+          270
+         ],
+         "mapbox_streets_v8": {
+          "class": "secondary"
+         }
+        }
+       ],
+       "bannerInstructions": [
+        {
+         "distanceAlongGeometry": 60.946,
+         "primary": {
+          "text": "El Centro Road",
+          "type": "turn",
+          "modifier": "right",
+          "components": [
+           {
+            "text": "El Centro Road",
+            "type": "text"
+           }
+          ]
+         },
+         "sub": {
+          "text": "",
+          "components": [
+           {
+            "text": "",
+            "type": "lane",
+            "active": false,
+            "directions": [
+             "left",
+             "straight"
+            ]
+           },
+           {
+            "text": "",
+            "type": "lane",
+            "active": true,
+            "directions": [
+             "right"
+            ],
+            "active_direction": "right"
+           }
+          ]
+         }
+        }
+       ]
+      },
+      {
+       "geometry": {
+        "type": "LineString",
+        "coordinates": [
+         [
+          -121.539544,
+          38.627321
+         ],
+         [
+          -121.53948,
+          38.627498
+         ],
+         [
+          -121.539485,
+          38.628893
+         ],
+         [
+          -121.539486,
+          38.629317
+         ],
+         [
+          -121.5395,
+          38.630883
+         ],
+         [
+          -121.539566,
+          38.630984
+         ],
+         [
+          -121.53958,
+          38.631136
+         ],
+         [
+          -121.539654,
+          38.631735
+         ],
+         [
+          -121.539663,
+          38.632741
+         ]
+        ]
+       },
+       "mode": "driving",
+       "driving_side": "right",
+       "distance": 605.857,
+       "duration": 47.02,
+       "weight": 43.613,
+       "name": "El Centro Road",
+       "maneuver": {
+        "location": [
+         -121.539544,
+         38.627321
+        ],
+        "bearing_before": 266,
+        "bearing_after": 16,
+        "modifier": "right",
+        "instruction": "Turn right onto El Centro Road.",
+        "type": "turn"
+       },
+       "intersections": [
+        {
+         "location": [
+          -121.539544,
+          38.627321
+         ],
+         "geometry_index": 2,
+         "admin_index": 0,
+         "stop_sign": true,
+         "turn_weight": 2,
+         "duration": 1.455,
+         "weight": 3.445,
+         "in": 1,
+         "out": 0,
+         "entry": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+         ],
+         "bearings": [
+          16,
+          86,
+          186,
+          258,
+          275,
+          344
+         ],
+         "mapbox_streets_v8": {
+          "class": "secondary"
+         },
+         "lanes": [
+          {
+           "active": false,
+           "valid": false,
+           "indications": [
+            "left",
+            "straight"
+           ]
+          },
+          {
+           "active": true,
+           "valid": true,
+           "valid_indication": "right",
+           "indications": [
+            "right"
+           ]
+          }
+         ]
+        },
+        {
+         "location": [
+          -121.53948,
+          38.627498
+         ],
+         "geometry_index": 3,
+         "admin_index": 0,
+         "duration": 11.034,
+         "weight": 10.962,
+         "in": 0,
+         "out": 1,
+         "entry": [
+          false,
+          true
+         ],
+         "bearings": [
+          196,
+          360
+         ],
+         "mapbox_streets_v8": {
+          "class": "secondary"
+         }
+        },
+        {
+         "location": [
+          -121.539485,
+          38.628893
+         ],
+         "geometry_index": 4,
+         "admin_index": 0,
+         "duration": 3.354,
+         "weight": 3.332,
+         "in": 0,
+         "out": 1,
+         "entry": [
+          false,
+          true
+         ],
+         "bearings": [
+          180,
+          360
+         ],
+         "mapbox_streets_v8": {
+          "class": "secondary"
+         }
+        },
+        {
+         "location": [
+          -121.539486,
+          38.629317
+         ],
+         "geometry_index": 5,
+         "admin_index": 0,
+         "turn_weight": 1,
+         "duration": 11.633,
+         "weight": 12.407,
+         "in": 1,
+         "out": 3,
+         "entry": [
+          true,
+          false,
+          true,
+          true
+         ],
+         "bearings": [
+          92,
+          180,
+          270,
+          360
+         ],
+         "mapbox_streets_v8": {
+          "class": "secondary"
+         },
+         "lanes": [
+          {
+           "active": false,
+           "valid": false,
+           "indications": [
+            "left"
+           ]
+          },
+          {
+           "active": true,
+           "valid": true,
+           "valid_indication": "straight",
+           "indications": [
+            "straight"
+           ]
+          },
+          {
+           "active": true,
+           "valid": true,
+           "valid_indication": "straight",
+           "indications": [
+            "straight"
+           ]
+          },
+          {
+           "active": false,
+           "valid": false,
+           "indications": [
+            "right"
+           ]
+          }
+         ]
+        },
+        {
+         "location": [
+          -121.539566,
+          38.630984
+         ],
+         "geometry_index": 7,
+         "admin_index": 0,
+         "turn_weight": 1.5,
+         "duration": 1.691,
+         "weight": 2.535,
+         "in": 0,
+         "out": 2,
+         "entry": [
+          false,
+          true,
+          true
+         ],
+         "bearings": [
+          164,
+          197,
+          356
+         ],
+         "mapbox_streets_v8": {
+          "class": "secondary"
+         }
+        },
+        {
+         "location": [
+          -121.53958,
+          38.631136
+         ],
+         "geometry_index": 8,
+         "admin_index": 0,
+         "in": 0,
+         "out": 1,
+         "entry": [
+          false,
+          true
+         ],
+         "bearings": [
+          176,
+          354
+         ],
+         "mapbox_streets_v8": {
+          "class": "secondary"
+         }
+        }
+       ],
+       "bannerInstructions": [
+        {
+         "distanceAlongGeometry": 605.857,
+         "primary": {
+          "text": "You will arrive at your destination",
+          "type": "arrive",
+          "modifier": "straight",
+          "components": [
+           {
+            "text": "You will arrive at your destination",
+            "type": "text"
+           }
+          ]
+         }
+        },
+        {
+         "distanceAlongGeometry": 111.111,
+         "primary": {
+          "text": "You have arrived at your destination",
+          "type": "arrive",
+          "modifier": "straight",
+          "components": [
+           {
+            "text": "You have arrived at your destination",
+            "type": "text"
+           }
+          ]
+         }
+        }
+       ]
+      },
+      {
+       "geometry": {
+        "type": "LineString",
+        "coordinates": [
+         [
+          -121.539663,
+          38.632741
+         ],
+         [
+          -121.539663,
+          38.632741
+         ]
+        ]
+       },
+       "mode": "driving",
+       "driving_side": "right",
+       "distance": 0,
+       "duration": 0,
+       "weight": 0,
+       "name": "El Centro Road",
+       "maneuver": {
+        "location": [
+         -121.539663,
+         38.632741
+        ],
+        "bearing_before": 360,
+        "bearing_after": 0,
+        "instruction": "You have arrived at your destination.",
+        "type": "arrive"
+       },
+       "intersections": [
+        {
+         "location": [
+          -121.539663,
+          38.632741
+         ],
+         "geometry_index": 10,
+         "admin_index": 0,
+         "in": 0,
+         "entry": [
+          true
+         ],
+         "bearings": [
+          180
+         ]
+        }
+       ],
+       "bannerInstructions": []
+      }
+     ],
+     "summary": "San Juan Road, El Centro Road",
+     "distance": 666.803,
+     "duration": 53.159,
+     "weight": 49.711,
+     "admins": [
+      {
+       "iso_3166_1": "US",
+       "iso_3166_1_alpha3": "USA"
+      }
+     ],
+     "via_waypoints": []
+    }
+   ]
+  }
+ ],
+ "uuid": "VfgYkqdxlXoFZhpDC9ZOF82FYCBMB_8vyccRDQUcHyZ6849cU1qKGg=="
+}
