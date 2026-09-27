@@ -7,14 +7,14 @@ import Panel from "./Panel";
 import { Segmented } from "./ui";
 import {
   ALTERNATE_HIT_LAYER, MAP_STYLE, addRouteLayers, boundsOf, calloutElement, destinationElement,
-  shareAlong, positionElement, positionOnRoute, routeLayerData, setRouteLayerData,
+  positionElement, positionOnRoute, routeLayerData, setRouteLayerData,
 } from "./routeMapLayers";
 
 const TOKEN: string | undefined = import.meta.env.VITE_MAPBOX_TOKEN;
 const FOLLOW_ZOOM = 16;
 const PADDING = 36;
-// Where an alternate route's card sits along it: past the start, where the position dot and fork are.
-const ALTERNATE_CALLOUT_AT = 0.8;
+// The other route's card follows the car, this far below the position dot so it doesn't cover it.
+const CALLOUT_BELOW_DOT_PX = 16;
 
 type Camera = "overview" | "follow";
 
@@ -118,14 +118,17 @@ function MapboxMiniMap({ data, routeKey, setRouteKey, frame, className, token }:
       );
       bubble.classList.add("route-callout-below");
       bubble.addEventListener("click", () => setRouteKey(key));
-      add(new mapboxgl.Marker({ element: bubble, anchor: "top", offset: [0, 8] }).setLngLat(shareAlong(r.geometry, ALTERNATE_CALLOUT_AT)));
+      // Rides with the car: that route's point at the car's distance along it (the same spot as the
+      // position dot while the routes share the road), just below the dot.
+      add(new mapboxgl.Marker({ element: bubble, anchor: "top", offset: [0, CALLOUT_BELOW_DOT_PX] })
+        .setLngLat(positionOnRoute(data, key, frame)));
     }
     add(new mapboxgl.Marker({ element: destinationElement(), anchor: "bottom" }).setLngLat(active.geometry[active.geometry.length - 1]));
     return () => {
       markers.current.forEach((m) => m.remove());
       markers.current = [];
     };
-  }, [data, routeKey, active, frame.nav, setRouteKey]);
+  }, [data, routeKey, active, frame, setRouteKey]);
 
   // current position and heading
   useEffect(() => {

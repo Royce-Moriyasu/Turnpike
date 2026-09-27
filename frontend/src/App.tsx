@@ -91,6 +91,17 @@ export default function App() {
     return () => clearInterval(t);
   }, [playing, count, speed, loop]);
 
+  // Looping a clip with several routes (e.g. SR 70 North/South): each pass plays the next route, so
+  // the highlight visibly moves to that route's lane. Detected on the wrap from the last frame to the
+  // first (not inside the stepper above: React may run state updaters twice).
+  const prevIndex = useRef(index);
+  useEffect(() => {
+    const wrapped = playing && loop && count > 1 && index === 0 && prevIndex.current === count - 1;
+    prevIndex.current = index;
+    const keys = Object.keys(data?.routes ?? {});
+    if (wrapped && keys.length > 1) setRouteKey((k) => keys[(keys.indexOf(k) + 1) % keys.length]);
+  }, [index, playing, loop, count, data]);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") setIndex(index + 1);
@@ -272,7 +283,7 @@ export default function App() {
           {import.meta.env.DEV && (
             <nav className="flex gap-2">
               <a href={`#label=${index + 1}`} className={headerLink}>Label this frame</a>
-              <a href={`#cv=${index + 1}`} className={headerLink}>CV review</a>
+              <a href={`#cv=${index + 1}`} className={headerLink}>CV Review</a>
             </nav>
           )}
         </div>

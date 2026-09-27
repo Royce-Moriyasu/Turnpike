@@ -261,7 +261,7 @@ export default function CvReview() {
     <div className="mx-auto max-w-7xl space-y-4 p-4 md:p-6">
       <header className="flex flex-wrap items-baseline justify-between gap-2">
         <h1 className="text-2xl font-bold tracking-tight">
-          CV <span className="text-accent">review</span>
+          CV <span className="text-accent">Review</span>
         </h1>
         <div className="flex flex-wrap items-center gap-4 text-sm text-white/60">
           <div className="flex rounded-lg bg-white/5 p-1" role="group" aria-label="Detected lines to review">
