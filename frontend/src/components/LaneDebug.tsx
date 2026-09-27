@@ -1,4 +1,5 @@
 import type { ActiveLanes, NavState } from "../types";
+import Panel from "./Panel";
 import { arrowFor, bikeLaneRatio, DRIVABLE_MIN, laneShapeLimits, type LaneDebugRow, type LaneStatus } from "../lanes";
 
 // Shared with DriverView's debug overlay.
@@ -25,17 +26,19 @@ interface Props {
 export default function LaneDebug({ nav, lanes, rows, reason, countFrom }: Props) {
   const mb = nav?.lanes ?? [];
   return (
-    <div className="rounded-2xl bg-surface p-4 text-sm ring-1 ring-amber-400/40">
-      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
-        <span className="text-xs uppercase tracking-widest text-amber-300/80">Lane debug · {lanes.label}</span>
-        <span className="font-mono text-xs text-white/50">
+    <Panel
+      title={`Lane debug · ${lanes.label}`}
+      tone="warn"
+      right={
+        <span className="value truncate text-white/50">
           {lanes.polygons ? `${lanes.polygons.length} visible` : "no lanes detected"} · Mapbox {mb.length} ·
           count from {countFrom ?? nav?.laneAnchor ?? nav?.laneSide ?? "—"}
           {countFrom && countFrom !== nav?.laneSide ? ` (turn side ${nav?.laneSide})` : ""}
           {nav?.laneAhead ? ` · turn lanes ahead L${nav.laneAhead.left} R${nav.laneAhead.right}` : ""}
           {lanes.confidence != null ? ` · conf ${lanes.confidence.toFixed(2)}` : ""}
         </span>
-      </div>
+      }
+    >
 
       {reason && rows.length > 0 && (
         <p className="mb-2 text-xs text-red-300">No highlight: {reason}</p>
@@ -119,6 +122,6 @@ export default function LaneDebug({ nav, lanes, rows, reason, countFrom }: Props
       ) : (
         <p className="text-xs text-white/50">No {lanes.label} lanes detected on this frame, so nothing is highlighted.</p>
       )}
-    </div>
+    </Panel>
   );
 }

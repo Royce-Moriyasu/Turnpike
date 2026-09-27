@@ -8,6 +8,8 @@
   --color-danger-soft: #f28b82;
   --color-surface: #2d2e31;
   --color-page: #202124;
+  --color-line: rgb(255 255 255 / 0.08); /* panel borders and row dividers */
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
 }
 
 html,
@@ -20,6 +22,30 @@ body {
   background: var(--color-page);
   color: #e8eaed;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13px; /* body text: 13px, small text: 11px (.label, .value in headers) */
+  line-height: 1.45;
+}
+
+/* Dashboard type: small uppercase labels, monospace values that line up. */
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.5);
+  white-space: nowrap;
+}
+.value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: pre;
+}
+
+/* Playback scrubber: a thin track with the accent fill. */
+.scrubber {
+  accent-color: var(--color-accent);
+  height: 4px;
+  cursor: pointer;
 }
 
 @keyframes lane-pulse {

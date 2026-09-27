@@ -1,13 +1,15 @@
 import type { DemoRoute, Frame } from "../types";
+import Panel from "./Panel";
 import { positionOnRoute } from "./routeMapLayers";
 
 interface Props {
   data: DemoRoute;
   routeKey: string;
   frame: Frame;
+  className?: string;
 }
 
-export default function MiniMap({ data, routeKey, frame }: Props) {
+export default function MiniMap({ data, routeKey, frame, className }: Props) {
   const all = Object.values(data.routes).flatMap((r) => r.geometry);
   const lngs = all.map((p) => p[0]);
   const lats = all.map((p) => p[1]);
@@ -23,9 +25,8 @@ export default function MiniMap({ data, routeKey, frame }: Props) {
   const r = Math.max(w, h) * 0.02;
 
   return (
-    <div className="rounded-2xl bg-surface p-3 ring-1 ring-white/10">
-      <div className="mb-2 text-xs uppercase tracking-widest text-white/50">Route</div>
-      <svg viewBox={vb} className="aspect-[4/3] w-full">
+    <Panel title="Route" className={className}>
+      <svg viewBox={vb} className="h-full min-h-48 w-full">
         {Object.entries(data.routes)
           .sort(([a]) => (a === routeKey ? 1 : -1))
           .map(([key, route]) => (
@@ -42,6 +43,6 @@ export default function MiniMap({ data, routeKey, frame }: Props) {
           ))}
         <circle cx={cx} cy={cy} r={r} fill="#fff" stroke="#000" strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
       </svg>
-    </div>
+    </Panel>
   );
 }

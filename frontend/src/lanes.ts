@@ -355,3 +355,6 @@ export function laneDebug(
   });
   return { rows, reason, countFrom };
 }
+
+/** Display only: "I 95" -> "I-95" (also US/SR/CR routes), as road names are usually written. */
+export const roadName = (text: string) => text.replace(/\b(I|US|SR|CR)\s(\d+)/g, "$1-$2");
