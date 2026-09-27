@@ -1,0 +1,159 @@
+import { useEffect, useRef, useState } from "react";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import type { DemoRoute, Frame } from "../types";
+import MiniMap from "./MiniMap";
+import {
+  ALTERNATE_HIT_LAYER, MAP_STYLE, addRouteLayers, boundsOf, calloutElement, destinationElement,
+  shareAlong, positionElement, routeLayerData, setRouteLayerData,
+} from "./routeMapLayers";
+
+const TOKEN: string | undefined = import.meta.env.VITE_MAPBOX_TOKEN;
+const FOLLOW_ZOOM = 16;
+const PADDING = 36;
+// Where an alternate route's card sits along it: past the start, where the position dot and fork are.
+const ALTERNATE_CALLOUT_AT = 0.8;
+
+type Camera = "overview" | "follow";
+
+interface Props {
+  data: DemoRoute;
+  routeKey: string;
+  setRouteKey: (key: string) => void;
+  frame: Frame;
+}
+
+/**
+ * The ROUTE panel: a Mapbox mini-map with the active route (colored by traffic when the bake has
+ * it), alternates, ETA callouts and position/destination markers. Without a Mapbox token
+ * it falls back to the plain SVG route (MiniMap).
+ */
+export default function RouteMiniMap(props: Props) {
+  if (!TOKEN) return <MiniMap data={props.data} routeKey={props.routeKey} frame={props.frame} />;
+  return <MapboxMiniMap {...props} token={TOKEN} />;
+}
+
+function MapboxMiniMap({ data, routeKey, setRouteKey, frame, token }: Props & { token: string }) {
+  const container = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const markers = useRef<mapboxgl.Marker[]>([]);
+  const position = useRef<mapboxgl.Marker | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [camera, setCamera] = useState<Camera>("overview");
+  const setRouteKeyRef = useRef(setRouteKey);
+  setRouteKeyRef.current = setRouteKey;
+
+  const active = data.routes[routeKey];
+
+  // create the map once; remove it on unmount
+  useEffect(() => {
+    if (!container.current) return;
+    const map = new mapboxgl.Map({
+      accessToken: token,
+      container: container.current,
+      style: MAP_STYLE,
+      bounds: boundsOf(Object.values(data.routes).map((r) => r.geometry)),
+      fitBoundsOptions: { padding: PADDING },
+      attributionControl: false,
+      pitchWithRotate: false,
+    });
+    map.scrollZoom.disable();
+    map.dragRotate.disable();
+    map.touchZoomRotate.disableRotation();
+    map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), "bottom-right");
+    map.addControl(new mapboxgl.AttributionControl({ compact: true }), "bottom-left");
+    map.on("load", () => {
+      addRouteLayers(map);
+      map.on("click", ALTERNATE_HIT_LAYER, (e) => {
+        const key = e.features?.[0]?.properties?.routeKey;
+        if (typeof key === "string") setRouteKeyRef.current(key);
+      });
+      map.on("mouseenter", ALTERNATE_HIT_LAYER, () => (map.getCanvas().style.cursor = "pointer"));
+      map.on("mouseleave", ALTERNATE_HIT_LAYER, () => (map.getCanvas().style.cursor = ""));
+      setLoaded(true);
+    });
+    position.current = new mapboxgl.Marker({ element: positionElement(), rotationAlignment: "map" })
+      .setLngLat([frame.lng, frame.lat]).addTo(map);
+    mapRef.current = map;
+    return () => {
+      map.remove();
+      mapRef.current = null;
+      position.current = null;
+      setLoaded(false);
+    };
+    // created once; the effects below keep it in sync with the props
+  }, [token]);
+
+  // route lines: active (traffic colors, traveled part gray) over the alternates
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map && loaded) setRouteLayerData(map, routeLayerData(data, routeKey, frame.progressM));
+  }, [loaded, data, routeKey, frame.progressM]);
+
+  // callouts and destination pin
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    const add = (m: mapboxgl.Marker) => markers.current.push(m.addTo(map));
+    // One card per other route, with the same distance as the maneuver card (to that route's next
+    // maneuver from here) and the time for it at the route's average speed. The active route has
+    // no card: the maneuver card already shows it.
+    for (const [key, r] of Object.entries(data.routes)) {
+      const routeNav = frame.nav[key];
+      if (key === routeKey || !routeNav) continue;
+      const main = r.map?.main;
+      const durationS = main?.durationS ?? r.durationS ?? 0;
+      const speed = durationS > 0 ? (main?.distanceM ?? r.distanceM) / durationS : 0; // m/s
+      const bubble = calloutElement(
+        { durationS: speed > 0 ? routeNav.distanceM / speed : 0, distanceM: routeNav.distanceM, toll: main?.toll ?? false },
+        false,
+      );
+      bubble.classList.add("route-callout-below");
+      bubble.addEventListener("click", () => setRouteKey(key));
+      add(new mapboxgl.Marker({ element: bubble, anchor: "top", offset: [0, 8] }).setLngLat(shareAlong(r.geometry, ALTERNATE_CALLOUT_AT)));
+    }
+    add(new mapboxgl.Marker({ element: destinationElement(), anchor: "bottom" }).setLngLat(active.geometry[active.geometry.length - 1]));
+    return () => {
+      markers.current.forEach((m) => m.remove());
+      markers.current = [];
+    };
+  }, [data, routeKey, active, frame.nav, setRouteKey]);
+
+  // current position and heading
+  useEffect(() => {
+    position.current?.setLngLat([frame.lng, frame.lat]).setRotation(frame.heading ?? 0);
+  }, [frame.lng, frame.lat, frame.heading]);
+
+  // camera: whole route, or follow the car rotated to its heading
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    if (camera === "follow") {
+      map.easeTo({ center: [frame.lng, frame.lat], zoom: FOLLOW_ZOOM, bearing: frame.heading ?? 0, duration: 600 });
+    } else {
+      map.fitBounds(boundsOf([active.geometry]), { padding: PADDING, bearing: 0, duration: 600 });
+    }
+  }, [camera, active, frame.lng, frame.lat, frame.heading]);
+
+  return (
+    <div className="rounded-2xl bg-surface p-3 ring-1 ring-white/10">
+      <div className="mb-2 flex items-center justify-between">
+        <div className="text-xs uppercase tracking-widest text-white/50">Route</div>
+        <div className="flex rounded-md bg-white/10 p-0.5 text-[11px]" role="group" aria-label="Map camera">
+          {(["overview", "follow"] as const).map((c) => (
+            <button
+              key={c}
+              type="button"
+              aria-pressed={camera === c}
+              onClick={() => setCamera(c)}
+              className={`rounded px-2 py-0.5 capitalize ${camera === c ? "bg-accent text-white" : "text-white/60 hover:text-white"}`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div ref={container} className="route-minimap aspect-[4/3] w-full overflow-hidden rounded-xl" />
+    </div>
+  );
+}

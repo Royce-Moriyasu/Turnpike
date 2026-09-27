@@ -65,10 +65,24 @@ export interface Frame {
   vehicles?: Vehicle[]; // YOLOPv2 vehicle boxes
 }
 
+export type Congestion = "unknown" | "low" | "moderate" | "heavy" | "severe";
+
+/** One route in the mini-map's traffic request (bake: load_map_route). */
+export interface MapRouteSummary {
+  geometry: [number, number][]; // [lng, lat]
+  durationS: number;
+  distanceM: number;
+  toll: boolean;
+  congestion: Congestion[] | null; // one per geometry segment
+}
+
 export interface RouteInfo {
   label: string;
   geometry: [number, number][]; // [lng, lat]
   distanceM: number;
+  durationS?: number; // the guidance route's duration (no traffic)
+  // traffic + alternatives for the mini-map; null when the bake ran without MAPBOX_TOKEN
+  map?: { main: MapRouteSummary; alternatives: MapRouteSummary[] } | null;
 }
 
 export interface DemoRoute {

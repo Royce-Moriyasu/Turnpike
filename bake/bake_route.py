@@ -187,6 +187,7 @@ class RouteModel:
     def __init__(self, key: str, response: dict):
         route = response["routes"][0]
         self.key = key
+        self.route = route
         self.line = Polyline(route["geometry"]["coordinates"])
         self.steps = route["legs"][0]["steps"]
         self.maneuver_s = [self.line.cum[st["intersections"][0]["geometry_index"]] for st in self.steps]
@@ -393,6 +394,54 @@ def load_mapbox(key: str, refresh: bool) -> dict:
     cache.write_text(json.dumps(resp, indent=1), encoding="utf-8")
     print(f"  fetched Mapbox route '{key}' -> {cache.relative_to(ROOT)}")
     return resp
+
+
+def load_map_route(key: str, refresh: bool) -> dict | None:
+    """Route preview data for the ROUTE mini-map: live traffic and alternatives.
+
+    A separate request from load_mapbox on purpose: the driving-traffic profile can return different
+    steps, and the lane guidance must keep using the cached driving route. Cached as
+    mapbox_<route>_map.json; without a cache or MAPBOX_TOKEN the map just draws the plain route.
+    Congestion is the traffic at the time of this request, not at the time of the photos.
+    """
+    cache = CLIP.root / f"mapbox_{key}_map.json"
+    if cache.exists() and not refresh:
+        resp = json.loads(cache.read_text(encoding="utf-8"))
+    else:
+        token = os.getenv("MAPBOX_TOKEN")
+        if not token:
+            print(f"  no MAPBOX_TOKEN: skipping traffic/alternatives for '{key}' (mini-map draws the plain route)")
+            return None
+        cfg = ROUTES[key]
+        coords = ";".join(f"{lng},{lat}" for lng, lat in (cfg["origin"], cfg["destination"]))
+        try:
+            r = requests.get(
+                f"https://api.mapbox.com/directions/v5/mapbox/driving-traffic/{coords}",
+                params={"alternatives": "true", "annotations": "congestion", "steps": "true",
+                        "geometries": "geojson", "overview": "full",
+                        "bearings": f"{ORIGIN_BEARING},45;", "access_token": token},
+                timeout=30,
+            )
+            r.raise_for_status()
+        except requests.RequestException as e:
+            print(f"  warning: map route '{key}' failed, skipping: {str(e).replace(token, '<MAPBOX_TOKEN>')}")
+            return None
+        resp = r.json()
+        cache.write_text(json.dumps(resp, indent=1), encoding="utf-8")
+        print(f"  fetched map route '{key}' -> {cache.relative_to(ROOT)}")
+
+    def summary(route: dict) -> dict:
+        # a toll road shows up as the "toll" class on the intersections along it
+        toll = any("toll" in inter.get("classes", [])
+                   for leg in route["legs"] for step in leg["steps"] for inter in step["intersections"])
+        congestion = [c for leg in route["legs"] for c in leg.get("annotation", {}).get("congestion", [])]
+        return {"geometry": route["geometry"]["coordinates"], "durationS": round(route["duration"]),
+                "distanceM": round(route["distance"], 1), "toll": toll, "congestion": congestion or None}
+
+    routes = resp.get("routes") or []
+    if not routes:
+        return None
+    return {"main": summary(routes[0]), "alternatives": [summary(r) for r in routes[1:]]}
 
 
 def mly_get(path: str, **params) -> dict:
@@ -649,6 +698,7 @@ def main() -> None:
     print("Loading routes")
     models = {k: RouteModel(k, load_mapbox(k, args.refresh)) for k in ROUTES}
     primary = models[PRIMARY_ROUTE]
+    map_routes = {k: load_map_route(k, args.refresh) for k in ROUTES}
 
     print("Building frames")
     if args.synthetic:
@@ -690,7 +740,9 @@ def main() -> None:
                    "imageSize": image_size(frames)},
         "primaryRoute": PRIMARY_ROUTE,
         "routes": {k: {"label": ROUTES[k]["label"], "geometry": m.line.coords,
-                       "distanceM": round(m.line.length, 1)} for k, m in models.items()},
+                       "distanceM": round(m.line.length, 1),
+                       "durationS": round(m.route["duration"]),
+                       "map": map_routes[k]} for k, m in models.items()},
         "laneSources": {k: {"label": v["label"], "method": v["method"]} for k, v in lane_info.items()},
         "frames": frames,
         "attribution": [

@@ -121,5 +121,8 @@ function labelingApi(): Plugin {
 }
 
 export default defineConfig({
+  // Read .env from the repo root, the same file the bake uses (bake_route.py load_dotenv). Only
+  // VITE_* variables reach the browser, so MAPBOX_TOKEN (used by the bake) stays out of the bundle.
+  envDir: repoRoot,
   plugins: [react(), tailwindcss(), labelingApi()],
 });
