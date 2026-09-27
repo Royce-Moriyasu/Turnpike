@@ -189,6 +189,65 @@ function laneChevrons(lane: Point[], horizonY: number): Point[][] {
   return out;
 }
 
+// Turn cue: when the route turns soon (Mapbox's next maneuver), the highlight runs on to the turn and
+// bends that way, ending in an arrowhead. It's drawn on the road with the chevrons' flat-road model,
+// anchored to the lane's far end (center xTop, width wTop at row yTop). A road point `along` lane
+// widths past the far end and `across` lane widths right of the lane's center is at
+//   s = 1 + along * wTop / CAMERA_FOCAL      (distance relative to the far end's)
+//   y = horizon + (yTop - horizon) / s,   x = vanishingX + (xTop - vanishingX + across * wTop) / s
+// since a lane wTop wide in the image is CAMERA_FOCAL / wTop lane widths away.
+const TURN_CUE_M = 60; // show within this many meters of the turn
+const TURN_TYPES = new Set(["turn", "end of road"]);
+const CAMERA_FOCAL = 0.6; // focal length in image widths (a typical dashcam); sets the curve's depth
+const LANE_WIDTH_M = 3.6;
+const TURN_STARTS_M = 6; // Mapbox's maneuver point is mid-intersection; the curve starts this much before
+const TURN_RADIUS = 2.2; // lane widths (~8 m, a curb-side turn)
+const TURN_HALF_WIDTH = 0.2; // ribbon, lane widths
+const TURN_HEAD = { halfWidth: 0.55, length: 1.0 };
+const TURN_ANGLE: Record<string, number> = { "slight right": 45, right: 90, "sharp right": 120, "slight left": -45, left: -90, "sharp left": -120 };
+
+function turnCue(lane: Point[], nav: NavState | null, horizonY: number, vanishingX: number): Point[] | null {
+  const angle = nav && TURN_TYPES.has(nav.maneuverType) && nav.modifier ? TURN_ANGLE[nav.modifier] : undefined;
+  if (angle === undefined || nav!.distanceM > TURN_CUE_M) return null;
+  const half = lane.length / 2;
+  if (lane.length < 4 || !Number.isInteger(half)) return null;
+  const [[xl, yl], [xr, yr]] = [lane[half - 1], lane[half]]; // far end: left and right edges
+  const yTop = Math.min(yl, yr);
+  const wTop = xr - xl;
+  if (yTop <= horizonY + 0.01 || wTop <= 0) return null;
+  const xTop = (xl + xr) / 2;
+  const farEnd = CAMERA_FOCAL / wTop; // lane widths
+  // straight on from the far end to where the turn starts, then the bend
+  const lead = Math.max(0.2, (nav!.distanceM - TURN_STARTS_M) / LANE_WIDTH_M - farEnd);
+  const project = (across: number, along: number): Point => {
+    const sc = 1 + (along * wTop) / CAMERA_FOCAL;
+    return [vanishingX + (xTop - vanishingX + across * wTop) / sc, horizonY + (yTop - horizonY) / sc];
+  };
+  const dir = Math.sign(angle);
+  const sweep = (Math.abs(angle) * Math.PI) / 180;
+  // centerline: position and heading (unit vector across/along) at each step
+  const steps: { a: number; l: number; ta: number; tl: number }[] = [{ a: 0, l: 0, ta: 0, tl: 1 }];
+  for (let i = 0; i <= 12; i++) {
+    const th = (sweep * i) / 12;
+    steps.push({
+      a: dir * TURN_RADIUS * (1 - Math.cos(th)),
+      l: lead + TURN_RADIUS * Math.sin(th),
+      ta: dir * Math.sin(th),
+      tl: Math.cos(th),
+    });
+  }
+  const offset = ({ a, l, ta, tl }: (typeof steps)[number], by: number) => project(a - tl * by, l + ta * by); // + = left
+  const end = steps[steps.length - 1];
+  const tip = project(end.a + end.ta * TURN_HEAD.length, end.l + end.tl * TURN_HEAD.length);
+  return [
+    ...steps.map((p) => offset(p, TURN_HALF_WIDTH)),
+    offset(end, TURN_HEAD.halfWidth),
+    tip,
+    offset(end, -TURN_HEAD.halfWidth),
+    ...steps.reverse().map((p) => offset(p, -TURN_HALF_WIDTH)),
+  ];
+}
+
 /** Keep an untaken turn branch from widening the highlighted through lane. */
 function trimUntakenBranch(lane: Point[] | null, previous: Point[] | null, side: "left" | "right" | null): Point[] | null {
   if (!lane || !previous || !side) return lane;
@@ -274,6 +333,7 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
   const inTargetLane = offset !== null && Math.abs(offset) <= IN_LANE;
   const blocked = !inTargetLane && vehicleInLane(frame.vehicles, trimmedLane && extendToBottom(trimmedLane), horizonY);
   const laneColor = blocked ? "var(--color-danger)" : "var(--color-accent)";
+  const turn = shownLane ? turnCue(shownLane, nav, horizonY, vanishingX) : null;
 
   return (
     <div
@@ -310,6 +370,16 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
               vectorEffect="non-scaling-stroke"
               className="lane-pulse lane-outline"
             />
+        )}
+        {turn && (
+          <polygon
+            points={toPoints(turn)}
+            className="turn-cue"
+            style={{ fill: laneColor, stroke: blocked ? "var(--color-danger-soft)" : "var(--color-accent-soft)" }}
+            strokeWidth={2}
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+          />
         )}
         {/* nearest first, so the brightening wave runs away from the driver */}
         {chevrons.map((pts, k) => (
