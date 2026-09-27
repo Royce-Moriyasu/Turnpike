@@ -18,6 +18,7 @@ import os
 import shutil
 import sys
 from datetime import datetime, timezone
+from functools import cmp_to_key
 from pathlib import Path
 
 import requests
@@ -547,7 +548,15 @@ def boundaries_to_polygons(frame: dict, rows: list[float]) -> list[list[list[flo
     def bottom_x(b):
         return next((x for x in b["x"] if x is not None), math.inf)
 
-    lines = sorted(frame["boundaries"], key=bottom_x)
+    def left_to_right(a, b):
+        # compare at the lowest row both lines reach: lines that start at different rows can swap
+        # order by their own lowest x (e.g. a keyhole bike lane's line vs. a steep edge line
+        # that only enters the frame higher up)
+        j = next((j for j, (xa, xb) in enumerate(zip(a["x"], b["x"])) if xa is not None and xb is not None), None)
+        xa, xb = (a["x"][j], b["x"][j]) if j is not None else (bottom_x(a), bottom_x(b))
+        return (xa > xb) - (xa < xb)
+
+    lines = sorted(frame["boundaries"], key=cmp_to_key(left_to_right))
     lanes = []
     for left, right in zip(lines, lines[1:]):
         both = [j for j, r in enumerate(rows) if left["x"][j] is not None and right["x"][j] is not None]

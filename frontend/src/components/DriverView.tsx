@@ -105,6 +105,30 @@ function trimUntakenBranch(lane: Point[] | null, previous: Point[] | null, side:
   });
 }
 
+/**
+ * Run a lane down to the bottom of the image. Detections often stop a few rows short, which leaves
+ * a strip of bare road under the highlight; continue both edges along their slope near the bottom.
+ * Always inserts two points so consecutive frames keep the same vertex count (see useSmoothLane).
+ */
+function extendToBottom(lane: Point[] | null): Point[] | null {
+  if (!lane || lane.length < 3) return lane;
+  const ys = lane.map(([, y]) => y);
+  const bottomY = Math.max(...ys);
+  const height = bottomY - Math.min(...ys);
+  // The bottom edge: two neighboring vertices on the lowest row.
+  const i = lane.findIndex(([, y], j) => y === bottomY && lane[(j + 1) % lane.length][1] === bottomY);
+  if (i === -1 || height <= 0) return lane;
+  const upY = bottomY - Math.min(0.05, height * 0.3);
+  const bottom = spanAt(lane, bottomY);
+  const up = spanAt(lane, upY);
+  if (!bottom || !up) return lane;
+  const reach = (1 - bottomY) / (bottomY - upY);
+  const left: Point = [bottom[0] + (bottom[0] - up[0]) * reach, 1];
+  const right: Point = [bottom[1] + (bottom[1] - up[1]) * reach, 1];
+  const [a, b] = lane[i][0] <= lane[(i + 1) % lane.length][0] ? [left, right] : [right, left];
+  return [...lane.slice(0, i + 1), a, b, ...lane.slice(i + 1)];
+}
+
 /** Keep the highlight mounted and move it between nearby detections. */
 function useSmoothLane(next: Point[] | null): Point[] | null {
   const [current, setCurrent] = useState<Point[] | null>(next);
@@ -149,7 +173,10 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
   const match = overlay && nav && nav.preferredLane !== null && navCount ? laneTarget(nav, polygons, horizonY) : null;
   const target = match?.index ?? null;
   const targetLane = target !== null ? polygons[target] : null;
-  const trimmedLane = useMemo(() => trimUntakenBranch(targetLane, previousLane, untakenTurnSide), [targetLane, previousLane, untakenTurnSide]);
+  const trimmedLane = useMemo(
+    () => extendToBottom(trimUntakenBranch(targetLane, previousLane, untakenTurnSide)),
+    [targetLane, previousLane, untakenTurnSide],
+  );
   const highlightedLane = useSmoothLane(trimmedLane);
   const imminent = nav ? nav.distanceM < 120 : false;
   // The compact arrow sits within the lane; its bearing follows bottom midpoint to top midpoint.

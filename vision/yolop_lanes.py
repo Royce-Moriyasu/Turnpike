@@ -65,6 +65,8 @@ SLIVER = 0.5                  # an inner lane narrower than this x both neighbor
 SUPPORT_TOP = 0.86            # judge a line's mask support below this row (horizon + 0.085)
 MIN_SUPPORT = 0.25            # a line inside the frame there with less mask than this is a fake extension
 MIN_SUPPORT_ROWS = 5          # ...judged only if it is inside the frame on at least this many rows
+SPLIT_EDGE = 0.2             # a missed line must sit at least this share of the lane's width from its edges
+SPLIT_PX = 8                 # how close paint must be to a candidate line when searching for a missed one
 X_LIMIT = (-0.1, 1.1)         # report x only this far outside the frame (as detect_lanes.py)
 EXTRAPOLATE = 0.10            # report rows at most this far (of image height) past the detections
 
@@ -158,12 +160,25 @@ def support(line, mask, h, w, s, with_rows=False):
     return (share, int(inside.sum())) if with_rows else share
 
 
-def drop_slivers(lines, mask, h, w, s):
+def paint_share(line, paint, h, w, s):
+    """Share of the band rows (inside the frame) with photo paint on this line."""
+    ys = np.arange(int(BAND_TOP * h), int(BAND_BOTTOM * h), max(1, int(STEP_PX * h / 1152)))
+    xs = np.polyval(line["poly"], ys)
+    inside = (xs >= 0) & (xs < w)
+    ys, xs = ys[inside], xs[inside].astype(int)
+    tol = max(2, int(PAINT_PX * s))
+    return float(np.mean([paint[y, max(0, x - tol):x + tol + 1].any() for y, x in zip(ys, xs)])) if len(ys) else 0.0
+
+
+def drop_slivers(lines, mask, paint, h, w, s):
     """Remove fake lines that split a lane into a sliver. Only inner lanes are checked: an outer
     narrow lane may be a real bike lane or shoulder, which the frontend handles (lanes.ts). Of the
     sliver's two lines, the one with less mask under it in the lower rows goes: there the real
     lines are distinct, while a fake one is usually a track from the crowded rows near the horizon
-    extended down over bare road."""
+    extended down over bare road.
+    A sliver between two solid painted lines is kept: that's a keyhole bike lane (e.g. SR 70 between
+    the through lanes and the I-95 ramp lane), and dropping either line would merge it into a travel
+    lane that the frontend then highlights. The frontend sets it aside (lanes.ts innerBikeLanes)."""
     ys = np.array([r * h for r in ROWS])
     changed = True
     while changed and len(lines) >= 4:
@@ -177,11 +192,52 @@ def drop_slivers(lines, mask, h, w, s):
             rows = on_screen[i - 1] & on_screen[i] & on_screen[i + 1] & on_screen[i + 2]
             if rows.any() and np.all(widths[i][rows] < SLIVER * widths[i - 1][rows]) \
                     and np.all(widths[i][rows] < SLIVER * widths[i + 1][rows]):
+                if all(paint_share(lines[j], paint, h, w, s) >= SOLID_MIN for j in (i, i + 1)):
+                    continue  # keyhole bike lane
                 weaker = i if support(lines[i], mask, h, w, s) < support(lines[i + 1], mask, h, w, s) else i + 1
                 del lines[weaker]
                 changed = True
                 break
     return lines
+
+
+def add_missed_solid(lines, paint, h, w, s):
+    """Split a lane at a solid painted line that YOLOPv2's mask missed.
+
+    The model can miss a line right under the camera (SR 70's keyhole bike lane at frame 29), and
+    the lane then spans a travel lane plus the bike lane, so the overlay would send the driver down
+    the bike lane. Within each lane, try every straight line from one of its bottom-row x's to one
+    of its top-row x's and keep the one with the most photo paint under it. It's taken only if it
+    is solid (paint on SOLID_MIN of the rows, as describe()) and well inside the lane; the frontend
+    then sets the narrow side aside as a bike lane (lanes.ts)."""
+    step = max(1, int(STEP_PX * h / 1152))
+    ys = np.arange(int(BAND_TOP * h), int(BAND_BOTTOM * h), step)
+    tol = max(1, int(SPLIT_PX * s))
+    near = cv2.dilate(paint, np.ones((1, 2 * tol + 1), np.uint8)) > 0  # paint within tol px sideways
+    y0, y1 = ys[-1], ys[0]  # bottom and top of the band
+    frac = (ys - y0) / (y1 - y0)  # 0 at the bottom row, 1 at the top
+    added = []
+    for a, b in zip(lines, lines[1:]):
+        (la0, la1), (lb0, lb1) = (np.polyval(ln["poly"], [y0, y1]) for ln in (a, b))
+        width0, width1 = lb0 - la0, lb1 - la1
+        if width0 <= 0 or width1 <= 0:
+            continue
+        bottoms = np.arange(la0 + SPLIT_EDGE * width0, lb0 - SPLIT_EDGE * width0, 2 * s)
+        tops = np.arange(la1 + SPLIT_EDGE * width1, lb1 - SPLIT_EDGE * width1, s)
+        if not len(bottoms) or not len(tops):
+            continue
+        # xs[i, j, k]: x at row k of the line from bottoms[i] to tops[j]
+        xs = bottoms[:, None, None] + (tops[None, :, None] - bottoms[:, None, None]) * frac[None, None, :]
+        inside = (xs >= 0) & (xs < w)
+        hit = near[ys[None, None, :], np.clip(xs, 0, w - 1).astype(int)] & inside
+        share = hit.sum(axis=2) / np.maximum(inside.sum(axis=2), 1)
+        share[inside.sum(axis=2) < MIN_POINTS] = 0
+        i, j = np.unravel_index(np.argmax(share), share.shape)
+        if share[i, j] < SOLID_MIN:
+            continue
+        on = hit[i, j]
+        added.append(fit(ys[on].astype(float), xs[i, j][on], s))
+    return sorted(lines + added, key=lambda ln: np.polyval(ln["poly"], ROWS[-1] * h))
 
 
 def describe(line, paint, yellow, h, w, s):
@@ -191,12 +247,10 @@ def describe(line, paint, yellow, h, w, s):
     inside = (xs >= 0) & (xs < w)
     ys, xs = ys[inside], xs[inside].astype(int)
     tol = max(2, int(PAINT_PX * s))
-    near = lambda m: np.array([m[y, max(0, x - tol):x + tol + 1].any() for y, x in zip(ys, xs)])  # noqa: E731
-    painted = near(paint) if len(ys) else np.array([])
-    yellowish = near(yellow) if len(ys) else np.array([])
+    yellowish = np.array([yellow[y, max(0, x - tol):x + tol + 1].any() for y, x in zip(ys, xs)]) if len(ys) else np.array([])
     detected = set(line["ys"].astype(int).tolist())
     coverage = (sum(1 for y in ys if any(abs(y - d) <= STEP_PX for d in detected)) / len(ys)) if len(ys) else 0.0
-    line_type = "solid" if len(painted) and painted.mean() >= SOLID_MIN else "dashed"
+    line_type = "solid" if paint_share(line, paint, h, w, s) >= SOLID_MIN else "dashed"
     color = "yellow" if len(yellowish) and yellowish.mean() >= dl.YELLOW_FRACTION else "white"
     x_at_vp = np.polyval(line["lin"], dl.VP[1] * h) / w
     vp_score = math.exp(-0.5 * ((x_at_vp - dl.VP[0]) / dl.VP_SIGMA) ** 2)
@@ -238,12 +292,14 @@ def process(img, mask, frame, route_key):
     h, w = img.shape[:2]
     s = w / 2048
     white, yellow = dl.build_masks(img, s)
+    paint = cv2.bitwise_or(white, yellow)
     lines = [fit(ys, xs, s) for ys, xs in track_lines(mask, s)]
     lines = merge_collinear(lines, h, s)
     lines.sort(key=lambda ln: np.polyval(ln["poly"], ROWS[-1] * h))  # left to right near the top
     lines = [ln for ln in lines
              if (sr := support(ln, mask, h, w, s, with_rows=True))[1] < MIN_SUPPORT_ROWS or sr[0] >= MIN_SUPPORT]
-    lines = drop_slivers(lines, mask, h, w, s)
+    lines = drop_slivers(lines, mask, paint, h, w, s)
+    lines = add_missed_solid(lines, paint, h, w, s)
 
     boundaries, kept = [], []
     for ln in lines:
@@ -254,7 +310,7 @@ def process(img, mask, frame, route_key):
         if kept and top is not None and boundaries[-1]["x"][-1] is not None \
                 and abs(top - boundaries[-1]["x"][-1]) < SAME_LINE:
             continue  # duplicate of the previous line
-        line_type, color, conf = describe(ln, cv2.bitwise_or(white, yellow), yellow, h, w, s)
+        line_type, color, conf = describe(ln, paint, yellow, h, w, s)
         boundaries.append({"x": xs, "type": line_type, "color": color, "confidence": round(conf, 3)})
         kept.append(ln)
 
