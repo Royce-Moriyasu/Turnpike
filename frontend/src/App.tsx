@@ -6,7 +6,7 @@ import LaneGuidance from "./components/LaneGuidance";
 import LaneDebug from "./components/LaneDebug";
 import { DEFAULT_HORIZON_Y, laneDebug, laneTarget } from "./lanes";
 import { demoUrl, loadClipIndex, openClip, pickClip, type ClipIndex } from "./clips";
-import MiniMap from "./components/MiniMap";
+import RouteMiniMap from "./components/RouteMiniMap";
 import DataPanel from "./components/DataPanel";
 import Controls from "./components/Controls";
 
@@ -250,7 +250,7 @@ export default function App() {
           />
         </main>
         <aside className="space-y-4">
-          <MiniMap data={data} routeKey={routeKey} frame={frame} />
+          <RouteMiniMap data={data} routeKey={routeKey} setRouteKey={setRouteKey} frame={frame} nav={nav} />
           <DataPanel data={data} frame={frame} nav={nav} lanes={lanes} />
         </aside>
       </div>
