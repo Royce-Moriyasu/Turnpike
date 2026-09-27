@@ -42,7 +42,7 @@ function MapboxMiniMap({ data, routeKey, setRouteKey, frame, className, token }:
   const markers = useRef<mapboxgl.Marker[]>([]);
   const position = useRef<mapboxgl.Marker | null>(null);
   const [loaded, setLoaded] = useState(false);
-  const [camera, setCamera] = useState<Camera>("overview");
+  const [camera, setCamera] = useState<Camera>("follow");
   const setRouteKeyRef = useRef(setRouteKey);
   setRouteKeyRef.current = setRouteKey;
 
