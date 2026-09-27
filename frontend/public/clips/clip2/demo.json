@@ -1,0 +1,4030 @@
+{
+ "generatedAt": "2026-09-27T00:23:28.950291+00:00",
+ "mode": "mapillary",
+ "sequenceId": "2pmhLcUPneYz0A69sKZWik",
+ "clip": {
+  "name": "clip2",
+  "title": "Right turn at a stop sign (Sacramento, CA)"
+ },
+ "camera": {
+  "vanishingPoint": [
+   0.48,
+   0.23
+  ],
+  "horizonY": 0.23
+ },
+ "primaryRoute": "right",
+ "routes": {
+  "right": {
+   "label": "Turn right \u00b7 northbound",
+   "geometry": [
+    [
+     -121.538844,
+     38.627332
+    ],
+    [
+     -121.539314,
+     38.627333
+    ],
+    [
+     -121.539544,
+     38.627321
+    ],
+    [
+     -121.53948,
+     38.627498
+    ],
+    [
+     -121.539485,
+     38.628893
+    ],
+    [
+     -121.539485,
+     38.629
+    ]
+   ],
+   "distanceM": 248.3
+  }
+ },
+ "laneSources": {
+  "yolop": {
+   "label": "YOLOPv2",
+   "method": "yolopv2-mask-tracks-v1"
+  }
+ },
+ "frames": [
+  {
+   "id": "2184986505310719",
+   "image": "/clips/clip2/images/2184986505310719.jpg",
+   "lng": -121.53907117834,
+   "lat": 38.627373740781,
+   "heading": 269.56340950319,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:09+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Turn right onto El Centro Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 41.1,
+     "lanes": [
+      {
+       "indications": [
+        "left",
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": true
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneMovement": "right",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539544,
+      "lat": 38.627321,
+      "distanceM": 41.1
+     },
+     "laneReasons": [
+      "Lane 1 only turns left or goes straight"
+     ]
+    }
+   },
+   "progressM": 19.7,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        -0.003,
+        0.658
+       ],
+       [
+        0.13,
+        0.521
+       ],
+       [
+        0.235,
+        0.418
+       ],
+       [
+        0.408,
+        0.418
+       ],
+       [
+        0.373,
+        0.521
+       ],
+       [
+        0.329,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.277,
+        0.829
+       ],
+       [
+        0.329,
+        0.658
+       ],
+       [
+        0.373,
+        0.521
+       ],
+       [
+        0.408,
+        0.418
+       ],
+       [
+        0.663,
+        0.418
+       ],
+       [
+        0.755,
+        0.521
+       ],
+       [
+        0.869,
+        0.658
+       ],
+       [
+        0.998,
+        0.829
+       ]
+      ]
+     ],
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      -0.003,
+      0.658
+     ],
+     [
+      0.13,
+      0.521
+     ],
+     [
+      0.235,
+      0.418
+     ],
+     [
+      0.408,
+      0.418
+     ],
+     [
+      0.373,
+      0.521
+     ],
+     [
+      0.329,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.277,
+      0.829
+     ],
+     [
+      0.329,
+      0.658
+     ],
+     [
+      0.373,
+      0.521
+     ],
+     [
+      0.408,
+      0.418
+     ],
+     [
+      0.663,
+      0.418
+     ],
+     [
+      0.755,
+      0.521
+     ],
+     [
+      0.869,
+      0.658
+     ],
+     [
+      0.998,
+      0.829
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "1510645613397383",
+   "image": "/clips/clip2/images/1510645613397383.jpg",
+   "lng": -121.53916087319,
+   "lat": 38.627375152903,
+   "heading": 268.68333836179,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:10+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Turn right onto El Centro Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 33.3,
+     "lanes": [
+      {
+       "indications": [
+        "left",
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": true
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneMovement": "right",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539544,
+      "lat": 38.627321,
+      "distanceM": 33.3
+     },
+     "laneReasons": [
+      "Lane 1 only turns left or goes straight"
+     ]
+    }
+   },
+   "progressM": 27.5,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        -0.049,
+        0.658
+       ],
+       [
+        0.091,
+        0.521
+       ],
+       [
+        0.196,
+        0.418
+       ],
+       [
+        0.384,
+        0.418
+       ],
+       [
+        0.344,
+        0.521
+       ],
+       [
+        0.291,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.224,
+        0.829
+       ],
+       [
+        0.291,
+        0.658
+       ],
+       [
+        0.344,
+        0.521
+       ],
+       [
+        0.384,
+        0.418
+       ],
+       [
+        0.664,
+        0.418
+       ],
+       [
+        0.736,
+        0.521
+       ],
+       [
+        0.831,
+        0.658
+       ],
+       [
+        0.95,
+        0.829
+       ]
+      ]
+     ],
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      -0.049,
+      0.658
+     ],
+     [
+      0.091,
+      0.521
+     ],
+     [
+      0.196,
+      0.418
+     ],
+     [
+      0.384,
+      0.418
+     ],
+     [
+      0.344,
+      0.521
+     ],
+     [
+      0.291,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.224,
+      0.829
+     ],
+     [
+      0.291,
+      0.658
+     ],
+     [
+      0.344,
+      0.521
+     ],
+     [
+      0.384,
+      0.418
+     ],
+     [
+      0.664,
+      0.418
+     ],
+     [
+      0.736,
+      0.521
+     ],
+     [
+      0.831,
+      0.658
+     ],
+     [
+      0.95,
+      0.829
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "1367328864825661",
+   "image": "/clips/clip2/images/1367328864825661.jpg",
+   "lng": -121.53922967744,
+   "lat": 38.627375595134,
+   "heading": 268.12247921478,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:11+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Turn right onto El Centro Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 27.3,
+     "lanes": [
+      {
+       "indications": [
+        "left",
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": true
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneMovement": "right",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539544,
+      "lat": 38.627321,
+      "distanceM": 27.3
+     },
+     "laneReasons": [
+      "Lane 1 only turns left or goes straight"
+     ]
+    }
+   },
+   "progressM": 33.5,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        -0.053,
+        0.658
+       ],
+       [
+        0.081,
+        0.521
+       ],
+       [
+        0.326,
+        0.521
+       ],
+       [
+        0.262,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.262,
+        0.658
+       ],
+       [
+        0.326,
+        0.521
+       ],
+       [
+        0.731,
+        0.521
+       ],
+       [
+        0.809,
+        0.658
+       ]
+      ]
+     ],
+     "confidence": 0.156
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      -0.053,
+      0.658
+     ],
+     [
+      0.081,
+      0.521
+     ],
+     [
+      0.326,
+      0.521
+     ],
+     [
+      0.262,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.262,
+      0.658
+     ],
+     [
+      0.326,
+      0.521
+     ],
+     [
+      0.731,
+      0.521
+     ],
+     [
+      0.809,
+      0.658
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "1125693112335631",
+   "image": "/clips/clip2/images/1125693112335631.jpg",
+   "lng": -121.53927884497,
+   "lat": 38.627375697662,
+   "heading": 267.884214235,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:12+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Turn right onto El Centro Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 23.1,
+     "lanes": [
+      {
+       "indications": [
+        "left",
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": true
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneMovement": "right",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539544,
+      "lat": 38.627321,
+      "distanceM": 23.1
+     },
+     "laneReasons": [
+      "Lane 1 only turns left or goes straight"
+     ]
+    }
+   },
+   "progressM": 37.8,
+   "laneSets": {
+    "yolop": {
+     "polygons": null,
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": null,
+   "lanePolygons": null
+  },
+  {
+   "id": "1224583429392562",
+   "image": "/clips/clip2/images/1224583429392562.jpg",
+   "lng": -121.53930700788,
+   "lat": 38.627375809667,
+   "heading": 267.8671222166,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:13+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Turn right onto El Centro Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 20.6,
+     "lanes": [
+      {
+       "indications": [
+        "left",
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": true
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneMovement": "right",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539544,
+      "lat": 38.627321,
+      "distanceM": 20.6
+     },
+     "laneReasons": [
+      "Lane 1 only turns left or goes straight"
+     ]
+    }
+   },
+   "progressM": 40.2,
+   "laneSets": {
+    "yolop": {
+     "polygons": null,
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": null,
+   "lanePolygons": null
+  },
+  {
+   "id": "1141191854624468",
+   "image": "/clips/clip2/images/1141191854624468.jpg",
+   "lng": -121.53932090855,
+   "lat": 38.627375775701,
+   "heading": 267.82798497761,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:15+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Turn right onto El Centro Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 19.7,
+     "lanes": [
+      {
+       "indications": [
+        "left",
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": true
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneMovement": "right",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539544,
+      "lat": 38.627321,
+      "distanceM": 19.7
+     },
+     "laneReasons": [
+      "Lane 1 only turns left or goes straight"
+     ]
+    }
+   },
+   "progressM": 41.1,
+   "laneSets": {
+    "yolop": {
+     "polygons": null,
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": null,
+   "lanePolygons": null
+  },
+  {
+   "id": "980756987517680",
+   "image": "/clips/clip2/images/980756987517680.jpg",
+   "lng": -121.53935805171,
+   "lat": 38.627380096687,
+   "heading": 276.34774102819,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:27+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Turn right onto El Centro Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 16.6,
+     "lanes": [
+      {
+       "indications": [
+        "left",
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": true
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneMovement": "right",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539544,
+      "lat": 38.627321,
+      "distanceM": 16.6
+     },
+     "laneReasons": [
+      "Lane 1 only turns left or goes straight"
+     ]
+    }
+   },
+   "progressM": 44.3,
+   "laneSets": {
+    "yolop": {
+     "polygons": null,
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": null,
+   "lanePolygons": null
+  },
+  {
+   "id": "817975827244600",
+   "image": "/clips/clip2/images/817975827244600.jpg",
+   "lng": -121.53937702155,
+   "lat": 38.627386431525,
+   "heading": 285.05956835577,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:28+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Turn right onto El Centro Road.",
+     "maneuverType": "turn",
+     "modifier": "right",
+     "distanceM": 15.0,
+     "lanes": [
+      {
+       "indications": [
+        "left",
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": true
+      }
+     ],
+     "preferredLane": 1,
+     "laneSide": "right",
+     "laneMovement": "right",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539544,
+      "lat": 38.627321,
+      "distanceM": 15.0
+     },
+     "laneReasons": [
+      "Lane 1 only turns left or goes straight"
+     ]
+    }
+   },
+   "progressM": 45.9,
+   "laneSets": {
+    "yolop": {
+     "polygons": null,
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": null,
+   "lanePolygons": null
+  },
+  {
+   "id": "2264653194007449",
+   "image": "/clips/clip2/images/2264653194007449.jpg",
+   "lng": -121.53940741115,
+   "lat": 38.627410354519,
+   "heading": 15.8,
+   "headingSource": "route",
+   "capturedAt": "2025-09-18T08:23:30+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 174.7,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 174.7
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 73.6,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        -0.054,
+        0.521
+       ],
+       [
+        0.274,
+        0.418
+       ],
+       [
+        0.545,
+        0.418
+       ],
+       [
+        0.324,
+        0.521
+       ]
+      ],
+      [
+       [
+        0.324,
+        0.521
+       ],
+       [
+        0.545,
+        0.418
+       ],
+       [
+        0.935,
+        0.418
+       ],
+       [
+        0.935,
+        0.521
+       ]
+      ]
+     ],
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      -0.054,
+      0.521
+     ],
+     [
+      0.274,
+      0.418
+     ],
+     [
+      0.545,
+      0.418
+     ],
+     [
+      0.324,
+      0.521
+     ]
+    ],
+    [
+     [
+      0.324,
+      0.521
+     ],
+     [
+      0.545,
+      0.418
+     ],
+     [
+      0.935,
+      0.418
+     ],
+     [
+      0.935,
+      0.521
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "1113464287523557",
+   "image": "/clips/clip2/images/1113464287523557.jpg",
+   "lng": -121.53942092917,
+   "lat": 38.627432458676,
+   "heading": 327.91218908126,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:31+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 172.6,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 172.6
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 75.7,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        -0.008,
+        0.521
+       ],
+       [
+        0.202,
+        0.418
+       ],
+       [
+        0.255,
+        0.418
+       ],
+       [
+        0.066,
+        0.521
+       ]
+      ],
+      [
+       [
+        0.066,
+        0.521
+       ],
+       [
+        0.255,
+        0.418
+       ],
+       [
+        0.424,
+        0.418
+       ],
+       [
+        0.269,
+        0.521
+       ]
+      ],
+      [
+       [
+        0.07,
+        0.658
+       ],
+       [
+        0.269,
+        0.521
+       ],
+       [
+        0.424,
+        0.418
+       ],
+       [
+        0.8,
+        0.418
+       ],
+       [
+        0.824,
+        0.521
+       ],
+       [
+        0.851,
+        0.658
+       ]
+      ]
+     ],
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      -0.008,
+      0.521
+     ],
+     [
+      0.202,
+      0.418
+     ],
+     [
+      0.255,
+      0.418
+     ],
+     [
+      0.066,
+      0.521
+     ]
+    ],
+    [
+     [
+      0.066,
+      0.521
+     ],
+     [
+      0.255,
+      0.418
+     ],
+     [
+      0.424,
+      0.418
+     ],
+     [
+      0.269,
+      0.521
+     ]
+    ],
+    [
+     [
+      0.07,
+      0.658
+     ],
+     [
+      0.269,
+      0.521
+     ],
+     [
+      0.424,
+      0.418
+     ],
+     [
+      0.8,
+      0.418
+     ],
+     [
+      0.824,
+      0.521
+     ],
+     [
+      0.851,
+      0.658
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "2507209356321160",
+   "image": "/clips/clip2/images/2507209356321160.jpg",
+   "lng": -121.53943503197,
+   "lat": 38.627465694366,
+   "heading": 339.28255709622,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:32+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 169.4,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 169.4
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 78.9,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        0.035,
+        0.521
+       ],
+       [
+        0.187,
+        0.418
+       ],
+       [
+        0.341,
+        0.418
+       ],
+       [
+        0.214,
+        0.521
+       ]
+      ],
+      [
+       [
+        0.055,
+        0.658
+       ],
+       [
+        0.214,
+        0.521
+       ],
+       [
+        0.341,
+        0.418
+       ],
+       [
+        0.699,
+        0.418
+       ],
+       [
+        0.74,
+        0.521
+       ],
+       [
+        0.794,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.794,
+        0.658
+       ],
+       [
+        0.74,
+        0.521
+       ],
+       [
+        0.699,
+        0.418
+       ],
+       [
+        0.867,
+        0.418
+       ],
+       [
+        0.951,
+        0.521
+       ],
+       [
+        1.015,
+        0.658
+       ]
+      ]
+     ],
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      0.035,
+      0.521
+     ],
+     [
+      0.187,
+      0.418
+     ],
+     [
+      0.341,
+      0.418
+     ],
+     [
+      0.214,
+      0.521
+     ]
+    ],
+    [
+     [
+      0.055,
+      0.658
+     ],
+     [
+      0.214,
+      0.521
+     ],
+     [
+      0.341,
+      0.418
+     ],
+     [
+      0.699,
+      0.418
+     ],
+     [
+      0.74,
+      0.521
+     ],
+     [
+      0.794,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.794,
+      0.658
+     ],
+     [
+      0.74,
+      0.521
+     ],
+     [
+      0.699,
+      0.418
+     ],
+     [
+      0.867,
+      0.418
+     ],
+     [
+      0.951,
+      0.521
+     ],
+     [
+      1.015,
+      0.658
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "1303931864011923",
+   "image": "/clips/clip2/images/1303931864011923.jpg",
+   "lng": -121.53944801524,
+   "lat": 38.627509781279,
+   "heading": 345.14412740322,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:33+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 165.7,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 165.7
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 82.6,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        0.036,
+        0.658
+       ],
+       [
+        0.181,
+        0.521
+       ],
+       [
+        0.297,
+        0.418
+       ],
+       [
+        0.638,
+        0.418
+       ],
+       [
+        0.689,
+        0.521
+       ],
+       [
+        0.753,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.753,
+        0.658
+       ],
+       [
+        0.689,
+        0.521
+       ],
+       [
+        0.638,
+        0.418
+       ],
+       [
+        0.837,
+        0.418
+       ],
+       [
+        0.951,
+        0.521
+       ],
+       [
+        1.046,
+        0.658
+       ]
+      ]
+     ],
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      0.036,
+      0.658
+     ],
+     [
+      0.181,
+      0.521
+     ],
+     [
+      0.297,
+      0.418
+     ],
+     [
+      0.638,
+      0.418
+     ],
+     [
+      0.689,
+      0.521
+     ],
+     [
+      0.753,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.753,
+      0.658
+     ],
+     [
+      0.689,
+      0.521
+     ],
+     [
+      0.638,
+      0.418
+     ],
+     [
+      0.837,
+      0.418
+     ],
+     [
+      0.951,
+      0.521
+     ],
+     [
+      1.046,
+      0.658
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "1594934021484679",
+   "image": "/clips/clip2/images/1594934021484679.jpg",
+   "lng": -121.53946118363,
+   "lat": 38.627565055963,
+   "heading": 347.52247102302,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:34+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 159.6,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 159.6
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 88.8,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        0.017,
+        0.658
+       ],
+       [
+        0.156,
+        0.521
+       ],
+       [
+        0.269,
+        0.418
+       ],
+       [
+        0.604,
+        0.418
+       ],
+       [
+        0.654,
+        0.521
+       ],
+       [
+        0.717,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.717,
+        0.658
+       ],
+       [
+        0.654,
+        0.521
+       ],
+       [
+        0.604,
+        0.418
+       ],
+       [
+        0.809,
+        0.418
+       ],
+       [
+        0.944,
+        0.521
+       ],
+       [
+        1.094,
+        0.658
+       ]
+      ]
+     ],
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      0.017,
+      0.658
+     ],
+     [
+      0.156,
+      0.521
+     ],
+     [
+      0.269,
+      0.418
+     ],
+     [
+      0.604,
+      0.418
+     ],
+     [
+      0.654,
+      0.521
+     ],
+     [
+      0.717,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.717,
+      0.658
+     ],
+     [
+      0.654,
+      0.521
+     ],
+     [
+      0.604,
+      0.418
+     ],
+     [
+      0.809,
+      0.418
+     ],
+     [
+      0.944,
+      0.521
+     ],
+     [
+      1.094,
+      0.658
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "2146911855719786",
+   "image": "/clips/clip2/images/2146911855719786.jpg",
+   "lng": -121.5394765004,
+   "lat": 38.627630992037,
+   "heading": 347.45883987861,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:35+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 152.2,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 152.2
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 96.1,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        0.013,
+        0.658
+       ],
+       [
+        0.153,
+        0.521
+       ],
+       [
+        0.266,
+        0.418
+       ],
+       [
+        0.429,
+        0.418
+       ],
+       [
+        0.39,
+        0.521
+       ],
+       [
+        0.338,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.338,
+        0.658
+       ],
+       [
+        0.39,
+        0.521
+       ],
+       [
+        0.429,
+        0.418
+       ],
+       [
+        0.599,
+        0.418
+       ],
+       [
+        0.645,
+        0.521
+       ],
+       [
+        0.703,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.774,
+        0.829
+       ],
+       [
+        0.703,
+        0.658
+       ],
+       [
+        0.645,
+        0.521
+       ],
+       [
+        0.599,
+        0.418
+       ],
+       [
+        0.682,
+        0.418
+       ],
+       [
+        0.761,
+        0.521
+       ],
+       [
+        0.866,
+        0.658
+       ],
+       [
+        0.997,
+        0.829
+       ]
+      ],
+      [
+       [
+        0.866,
+        0.658
+       ],
+       [
+        0.761,
+        0.521
+       ],
+       [
+        0.682,
+        0.418
+       ],
+       [
+        0.813,
+        0.418
+       ],
+       [
+        0.947,
+        0.521
+       ],
+       [
+        1.093,
+        0.658
+       ]
+      ]
+     ],
+     "confidence": 0.275
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      0.013,
+      0.658
+     ],
+     [
+      0.153,
+      0.521
+     ],
+     [
+      0.266,
+      0.418
+     ],
+     [
+      0.429,
+      0.418
+     ],
+     [
+      0.39,
+      0.521
+     ],
+     [
+      0.338,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.338,
+      0.658
+     ],
+     [
+      0.39,
+      0.521
+     ],
+     [
+      0.429,
+      0.418
+     ],
+     [
+      0.599,
+      0.418
+     ],
+     [
+      0.645,
+      0.521
+     ],
+     [
+      0.703,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.774,
+      0.829
+     ],
+     [
+      0.703,
+      0.658
+     ],
+     [
+      0.645,
+      0.521
+     ],
+     [
+      0.599,
+      0.418
+     ],
+     [
+      0.682,
+      0.418
+     ],
+     [
+      0.761,
+      0.521
+     ],
+     [
+      0.866,
+      0.658
+     ],
+     [
+      0.997,
+      0.829
+     ]
+    ],
+    [
+     [
+      0.866,
+      0.658
+     ],
+     [
+      0.761,
+      0.521
+     ],
+     [
+      0.682,
+      0.418
+     ],
+     [
+      0.813,
+      0.418
+     ],
+     [
+      0.947,
+      0.521
+     ],
+     [
+      1.093,
+      0.658
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "3081613288678883",
+   "image": "/clips/clip2/images/3081613288678883.jpg",
+   "lng": -121.53949432464,
+   "lat": 38.627706625957,
+   "heading": 347.31056546598,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:36+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 143.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 143.8
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 104.5,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        0.011,
+        0.658
+       ],
+       [
+        0.153,
+        0.521
+       ],
+       [
+        0.267,
+        0.418
+       ],
+       [
+        0.425,
+        0.418
+       ],
+       [
+        0.382,
+        0.521
+       ],
+       [
+        0.326,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.255,
+        0.829
+       ],
+       [
+        0.326,
+        0.658
+       ],
+       [
+        0.382,
+        0.521
+       ],
+       [
+        0.425,
+        0.418
+       ],
+       [
+        0.594,
+        0.418
+       ],
+       [
+        0.637,
+        0.521
+       ],
+       [
+        0.692,
+        0.658
+       ],
+       [
+        0.758,
+        0.829
+       ]
+      ],
+      [
+       [
+        0.758,
+        0.829
+       ],
+       [
+        0.692,
+        0.658
+       ],
+       [
+        0.637,
+        0.521
+       ],
+       [
+        0.594,
+        0.418
+       ],
+       [
+        0.677,
+        0.418
+       ],
+       [
+        0.757,
+        0.521
+       ],
+       [
+        0.858,
+        0.658
+       ],
+       [
+        0.976,
+        0.829
+       ]
+      ],
+      [
+       [
+        0.858,
+        0.658
+       ],
+       [
+        0.757,
+        0.521
+       ],
+       [
+        0.677,
+        0.418
+       ],
+       [
+        0.808,
+        0.418
+       ],
+       [
+        0.943,
+        0.521
+       ],
+       [
+        1.09,
+        0.658
+       ]
+      ]
+     ],
+     "confidence": 0.404
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      0.011,
+      0.658
+     ],
+     [
+      0.153,
+      0.521
+     ],
+     [
+      0.267,
+      0.418
+     ],
+     [
+      0.425,
+      0.418
+     ],
+     [
+      0.382,
+      0.521
+     ],
+     [
+      0.326,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.255,
+      0.829
+     ],
+     [
+      0.326,
+      0.658
+     ],
+     [
+      0.382,
+      0.521
+     ],
+     [
+      0.425,
+      0.418
+     ],
+     [
+      0.594,
+      0.418
+     ],
+     [
+      0.637,
+      0.521
+     ],
+     [
+      0.692,
+      0.658
+     ],
+     [
+      0.758,
+      0.829
+     ]
+    ],
+    [
+     [
+      0.758,
+      0.829
+     ],
+     [
+      0.692,
+      0.658
+     ],
+     [
+      0.637,
+      0.521
+     ],
+     [
+      0.594,
+      0.418
+     ],
+     [
+      0.677,
+      0.418
+     ],
+     [
+      0.757,
+      0.521
+     ],
+     [
+      0.858,
+      0.658
+     ],
+     [
+      0.976,
+      0.829
+     ]
+    ],
+    [
+     [
+      0.858,
+      0.658
+     ],
+     [
+      0.757,
+      0.521
+     ],
+     [
+      0.677,
+      0.418
+     ],
+     [
+      0.808,
+      0.418
+     ],
+     [
+      0.943,
+      0.521
+     ],
+     [
+      1.09,
+      0.658
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "3679790072151659",
+   "image": "/clips/clip2/images/3679790072151659.jpg",
+   "lng": -121.53951397336,
+   "lat": 38.627789724701,
+   "heading": 346.98769564869,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:37+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 134.6,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 134.6
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 113.8,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        -0.089,
+        0.521
+       ],
+       [
+        0.059,
+        0.418
+       ],
+       [
+        0.118,
+        0.418
+       ],
+       [
+        -0.042,
+        0.521
+       ]
+      ],
+      [
+       [
+        -0.042,
+        0.521
+       ],
+       [
+        0.118,
+        0.418
+       ],
+       [
+        0.265,
+        0.418
+       ],
+       [
+        0.148,
+        0.521
+       ]
+      ],
+      [
+       [
+        -0.007,
+        0.658
+       ],
+       [
+        0.148,
+        0.521
+       ],
+       [
+        0.265,
+        0.418
+       ],
+       [
+        0.421,
+        0.418
+       ],
+       [
+        0.375,
+        0.521
+       ],
+       [
+        0.316,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.245,
+        0.829
+       ],
+       [
+        0.316,
+        0.658
+       ],
+       [
+        0.375,
+        0.521
+       ],
+       [
+        0.421,
+        0.418
+       ],
+       [
+        0.595,
+        0.418
+       ],
+       [
+        0.635,
+        0.521
+       ],
+       [
+        0.687,
+        0.658
+       ],
+       [
+        0.75,
+        0.829
+       ]
+      ],
+      [
+       [
+        0.635,
+        0.521
+       ],
+       [
+        0.595,
+        0.418
+       ],
+       [
+        0.8,
+        0.418
+       ],
+       [
+        0.947,
+        0.521
+       ]
+      ]
+     ],
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      -0.089,
+      0.521
+     ],
+     [
+      0.059,
+      0.418
+     ],
+     [
+      0.118,
+      0.418
+     ],
+     [
+      -0.042,
+      0.521
+     ]
+    ],
+    [
+     [
+      -0.042,
+      0.521
+     ],
+     [
+      0.118,
+      0.418
+     ],
+     [
+      0.265,
+      0.418
+     ],
+     [
+      0.148,
+      0.521
+     ]
+    ],
+    [
+     [
+      -0.007,
+      0.658
+     ],
+     [
+      0.148,
+      0.521
+     ],
+     [
+      0.265,
+      0.418
+     ],
+     [
+      0.421,
+      0.418
+     ],
+     [
+      0.375,
+      0.521
+     ],
+     [
+      0.316,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.245,
+      0.829
+     ],
+     [
+      0.316,
+      0.658
+     ],
+     [
+      0.375,
+      0.521
+     ],
+     [
+      0.421,
+      0.418
+     ],
+     [
+      0.595,
+      0.418
+     ],
+     [
+      0.635,
+      0.521
+     ],
+     [
+      0.687,
+      0.658
+     ],
+     [
+      0.75,
+      0.829
+     ]
+    ],
+    [
+     [
+      0.635,
+      0.521
+     ],
+     [
+      0.595,
+      0.418
+     ],
+     [
+      0.8,
+      0.418
+     ],
+     [
+      0.947,
+      0.521
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "1116476260071926",
+   "image": "/clips/clip2/images/1116476260071926.jpg",
+   "lng": -121.53955843902,
+   "lat": 38.627967841514,
+   "heading": 346.75497372702,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:39+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 114.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 114.8
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 133.6,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        0.008,
+        0.658
+       ],
+       [
+        0.145,
+        0.521
+       ],
+       [
+        0.257,
+        0.418
+       ],
+       [
+        0.418,
+        0.418
+       ],
+       [
+        0.372,
+        0.521
+       ],
+       [
+        0.312,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.236,
+        0.829
+       ],
+       [
+        0.312,
+        0.658
+       ],
+       [
+        0.372,
+        0.521
+       ],
+       [
+        0.418,
+        0.418
+       ],
+       [
+        0.598,
+        0.418
+       ],
+       [
+        0.636,
+        0.521
+       ],
+       [
+        0.685,
+        0.658
+       ],
+       [
+        0.744,
+        0.829
+       ]
+      ],
+      [
+       [
+        0.685,
+        0.658
+       ],
+       [
+        0.636,
+        0.521
+       ],
+       [
+        0.598,
+        0.418
+       ],
+       [
+        0.771,
+        0.418
+       ],
+       [
+        0.893,
+        0.521
+       ],
+       [
+        1.04,
+        0.658
+       ]
+      ]
+     ],
+     "confidence": 0.351
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      0.008,
+      0.658
+     ],
+     [
+      0.145,
+      0.521
+     ],
+     [
+      0.257,
+      0.418
+     ],
+     [
+      0.418,
+      0.418
+     ],
+     [
+      0.372,
+      0.521
+     ],
+     [
+      0.312,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.236,
+      0.829
+     ],
+     [
+      0.312,
+      0.658
+     ],
+     [
+      0.372,
+      0.521
+     ],
+     [
+      0.418,
+      0.418
+     ],
+     [
+      0.598,
+      0.418
+     ],
+     [
+      0.636,
+      0.521
+     ],
+     [
+      0.685,
+      0.658
+     ],
+     [
+      0.744,
+      0.829
+     ]
+    ],
+    [
+     [
+      0.685,
+      0.658
+     ],
+     [
+      0.636,
+      0.521
+     ],
+     [
+      0.598,
+      0.418
+     ],
+     [
+      0.771,
+      0.418
+     ],
+     [
+      0.893,
+      0.521
+     ],
+     [
+      1.04,
+      0.658
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "2242645109540722",
+   "image": "/clips/clip2/images/2242645109540722.jpg",
+   "lng": -121.53946584105,
+   "lat": 38.628120375533,
+   "heading": 357.21736772688,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:40+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 97.8,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 97.8
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 150.5,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        -0.0,
+        0.658
+       ],
+       [
+        0.143,
+        0.521
+       ],
+       [
+        0.258,
+        0.418
+       ],
+       [
+        0.419,
+        0.418
+       ],
+       [
+        0.373,
+        0.521
+       ],
+       [
+        0.311,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.235,
+        0.829
+       ],
+       [
+        0.311,
+        0.658
+       ],
+       [
+        0.373,
+        0.521
+       ],
+       [
+        0.419,
+        0.418
+       ],
+       [
+        0.594,
+        0.418
+       ],
+       [
+        0.632,
+        0.521
+       ],
+       [
+        0.681,
+        0.658
+       ],
+       [
+        0.741,
+        0.829
+       ]
+      ],
+      [
+       [
+        0.681,
+        0.658
+       ],
+       [
+        0.632,
+        0.521
+       ],
+       [
+        0.594,
+        0.418
+       ],
+       [
+        0.735,
+        0.418
+       ],
+       [
+        0.846,
+        0.521
+       ],
+       [
+        0.981,
+        0.658
+       ]
+      ]
+     ],
+     "confidence": 0.395
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      -0.0,
+      0.658
+     ],
+     [
+      0.143,
+      0.521
+     ],
+     [
+      0.258,
+      0.418
+     ],
+     [
+      0.419,
+      0.418
+     ],
+     [
+      0.373,
+      0.521
+     ],
+     [
+      0.311,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.235,
+      0.829
+     ],
+     [
+      0.311,
+      0.658
+     ],
+     [
+      0.373,
+      0.521
+     ],
+     [
+      0.419,
+      0.418
+     ],
+     [
+      0.594,
+      0.418
+     ],
+     [
+      0.632,
+      0.521
+     ],
+     [
+      0.681,
+      0.658
+     ],
+     [
+      0.741,
+      0.829
+     ]
+    ],
+    [
+     [
+      0.681,
+      0.658
+     ],
+     [
+      0.632,
+      0.521
+     ],
+     [
+      0.594,
+      0.418
+     ],
+     [
+      0.735,
+      0.418
+     ],
+     [
+      0.846,
+      0.521
+     ],
+     [
+      0.981,
+      0.658
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "4011448179160828",
+   "image": "/clips/clip2/images/4011448179160828.jpg",
+   "lng": -121.53946786111,
+   "lat": 38.628240028154,
+   "heading": 357.03063252211,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:41+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 84.5,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 84.5
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 163.8,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        0.001,
+        0.658
+       ],
+       [
+        0.148,
+        0.521
+       ],
+       [
+        0.25,
+        0.418
+       ],
+       [
+        0.419,
+        0.418
+       ],
+       [
+        0.373,
+        0.521
+       ],
+       [
+        0.314,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.314,
+        0.658
+       ],
+       [
+        0.373,
+        0.521
+       ],
+       [
+        0.419,
+        0.418
+       ],
+       [
+        0.597,
+        0.418
+       ],
+       [
+        0.635,
+        0.521
+       ],
+       [
+        0.685,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.744,
+        0.829
+       ],
+       [
+        0.685,
+        0.658
+       ],
+       [
+        0.635,
+        0.521
+       ],
+       [
+        0.597,
+        0.418
+       ],
+       [
+        0.702,
+        0.418
+       ],
+       [
+        0.799,
+        0.521
+       ],
+       [
+        0.928,
+        0.658
+       ],
+       [
+        1.088,
+        0.829
+       ]
+      ]
+     ],
+     "confidence": 0.336
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      0.001,
+      0.658
+     ],
+     [
+      0.148,
+      0.521
+     ],
+     [
+      0.25,
+      0.418
+     ],
+     [
+      0.419,
+      0.418
+     ],
+     [
+      0.373,
+      0.521
+     ],
+     [
+      0.314,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.314,
+      0.658
+     ],
+     [
+      0.373,
+      0.521
+     ],
+     [
+      0.419,
+      0.418
+     ],
+     [
+      0.597,
+      0.418
+     ],
+     [
+      0.635,
+      0.521
+     ],
+     [
+      0.685,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.744,
+      0.829
+     ],
+     [
+      0.685,
+      0.658
+     ],
+     [
+      0.635,
+      0.521
+     ],
+     [
+      0.597,
+      0.418
+     ],
+     [
+      0.702,
+      0.418
+     ],
+     [
+      0.799,
+      0.521
+     ],
+     [
+      0.928,
+      0.658
+     ],
+     [
+      1.088,
+      0.829
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "1123503549343244",
+   "image": "/clips/clip2/images/1123503549343244.jpg",
+   "lng": -121.5394701781,
+   "lat": 38.628356831112,
+   "heading": 356.89737461567,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:42+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 71.5,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 71.5
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 176.8,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        -0.093,
+        0.521
+       ],
+       [
+        0.064,
+        0.418
+       ],
+       [
+        0.206,
+        0.418
+       ],
+       [
+        0.099,
+        0.521
+       ]
+      ],
+      [
+       [
+        -0.005,
+        0.658
+       ],
+       [
+        0.099,
+        0.521
+       ],
+       [
+        0.206,
+        0.418
+       ],
+       [
+        0.417,
+        0.418
+       ],
+       [
+        0.369,
+        0.521
+       ],
+       [
+        0.307,
+        0.658
+       ]
+      ],
+      [
+       [
+        0.232,
+        0.829
+       ],
+       [
+        0.307,
+        0.658
+       ],
+       [
+        0.369,
+        0.521
+       ],
+       [
+        0.417,
+        0.418
+       ],
+       [
+        0.602,
+        0.418
+       ],
+       [
+        0.642,
+        0.521
+       ],
+       [
+        0.693,
+        0.658
+       ],
+       [
+        0.754,
+        0.829
+       ]
+      ],
+      [
+       [
+        0.754,
+        0.829
+       ],
+       [
+        0.693,
+        0.658
+       ],
+       [
+        0.642,
+        0.521
+       ],
+       [
+        0.602,
+        0.418
+       ],
+       [
+        0.703,
+        0.418
+       ],
+       [
+        0.783,
+        0.521
+       ],
+       [
+        0.89,
+        0.658
+       ],
+       [
+        1.023,
+        0.829
+       ]
+      ]
+     ],
+     "confidence": 0.44
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      -0.093,
+      0.521
+     ],
+     [
+      0.064,
+      0.418
+     ],
+     [
+      0.206,
+      0.418
+     ],
+     [
+      0.099,
+      0.521
+     ]
+    ],
+    [
+     [
+      -0.005,
+      0.658
+     ],
+     [
+      0.099,
+      0.521
+     ],
+     [
+      0.206,
+      0.418
+     ],
+     [
+      0.417,
+      0.418
+     ],
+     [
+      0.369,
+      0.521
+     ],
+     [
+      0.307,
+      0.658
+     ]
+    ],
+    [
+     [
+      0.232,
+      0.829
+     ],
+     [
+      0.307,
+      0.658
+     ],
+     [
+      0.369,
+      0.521
+     ],
+     [
+      0.417,
+      0.418
+     ],
+     [
+      0.602,
+      0.418
+     ],
+     [
+      0.642,
+      0.521
+     ],
+     [
+      0.693,
+      0.658
+     ],
+     [
+      0.754,
+      0.829
+     ]
+    ],
+    [
+     [
+      0.754,
+      0.829
+     ],
+     [
+      0.693,
+      0.658
+     ],
+     [
+      0.642,
+      0.521
+     ],
+     [
+      0.602,
+      0.418
+     ],
+     [
+      0.703,
+      0.418
+     ],
+     [
+      0.783,
+      0.521
+     ],
+     [
+      0.89,
+      0.658
+     ],
+     [
+      1.023,
+      0.829
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "820738367279393",
+   "image": "/clips/clip2/images/820738367279393.jpg",
+   "lng": -121.53947261296,
+   "lat": 38.628470738877,
+   "heading": 356.73663863979,
+   "headingSource": "camera",
+   "capturedAt": "2025-09-18T08:23:43+00:00",
+   "nav": {
+    "right": {
+     "laneAnchor": "right",
+     "laneAhead": null,
+     "instruction": "Continue toward El Centro Road.",
+     "maneuverType": "arrive",
+     "modifier": "right",
+     "distanceM": 58.9,
+     "lanes": [
+      {
+       "indications": [
+        "left"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": false
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "straight"
+       ],
+       "valid": false,
+       "active": false,
+       "allowed": true
+      },
+      {
+       "indications": [
+        "right"
+       ],
+       "valid": true,
+       "active": true,
+       "valid_indication": "right",
+       "allowed": false
+      }
+     ],
+     "preferredLane": 2,
+     "laneSide": "right",
+     "laneMovement": "straight",
+     "laneBasis": "arrows",
+     "laneToward": "El Centro Road",
+     "laneSource": {
+      "lng": -121.539485,
+      "lat": 38.629,
+      "distanceM": 58.9
+     },
+     "laneReasons": [
+      "Lane 4 only turns right",
+      "Stay right for El Centro Road"
+     ]
+    }
+   },
+   "progressM": 189.5,
+   "laneSets": {
+    "yolop": {
+     "polygons": [
+      [
+       [
+        -0.086,
+        0.521
+       ],
+       [
+        0.069,
+        0.418
+       ],
+       [
+        0.182,
+        0.418
+       ],
+       [
+        0.045,
+        0.521
+       ]
+      ],
+      [
+       [
+        0.045,
+        0.521
+       ],
+       [
+        0.182,
+        0.418
+       ],
+       [
+        0.417,
+        0.418
+       ],
+       [
+        0.369,
+        0.521
+       ]
+      ],
+      [
+       [
+        0.369,
+        0.521
+       ],
+       [
+        0.417,
+        0.418
+       ],
+       [
+        0.275,
+        0.418
+       ],
+       [
+        0.161,
+        0.521
+       ]
+      ],
+      [
+       [
+        0.773,
+        0.829
+       ],
+       [
+        0.708,
+        0.658
+       ],
+       [
+        0.653,
+        0.521
+       ],
+       [
+        0.803,
+        0.521
+       ],
+       [
+        0.893,
+        0.658
+       ],
+       [
+        1.031,
+        0.829
+       ]
+      ]
+     ],
+     "confidence": 0.0
+    }
+   },
+   "polygonSource": "yolop",
+   "lanePolygons": [
+    [
+     [
+      -0.086,
+      0.521
+     ],
+     [
+      0.069,
+      0.418
+     ],
+     [
+      0.182,
+      0.418
+     ],
+     [
+      0.045,
+      0.521
+     ]
+    ],
+    [
+     [
+      0.045,
+      0.521
+     ],
+     [
+      0.182,
+      0.418
+     ],
+     [
+      0.417,
+      0.418
+     ],
+     [
+      0.369,
+      0.521
+     ]
+    ],
+    [
+     [
+      0.369,
+      0.521
+     ],
+     [
+      0.417,
+      0.418
+     ],
+     [
+      0.275,
+      0.418
+     ],
+     [
+      0.161,
+      0.521
+     ]
+    ],
+    [
+     [
+      0.773,
+      0.829
+     ],
+     [
+      0.708,
+      0.658
+     ],
+     [
+      0.653,
+      0.521
+     ],
+     [
+      0.803,
+      0.521
+     ],
+     [
+      0.893,
+      0.658
+     ],
+     [
+      1.031,
+      0.829
+     ]
+    ]
+   ]
+  }
+ ],
+ "attribution": [
+  "Route and lane guidance: Mapbox Directions API (\u00a9 Mapbox, \u00a9 OpenStreetMap contributors)",
+  "Street-level imagery: Mapillary, CC-BY-SA 4.0"
+ ]
+}

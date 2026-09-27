@@ -2,6 +2,11 @@
  "default": "sr70",
  "clips": [
   {
+   "name": "clip2",
+   "title": "Right turn at a stop sign (Sacramento, CA)",
+   "frames": 21
+  },
+  {
    "name": "sr70",
    "title": "SR 70 to I-95 (Fort Pierce, FL)",
    "frames": 49
