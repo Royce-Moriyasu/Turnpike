@@ -1,7 +1,7 @@
 // Layers, sources and marker elements for the ROUTE mini-map (RouteMiniMap.tsx).
 import type { Feature, FeatureCollection, LineString } from "geojson";
 import type { GeoJSONSource, Map as MapboxMap } from "mapbox-gl";
-import type { Congestion, DemoRoute, MapRouteSummary } from "../types";
+import type { Congestion, DemoRoute, Frame, MapRouteSummary } from "../types";
 import { formatDistance } from "../lanes";
 
 // Swap to "mapbox://styles/mapbox/navigation-day-v1" (or light-v11) for a light map.
@@ -50,6 +50,17 @@ export function pointAlong(line: LngLat[], m: number): LngLat {
     }
   }
   return line[line.length - 1];
+}
+
+/**
+ * Where to draw the car: on the route line, at the frame's distance along it (bake: progressM),
+ * not at the photo's raw GPS, which can sit several meters off the road (phone GPS). Frames off
+ * this route (e.g. the other destination past a fork) keep their GPS position.
+ */
+export function positionOnRoute(data: DemoRoute, routeKey: string, frame: Frame): LngLat {
+  const route = data.routes[routeKey];
+  if (!route || !frame.nav[routeKey]) return [frame.lng, frame.lat];
+  return pointAlong(route.geometry, frame.progressM);
 }
 
 /** The part of the line between `from` and `to` meters along it. */

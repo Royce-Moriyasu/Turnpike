@@ -1,4 +1,5 @@
 import type { DemoRoute, Frame } from "../types";
+import { positionOnRoute } from "./routeMapLayers";
 
 interface Props {
   data: DemoRoute;
@@ -17,7 +18,7 @@ export default function MiniMap({ data, routeKey, frame }: Props) {
   const pad = Math.max(w, h) * 0.08;
   const project = ([lng, lat]: [number, number]) => [(lng - minX) * kx + pad, maxY - lat + pad];
   const path = (g: [number, number][]) => g.map((p) => project(p).join(",")).join(" ");
-  const [cx, cy] = project([frame.lng, frame.lat]);
+  const [cx, cy] = project(positionOnRoute(data, routeKey, frame));
   const vb = `0 0 ${w + 2 * pad} ${h + 2 * pad}`;
   const r = Math.max(w, h) * 0.02;
 

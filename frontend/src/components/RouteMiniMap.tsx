@@ -5,7 +5,7 @@ import type { DemoRoute, Frame } from "../types";
 import MiniMap from "./MiniMap";
 import {
   ALTERNATE_HIT_LAYER, MAP_STYLE, addRouteLayers, boundsOf, calloutElement, destinationElement,
-  shareAlong, positionElement, routeLayerData, setRouteLayerData,
+  shareAlong, positionElement, positionOnRoute, routeLayerData, setRouteLayerData,
 } from "./routeMapLayers";
 
 const TOKEN: string | undefined = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -44,6 +44,7 @@ function MapboxMiniMap({ data, routeKey, setRouteKey, frame, token }: Props & { 
   setRouteKeyRef.current = setRouteKey;
 
   const active = data.routes[routeKey];
+  const [posLng, posLat] = positionOnRoute(data, routeKey, frame); // on the route line, not raw GPS
 
   // create the map once; remove it on unmount
   useEffect(() => {
@@ -73,7 +74,7 @@ function MapboxMiniMap({ data, routeKey, setRouteKey, frame, token }: Props & { 
       setLoaded(true);
     });
     position.current = new mapboxgl.Marker({ element: positionElement(), rotationAlignment: "map" })
-      .setLngLat([frame.lng, frame.lat]).addTo(map);
+      .setLngLat([posLng, posLat]).addTo(map);
     mapRef.current = map;
     return () => {
       map.remove();
@@ -121,19 +122,19 @@ function MapboxMiniMap({ data, routeKey, setRouteKey, frame, token }: Props & { 
 
   // current position and heading
   useEffect(() => {
-    position.current?.setLngLat([frame.lng, frame.lat]).setRotation(frame.heading ?? 0);
-  }, [frame.lng, frame.lat, frame.heading]);
+    position.current?.setLngLat([posLng, posLat]).setRotation(frame.heading ?? 0);
+  }, [posLng, posLat, frame.heading]);
 
   // camera: whole route, or follow the car rotated to its heading
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
     if (camera === "follow") {
-      map.easeTo({ center: [frame.lng, frame.lat], zoom: FOLLOW_ZOOM, bearing: frame.heading ?? 0, duration: 600 });
+      map.easeTo({ center: [posLng, posLat], zoom: FOLLOW_ZOOM, bearing: frame.heading ?? 0, duration: 600 });
     } else {
       map.fitBounds(boundsOf([active.geometry]), { padding: PADDING, bearing: 0, duration: 600 });
     }
-  }, [camera, active, frame.lng, frame.lat, frame.heading]);
+  }, [camera, active, posLng, posLat, frame.heading]);
 
   return (
     <div className="rounded-2xl bg-surface p-3 ring-1 ring-white/10">
