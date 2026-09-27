@@ -15,9 +15,12 @@ import DataPanel from "./components/DataPanel";
 
 // Space around the video in the page layout (header, controls row, panel header, playback bar and the
 // top of the guidance panel), so the video grows into whatever height is left on screen.
-const VIDEO_RESERVED_PX = 330;
-// ...and in full screen, only the panel header and playback bar.
+const VIDEO_RESERVED_PX = 378;
+// ...in full screen, only the panel header and playback bar...
 const FULLSCREEN_RESERVED_PX = 110;
+// ...and in theater mode, the header, controls row, playback bar and the one-row guidance panel below
+// (map and data are beside the video).
+const THEATER_RESERVED_PX = 422;
 
 const FRAME_MS = 700; // at 1x speed. SR 70 was captured at ~1 frame/s, so 1x plays it at ~1.4x real time
 
@@ -33,6 +36,7 @@ export default function App() {
   const [loop, setLoop] = useState(false); // start over from the first frame at the end
   const cameraRef = useRef<HTMLDivElement>(null);
   const [fullscreen, setFullscreen] = useState(false);
+  const [theater, setTheater] = useState(false); // video as big as possible, map and data in a row below
 
   useEffect(() => {
     const onChange = () => setFullscreen(document.fullscreenElement === cameraRef.current && !!cameraRef.current);
@@ -96,6 +100,7 @@ export default function App() {
         setPlaying((p) => !p);
       } else if (e.key.toLowerCase() === "g") setLanesOn((on) => !on);
       else if (e.key.toLowerCase() === "f") toggleFullscreen();
+      else if (e.key.toLowerCase() === "t") setTheater((on) => !on);
       else if (e.key.toLowerCase() === "d") setDebug((on) => !on);
       else if (e.key.toLowerCase() === "v" && sourceKeys) {
         const keys = sourceKeys.split(",");
@@ -159,21 +164,93 @@ export default function App() {
     : null;
 
   const status = laneStatus(lanesOn, nav, lanes, horizonY);
-  const headerLink = "flex h-7 items-center rounded-md border border-line bg-white/5 px-2.5 text-xs font-medium text-white/70 hover:bg-white/10 hover:text-white";
+  const headerLink = "flex h-11 items-center rounded-md border border-line bg-white/5 px-4 text-base font-medium text-white/70 hover:bg-white/10 hover:text-white";
+
+  const toolbar = (
+    <Toolbar
+      data={data}
+      laneSource={laneSource}
+      setLaneSource={setLaneSource}
+      lanesOn={lanesOn}
+      setLanesOn={setLanesOn}
+      arrowOn={arrowOn}
+      setArrowOn={setArrowOn}
+      debug={debug}
+      setDebug={setDebug}
+    />
+  );
+  const camera = (
+    <div ref={cameraRef} className={fullscreen ? "flex h-full items-center bg-page p-3" : ""}>
+      <Panel
+        title="Camera"
+        className={fullscreen ? "w-full" : ""}
+        right={
+          <>
+            {status ? (
+              <span className={`value flex min-w-0 items-center gap-1.5 ${status.ok ? "text-white/60" : "text-amber-300"}`} title={status.text}>
+                <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${status.ok ? "bg-emerald-400" : "bg-amber-400"}`} />
+                <span className="truncate">{status.text}</span>
+              </span>
+            ) : (
+              <span className="value text-white/40">{lanesOn ? "no lane data" : "standard GPS"}</span>
+            )}
+            <button
+              type="button"
+              onClick={() => setTheater((on) => !on)}
+              aria-pressed={theater}
+              title={theater ? "Exit theater mode (T)" : "Theater mode (T)"}
+              aria-label="Theater mode"
+              className={`flex h-6 w-6 items-center justify-center rounded border border-line hover:bg-white/10 hover:text-white ${theater ? "bg-accent text-white" : "bg-white/5 text-white/70"}`}
+            >
+              <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
+                <rect x="1.5" y="3.5" width="13" height="9" rx="1" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              title={fullscreen ? "Exit full screen (F or Esc)" : "Full screen (F)"}
+              aria-label={fullscreen ? "Exit full screen" : "Full screen"}
+              className="flex h-6 w-6 items-center justify-center rounded border border-line bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+            >
+              <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
+                <path d={fullscreen ? "M6 2v4H2M10 2v4h4M6 14v-4H2M10 14v-4h4" : "M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"} />
+              </svg>
+            </button>
+          </>
+        }
+        bodyClassName="flex flex-col gap-3 p-3"
+      >
+        <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} showArrow={arrowOn} lanes={lanes} previousLane={previousLane} untakenTurnSide={untakenTurnSide} debug={debugInfo?.rows ?? null} horizonY={horizonY} vanishingX={vanishingX} imageAspect={imageAspect}
+          maxHeight={`(100vh - ${
+              fullscreen ? FULLSCREEN_RESERVED_PX
+              : theater ? THEATER_RESERVED_PX
+              : VIDEO_RESERVED_PX}px)`} />
+        <PlaybackBar index={index} count={count} setIndex={setIndex} playing={playing} setPlaying={setPlaying} speed={speed} setSpeed={setSpeed} loop={loop} setLoop={setLoop} />
+      </Panel>
+    </div>
+  );
+  const laneDebugPanel = debug && <LaneDebug nav={nav} lanes={lanes} rows={debugInfo?.rows ?? []} reason={debugInfo?.reason ?? null} countFrom={debugInfo?.countFrom ?? null} />;
+  const map = (className: string) => (
+    <RouteMiniMap data={data} routeKey={routeKey} setRouteKey={setRouteKey} frame={frame} className={className} />
+  );
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-3 p-3 md:p-4">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-xl font-bold tracking-tight">
-            Turn<span className="text-accent">pike</span>
+    <div className={`mx-auto flex flex-col gap-3 p-3 md:p-4 ${theater ? "max-w-none" : "max-w-7xl"}`}>
+      <header className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-4">
+          <h1 className="flex items-center gap-3 text-4xl font-bold tracking-tight">
+            <img src="/turnpike-mark.png" alt="" className="h-16 w-auto" draggable={false} />
+            <span>
+              Turn<span className="text-accent">pike</span>
+            </span>
           </h1>
           {clips && clips.clips.length > 1 && (
             <select
               value={clip ?? ""}
               onChange={(e) => openClip(e.target.value)}
               aria-label="Clip"
-              className="h-7 rounded-md border border-line bg-white/5 px-2 text-xs font-medium text-white/80"
+              className="h-11 rounded-md border border-line bg-white/5 px-3 text-base font-medium text-white/80"
             >
               {clips.clips.map((c) => (
                 <option key={c.name} value={c.name} className="bg-surface">
@@ -183,6 +260,7 @@ export default function App() {
             </select>
           )}
           <Segmented
+            size="xl"
             ariaLabel="Route"
             value={routeKey}
             onChange={setRouteKey}
@@ -190,7 +268,7 @@ export default function App() {
           />
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-white/50">Lane-level AR guidance from public road data</span>
+          <span className="text-base text-white/50">Lane-level AR guidance from public road data</span>
           {import.meta.env.DEV && (
             <nav className="flex gap-2">
               <a href={`#label=${index + 1}`} className={headerLink}>Label this frame</a>
@@ -199,61 +277,35 @@ export default function App() {
           )}
         </div>
       </header>
-      <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_340px]">
-        <main className="flex min-w-0 flex-col gap-3">
-          <Toolbar
-            data={data}
-            laneSource={laneSource}
-            setLaneSource={setLaneSource}
-            lanesOn={lanesOn}
-            setLanesOn={setLanesOn}
-            arrowOn={arrowOn}
-            setArrowOn={setArrowOn}
-            debug={debug}
-            setDebug={setDebug}
-          />
-          <div ref={cameraRef} className={fullscreen ? "flex h-full items-center bg-page p-3" : ""}>
-            <Panel
-              title="Camera"
-              className={fullscreen ? "w-full" : ""}
-              right={
-                <>
-                  {status ? (
-                    <span className={`value flex min-w-0 items-center gap-1.5 ${status.ok ? "text-white/60" : "text-amber-300"}`} title={status.text}>
-                      <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${status.ok ? "bg-emerald-400" : "bg-amber-400"}`} />
-                      <span className="truncate">{status.text}</span>
-                    </span>
-                  ) : (
-                    <span className="value text-white/40">{lanesOn ? "no lane data" : "standard GPS"}</span>
-                  )}
-                  <button
-                    type="button"
-                    onClick={toggleFullscreen}
-                    title={fullscreen ? "Exit full screen (F or Esc)" : "Full screen (F)"}
-                    aria-label={fullscreen ? "Exit full screen" : "Full screen"}
-                    className="flex h-6 w-6 items-center justify-center rounded border border-line bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
-                  >
-                    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
-                      <path d={fullscreen ? "M6 2v4H2M10 2v4h4M6 14v-4H2M10 14v-4h4" : "M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"} />
-                    </svg>
-                  </button>
-                </>
-              }
-              bodyClassName="flex flex-col gap-3 p-3"
-            >
-              <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} showArrow={arrowOn} lanes={lanes} previousLane={previousLane} untakenTurnSide={untakenTurnSide} debug={debugInfo?.rows ?? null} horizonY={horizonY} vanishingX={vanishingX} imageAspect={imageAspect}
-                maxHeight={`(100vh - ${fullscreen ? FULLSCREEN_RESERVED_PX : VIDEO_RESERVED_PX}px)`} />
-              <PlaybackBar index={index} count={count} setIndex={setIndex} playing={playing} setPlaying={setPlaying} speed={speed} setSpeed={setSpeed} loop={loop} setLoop={setLoop} />
-            </Panel>
+      {theater ? (
+        // theater: the video as big as the screen allows; beside it the map at its usual size (square)
+        // and the road data, down to the bottom of the camera panel; the guidance panel below both
+        <>
+          {toolbar}
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_340px]">
+            <div className="min-w-0">{camera}</div>
+            <aside className="flex min-h-0 flex-col gap-3 lg:h-0 lg:min-h-full">
+              {map("aspect-[10/11] shrink-0") /* a bit taller than wide: square map under the header */}
+              <DataPanel frame={frame} nav={nav} lanes={lanes} layout="compact" className="min-h-40 flex-1" />
+            </aside>
           </div>
-          <GuidancePanel nav={nav} showLanes={lanesOn} />
-          {debug && <LaneDebug nav={nav} lanes={lanes} rows={debugInfo?.rows ?? []} reason={debugInfo?.reason ?? null} countFrom={debugInfo?.countFrom ?? null} />}
-        </main>
-        <aside className="flex min-h-0 flex-col gap-3 lg:h-0 lg:min-h-full lg:pt-10">
-          <RouteMiniMap data={data} routeKey={routeKey} setRouteKey={setRouteKey} frame={frame} className="min-h-64 flex-1" />
-          <DataPanel frame={frame} nav={nav} lanes={lanes} className="min-h-64 flex-1" />
-        </aside>
-      </div>
+          <GuidancePanel nav={nav} showLanes={lanesOn} compact />
+          {laneDebugPanel}
+        </>
+      ) : (
+        <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_340px]">
+          <main className="flex min-w-0 flex-col gap-3">
+            {toolbar}
+            {camera}
+            <GuidancePanel nav={nav} showLanes={lanesOn} />
+            {laneDebugPanel}
+          </main>
+          <aside className="flex min-h-0 flex-col gap-3 lg:h-0 lg:min-h-full lg:pt-12">
+            {map("min-h-64 flex-1")}
+            <DataPanel frame={frame} nav={nav} lanes={lanes} className="min-h-64 flex-1" />
+          </aside>
+        </div>
+      )}
 
       <footer className="flex flex-wrap gap-x-4 gap-y-1 border-t border-line pt-2 text-[11px] text-white/40">
         {data.attribution.map((a) => (

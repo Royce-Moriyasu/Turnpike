@@ -7,6 +7,7 @@ interface Props {
   nav: NavState | null;
   lanes: ActiveLanes;
   className?: string;
+  layout?: "stack" | "compact" | "mini"; // compact: tighter rows; mini: a small summary of the key values
 }
 
 // The bake uses a frame's detected lanes when their confidence is at least this (vision/README.md).
@@ -14,8 +15,8 @@ const LOW_CONFIDENCE = 0.6;
 
 function Section({ title, badge, children }: { title: string; badge?: ReactNode; children: ReactNode }) {
   return (
-    <div className="border-b border-line last:border-0">
-      <div className="flex items-center justify-between gap-2 px-3 pb-1 pt-2">
+    <div className="min-w-0 border-b border-line last:border-0">
+      <div className="flex items-center justify-between gap-2 px-3 pb-1 pt-2 [.compact_&]:pb-0 [.compact_&]:pt-1.5">
         <span className="label">{title}</span>
         {badge}
       </div>
@@ -27,7 +28,7 @@ function Section({ title, badge, children }: { title: string; badge?: ReactNode;
 function Row({ label, children, tone }: { label: string; children: ReactNode; tone?: "warn" | "muted" }) {
   const color = tone === "warn" ? "text-amber-300" : tone === "muted" ? "text-white/40" : "text-white/90";
   return (
-    <div className="flex items-baseline justify-between gap-3 px-3 py-1 odd:bg-white/[0.02]">
+    <div className="flex items-baseline justify-between gap-3 px-3 py-1 odd:bg-white/[0.02] [.compact_&]:py-0.5">
       <dt className="shrink-0 text-white/50">{label}</dt>
       <dd className={`value min-w-0 truncate text-right ${color}`}>{children}</dd>
     </div>
@@ -42,7 +43,7 @@ function WarnBadge({ children, title }: { children: ReactNode; title: string }) 
   );
 }
 
-export default function DataPanel({ frame, nav, lanes, className }: Props) {
+export default function DataPanel({ frame, nav, lanes, className, layout = "stack" }: Props) {
   const navCount = nav?.lanes?.length ?? 0;
   const lanePos = (i: number | null) => {
     if (i === null || !navCount) return "—";
@@ -54,8 +55,31 @@ export default function DataPanel({ frame, nav, lanes, className }: Props) {
   const mismatch = seen !== null && navCount > 0 && seen !== navCount;
   const lowConfidence = lanes.confidence != null && lanes.confidence < LOW_CONFIDENCE;
 
+  if (layout === "mini") {
+    const cell = (label: string, value: ReactNode, tone?: "warn", wide?: boolean) => (
+      <div className={`flex min-w-0 items-baseline justify-between gap-2 ${wide ? "col-span-2" : ""}`}>
+        <span className="shrink-0 text-[11px] text-white/50">{label}</span>
+        <span className={`value truncate text-[11px] ${tone === "warn" ? "text-amber-300" : "text-white/90"}`}>{value}</span>
+      </div>
+    );
+    return (
+      <Panel title="Road data" className={className} bodyClassName="grid grid-cols-2 gap-x-4 gap-y-0.5 px-3 py-2">
+        {cell("Position", `${frame.lat.toFixed(5)}, ${frame.lng.toFixed(5)}`, undefined, true)}
+        {cell("Heading", frame.heading !== null ? `${Math.round(frame.heading)}°` : "—")}
+        {cell("Progress", `${Math.round(frame.progressM)} m`)}
+        {cell("Lane", lanePos(nav?.preferredLane ?? null).replace(/ \(.*\)/, ""))}
+        {cell("Seen", seen !== null ? `${seen} lanes${mismatch ? ` ⚠ ${navCount}` : ""}` : "—", mismatch ? "warn" : undefined)}
+        {cell("Conf", lanes.confidence != null ? lanes.confidence.toFixed(2) : "—", lowConfidence ? "warn" : undefined)}
+      </Panel>
+    );
+  }
+
   return (
-    <Panel title="Public road data" className={className} bodyClassName="overflow-y-auto">
+    <Panel
+      title="Public road data"
+      className={className}
+      bodyClassName={`${layout} overflow-y-auto`}
+    >
       <Section title="Location">
         <Row label="Position">{frame.lat.toFixed(5)}, {frame.lng.toFixed(5)}</Row>
         <Row label="Heading">{frame.heading !== null ? `${Math.round(frame.heading)}°` : "—"}</Row>

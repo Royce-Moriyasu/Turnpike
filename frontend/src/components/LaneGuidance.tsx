@@ -7,7 +7,7 @@ import LaneStrip from "./LaneStrip";
  * Which lane to be in, from Mapbox lane data: in words and as a lane diagram. The panel around it
  * is GuidancePanel; visionTarget() is its debug footer.
  */
-export default function LaneGuidance({ nav }: { nav: NavState }) {
+export default function LaneGuidance({ nav, compact = false }: { nav: NavState; compact?: boolean }) {
   const lanes = nav.lanes ?? [];
   const n = lanes.length;
   const target = nav.preferredLane;
@@ -35,6 +35,16 @@ export default function LaneGuidance({ nav }: { nav: NavState }) {
       (nav.laneSource && nav.laneSource.distanceM >= 10
         ? `lanes ${formatDistance(nav.laneSource.distanceM)} ahead`
         : "lanes at this point");
+  }
+
+  if (compact) {
+    // one row: the recommendation and the lane arrows (theater mode)
+    return (
+      <div className="flex items-center gap-4">
+        <div className="text-base font-semibold whitespace-nowrap">{headline}</div>
+        {n > 0 && <LaneStrip nav={nav} />}
+      </div>
+    );
   }
 
   return (
