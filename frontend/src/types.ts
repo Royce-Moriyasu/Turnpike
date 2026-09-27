@@ -43,6 +43,12 @@ export interface ActiveLanes {
   drivable?: (number | null)[] | null; // per polygon, see LaneSet
 }
 
+/** A YOLOPv2 vehicle detection (vision/yolop_masks.py): box as fractions of the image. */
+export interface Vehicle {
+  box: [number, number, number, number]; // x0, y0, x1, y1
+  confidence: number;
+}
+
 export interface Frame {
   id: string;
   image: string | null;
@@ -56,6 +62,7 @@ export interface Frame {
   lanePolygons: Point[][] | null; // default source's lanes (see laneSets)
   polygonSource?: string | null;
   laneSets?: Record<string, LaneSet>; // every lane source's geometry for this frame
+  vehicles?: Vehicle[]; // YOLOPv2 vehicle boxes
 }
 
 export interface RouteInfo {

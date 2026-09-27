@@ -4,6 +4,8 @@
 @theme {
   --color-accent: #4285f4;
   --color-accent-soft: #8ab4f8;
+  --color-danger: #ea4335; /* lane highlight when a vehicle is in the target lane */
+  --color-danger-soft: #f28b82;
   --color-surface: #2d2e31;
   --color-page: #202124;
 }
@@ -29,10 +31,25 @@ body {
   animation: lane-pulse 1.6s ease-in-out infinite;
 }
 
-.direction-arrow {
-  opacity: 0.62;
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 0 3px #42ffae88);
+/* Blue <-> red when a vehicle enters or leaves the target lane (DriverView). */
+.lane-stop {
+  transition: stop-color 0.35s ease;
+}
+
+.lane-outline {
+  transition: stroke 0.35s ease;
+}
+
+/* Direction chevrons on the highlighted lane (DriverView): a soft wave, nearest chevron first. */
+@keyframes chevron-wave {
+  0%, 100% { fill-opacity: 0.28; }
+  35% { fill-opacity: 0.85; }
+}
+
+.lane-chevron {
+  fill: #fff;
+  fill-opacity: 0.28;
+  animation: chevron-wave 1.8s ease-in-out infinite;
 }
 
 /* Frame crossfade (DriverView). Origin is the vanishing point within the cropped view, so the
@@ -67,6 +84,10 @@ body {
   .frame-out-forward,
   .lane-pulse {
     animation: none;
+  }
+  .lane-chevron {
+    animation: none;
+    fill-opacity: 0.7;
   }
   .frame-out,
   .frame-out-forward {

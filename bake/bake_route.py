@@ -647,6 +647,9 @@ def main() -> None:
         seq, frames = manifest_frames(Path(args.frames) if args.frames else CLIP.frames, primary)
 
     lane_polys, lane_info = load_lane_sources()
+    # YOLOPv2 vehicle boxes (vision/yolop_masks.py), for the "vehicle in your lane" highlight
+    vehicles = (json.loads(CLIP.vehicles.read_text(encoding="utf-8")).get("frames", {})
+                if CLIP.vehicles.exists() else {})
     print("Lane sources: " + ", ".join(f"{k} ({len(p)} frames)" for k, p in lane_polys.items()))
     for f in frames:
         f["nav"] = {}
@@ -662,6 +665,7 @@ def main() -> None:
         f["laneSets"] = {k: {"polygons": polys.get(f["id"]), "confidence": lane_info[k]["confidence"].get(f["id"]),
                              "drivable": lane_info[k]["drivable"].get(f["id"])}
                          for k, polys in lane_polys.items()}
+        f["vehicles"] = vehicles.get(f["id"], [])
         f["polygonSource"] = next((k for k, v in f["laneSets"].items() if v["polygons"]), None)
         f["lanePolygons"] = f["laneSets"][f["polygonSource"]]["polygons"] if f["polygonSource"] else None
 

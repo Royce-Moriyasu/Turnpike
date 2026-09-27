@@ -58,6 +58,10 @@ class Clip:
     def yolop_lanes(self) -> Path:
         return self.root / "yolop_lanes.json"
 
+    @property
+    def vehicles(self) -> Path:
+        return self.root / "vehicles.json"
+
     def mapbox(self, route: str) -> Path:
         return self.root / f"mapbox_{route}.json"
 

@@ -107,6 +107,7 @@ export default function App() {
       }
     : { source: frame.polygonSource ?? null, label: "labeled", polygons: frame.lanePolygons, confidence: null };
   const horizonY = data.camera?.horizonY ?? DEFAULT_HORIZON_Y;
+  const vanishingX = data.camera?.vanishingPoint[0] ?? 0.5;
   const debugInfo = debug && nav && lanes.polygons ? laneDebug(nav, lanes.polygons, horizonY, lanes.drivable) : null;
   const previousFrame = data.frames[index - 1];
   const previousNav = previousFrame?.nav[routeKey] ?? null;
@@ -235,7 +236,7 @@ export default function App() {
               </button>
             </div>
           </div>
-          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} showArrow={arrowOn} lanes={lanes} previousLane={previousLane} untakenTurnSide={untakenTurnSide} debug={debugInfo?.rows ?? null} horizonY={horizonY} />
+          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} showArrow={arrowOn} lanes={lanes} previousLane={previousLane} untakenTurnSide={untakenTurnSide} debug={debugInfo?.rows ?? null} horizonY={horizonY} vanishingX={vanishingX} />
           <NavCard nav={nav} />
           {lanesOn && <LaneGuidance nav={nav} />}
           {debug && <LaneDebug nav={nav} lanes={lanes} rows={debugInfo?.rows ?? []} reason={debugInfo?.reason ?? null} countFrom={debugInfo?.countFrom ?? null} />}

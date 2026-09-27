@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { ActiveLanes, Frame, NavState, Point } from "../types";
+import type { ActiveLanes, Frame, NavState, Point, Vehicle } from "../types";
 import { laneTarget, type LaneDebugRow } from "../lanes";
 import { STATUS_STYLE } from "./LaneDebug";
 
@@ -14,6 +14,7 @@ interface Props {
   untakenTurnSide: "left" | "right" | null;
   debug?: LaneDebugRow[] | null; // lane debug view: outline and label every detected lane
   horizonY: number; // the clip's camera (demo.camera.horizonY)
+  vanishingX: number; // ...and where its lane lines meet across the image (demo.camera.vanishingPoint[0])
 }
 
 const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
@@ -92,6 +93,102 @@ function extendToBottom(poly: Point[]): Point[] {
   return [left, ...poly, right];
 }
 
+// A vehicle is "in our lane" when the middle of its box's bottom edge (where it meets the road) is in
+// the highlighted lane, or just past the lane's far end: up to this x the far end's ground distance.
+const VEHICLE_AHEAD = 1.5;
+const VEHICLE_MIN_CONFIDENCE = 0.4;
+const VEHICLE_MAX_WIDTH = 0.6; // wider boxes are the camera car's own hood, not traffic
+
+function insidePolygon([x, y]: Point, poly: Point[]): boolean {
+  let inside = false;
+  poly.forEach(([x1, y1], i) => {
+    const [x2, y2] = poly[(i + 1) % poly.length];
+    if (y1 > y !== y2 > y && x < x1 + ((y - y1) / (y2 - y1)) * (x2 - x1)) inside = !inside;
+  });
+  return inside;
+}
+
+/** The lane (extended to the bottom) plus a short stretch past its far end, each edge continued
+ * along its farthest segment. Ground distance ~ 1 / (y - horizon), as for the chevrons. */
+function laneWithRunway(lane: Point[], horizonY: number): Point[] {
+  const half = lane.length / 2;
+  if (lane.length < 4 || !Number.isInteger(half)) return lane;
+  const [leftTop, leftBelow] = [lane[half - 1], lane[half - 2]];
+  const [rightTop, rightBelow] = [lane[half], lane[half + 1]];
+  const top = Math.min(leftTop[1], rightTop[1]);
+  if (top <= horizonY + 0.005) return lane;
+  const ahead = horizonY + (top - horizonY) / VEHICLE_AHEAD;
+  const along = ([x0, y0]: Point, [x1, y1]: Point): Point =>
+    y0 === y1 ? [x0, ahead] : [x0 + ((ahead - y0) * (x0 - x1)) / (y0 - y1), ahead];
+  return [...lane.slice(0, half), along(leftTop, leftBelow), along(rightTop, rightBelow), ...lane.slice(half)];
+}
+
+// Red means "that lane is occupied, wait before moving over". Once we are in the target lane, the
+// vehicle ahead is just the one we're following, so the highlight stays blue. We are in the lane when
+// the camera's path (from the bottom middle of the image toward the vanishing point) runs within
+// this many lane widths of the lane's center, at the lane's nearest detected row: 0.5 = anywhere
+// between its lines.
+const IN_LANE = 0.5;
+
+/** Signed distance from the lane's center to the camera's path, in lane widths (+ = camera to the
+ * right), at the lane's lowest detected row; null if the lane has no width there. */
+export function cameraOffset(lane: Point[], horizonY: number, vanishingX: number): number | null {
+  const y = Math.max(...lane.map(([, py]) => py));
+  const span = spanAt(lane, y);
+  if (!span || span[1] - span[0] <= 0 || y <= horizonY) return null;
+  const cameraX = 0.5 + ((vanishingX - 0.5) * (1 - y)) / (1 - horizonY);
+  return (cameraX - (span[0] + span[1]) / 2) / (span[1] - span[0]);
+}
+
+function vehicleInLane(vehicles: Vehicle[] | undefined, lane: Point[] | null, horizonY: number): boolean {
+  if (!vehicles?.length || !lane) return false;
+  const zone = laneWithRunway(lane, horizonY);
+  return vehicles.some(({ box: [x0, , x1, y1], confidence }) =>
+    confidence >= VEHICLE_MIN_CONFIDENCE && x1 - x0 <= VEHICLE_MAX_WIDTH && insidePolygon([(x0 + x1) / 2, y1], zone));
+}
+
+// Direction chevrons painted on the highlighted lane, like road markings. They sit at even steps of
+// ground distance, so they shrink and bunch up toward the horizon as paint would. On a flat road a
+// row's distance is proportional to 1 / (y - horizon); z below is that distance in units of the
+// bottom row's (z = 1 at y = 1). Each chevron's corners come from the lane's edges at its own rows, so
+// it also follows the lane around a curve.
+const CHEVRONS = 3;
+const CHEVRON_NEAR = 1.15; // distance of the nearest chevron (bottom row = 1)
+const CHEVRON_SPREAD = 2.8; // farthest chevron at most this x the nearest's distance
+const CHEVRON_LENGTH = 0.32; // tip ahead of the base, as a share of the distance
+const CHEVRON_THICKNESS = 0.09; // arm thickness, as a share of the distance
+const CHEVRON_HALF_WIDTH = 0.2; // arm reach, as a share of the lane width
+
+function laneChevrons(lane: Point[], horizonY: number): Point[][] {
+  const top = Math.min(...lane.map(([, y]) => y));
+  if (top <= horizonY + 0.01) return [];
+  const row = (z: number) => horizonY + (1 - horizonY) / z;
+  const zTop = (1 - horizonY) / (top - horizonY);
+  const zFar = Math.min(CHEVRON_NEAR * CHEVRON_SPREAD, zTop / (1 + CHEVRON_LENGTH) / 1.05);
+  if (zFar <= CHEVRON_NEAR) return [];
+  const at = (z: number) => {
+    const y = row(z);
+    const span = spanAt(lane, y);
+    return span && { y, c: (span[0] + span[1]) / 2, r: (span[1] - span[0]) * CHEVRON_HALF_WIDTH };
+  };
+  const out: Point[][] = [];
+  for (let k = 0; k < CHEVRONS; k++) {
+    const z = CHEVRON_NEAR * (zFar / CHEVRON_NEAR) ** (k / (CHEVRONS - 1));
+    const [base, tip] = [at(z), at(z * (1 + CHEVRON_LENGTH))];
+    const [innerBase, innerTip] = [at(z / (1 + CHEVRON_THICKNESS)), at((z * (1 + CHEVRON_LENGTH)) / (1 + CHEVRON_THICKNESS))];
+    if (!base || !tip || !innerBase || !innerTip) continue;
+    out.push([
+      [base.c - base.r, base.y],
+      [tip.c, tip.y],
+      [base.c + base.r, base.y],
+      [innerBase.c + innerBase.r, innerBase.y],
+      [innerTip.c, innerTip.y],
+      [innerBase.c - innerBase.r, innerBase.y],
+    ]);
+  }
+  return out;
+}
+
 /** Keep an untaken turn branch from widening the highlighted through lane. */
 function trimUntakenBranch(lane: Point[] | null, previous: Point[] | null, side: "left" | "right" | null): Point[] | null {
   if (!lane || !previous || !side) return lane;
@@ -157,7 +254,7 @@ function useSmoothLane(next: Point[] | null): Point[] | null {
   return current;
 }
 
-export default function DriverView({ frame, nav, offRoute, overlay, showArrow, lanes, previousLane, untakenTurnSide, debug, horizonY }: Props) {
+export default function DriverView({ frame, nav, offRoute, overlay, showArrow, lanes, previousLane, untakenTurnSide, debug, horizonY, vanishingX }: Props) {
   const CROP_TOP = cropTopFor(horizonY);
   const navCount = nav?.lanes?.length ?? 0;
   // Only detected lanes are drawn: no lanes for this frame means no highlight (Mapbox guidance still shows).
@@ -169,30 +266,14 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
   const trimmedLane = useMemo(() => trimUntakenBranch(targetLane, previousLane, untakenTurnSide), [targetLane, previousLane, untakenTurnSide]);
   const highlightedLane = useSmoothLane(trimmedLane);
   const imminent = nav ? nav.distanceM < 120 : false;
-  // The compact arrow sits within the lane; its bearing follows bottom midpoint to top midpoint.
-  const arrowLane = trimmedLane;
-  const topY = arrowLane ? Math.max(CROP_TOP, Math.min(...arrowLane.map(([, y]) => y))) : 0;
-  const bottomY = arrowLane ? Math.min(1, Math.max(...arrowLane.map(([, y]) => y))) : 0;
-  const laneHeight = bottomY - topY;
-  const upperY = topY + laneHeight * 0.08;
-  const lowerY = bottomY - laneHeight * 0.08;
-  const arrowY = topY + laneHeight * 0.4;
-  const upperSpan = arrowLane ? spanAt(arrowLane, upperY) : null;
-  const lowerSpan = arrowLane ? spanAt(arrowLane, lowerY) : null;
-  const arrowSpan = arrowLane ? spanAt(arrowLane, arrowY) : null;
-  const arrowX = arrowSpan ? (arrowSpan[0] + arrowSpan[1]) / 2 : 0.5;
-  const arrowAngle = upperSpan && lowerSpan
-    ? Math.atan2(
-        ((upperSpan[0] + upperSpan[1] - lowerSpan[0] - lowerSpan[1]) / 2) * Math.cos(52 * Math.PI / 180),
-        (lowerY - upperY) / IMAGE_ASPECT,
-      ) * 180 / Math.PI
-    : 0;
-  const arrowWidth = Math.min(
-    7.3,
-    arrowSpan ? (arrowSpan[1] - arrowSpan[0]) * 55 : 7.3,
-    upperSpan ? (upperSpan[1] - upperSpan[0]) * 45 : 7.3,
-    (laneHeight / IMAGE_ASPECT) * 100,
-  );
+  const shownLane = highlightedLane && extendToBottom(highlightedLane);
+  const chevrons = showArrow && shownLane ? laneChevrons(shownLane, horizonY) : [];
+  // Red when a vehicle is in the target lane and we aren't in it yet (judged on the detected lane, not
+  // the animated one).
+  const offset = trimmedLane ? cameraOffset(trimmedLane, horizonY, vanishingX) : null;
+  const inTargetLane = offset !== null && Math.abs(offset) <= IN_LANE;
+  const blocked = !inTargetLane && vehicleInLane(frame.vehicles, trimmedLane && extendToBottom(trimmedLane), horizonY);
+  const laneColor = blocked ? "var(--color-danger)" : "var(--color-accent)";
 
   return (
     <div
@@ -216,20 +297,29 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
       >
         <defs>
           <linearGradient id="lane-fill" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0%" stopColor="var(--color-accent)" stopOpacity={imminent ? 0.7 : 0.5} />
-            <stop offset="100%" stopColor="var(--color-accent)" stopOpacity={0} />
+            <stop offset="0%" className="lane-stop" style={{ stopColor: laneColor }} stopOpacity={imminent ? 0.7 : 0.5} />
+            <stop offset="100%" className="lane-stop" style={{ stopColor: laneColor }} stopOpacity={0} />
           </linearGradient>
         </defs>
         {highlightedLane && (
             <polygon
-              points={toPoints(extendToBottom(highlightedLane))}
+              points={toPoints(shownLane!)}
               fill="url(#lane-fill)"
-              stroke="var(--color-accent-soft)"
+              stroke={blocked ? "var(--color-danger-soft)" : "var(--color-accent-soft)"}
               strokeWidth={2}
               vectorEffect="non-scaling-stroke"
-              className="lane-pulse"
+              className="lane-pulse lane-outline"
             />
         )}
+        {/* nearest first, so the brightening wave runs away from the driver */}
+        {chevrons.map((pts, k) => (
+          <polygon
+            key={`chev${k}`}
+            points={toPoints(pts)}
+            className="lane-chevron"
+            style={{ animationDelay: `${k * 0.22}s` }}
+          />
+        ))}
         {debug &&
           lanes.polygons &&
           debug.map((row) => (
@@ -263,28 +353,6 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
             </div>
           );
         })}
-
-      {showArrow && arrowLane && upperSpan && lowerSpan && arrowSpan && laneHeight > 0.04 && (
-        <div
-          className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
-          style={{
-            left: `${arrowX * 100}%`,
-            top: `${((arrowY - CROP_TOP) / (1 - CROP_TOP)) * 100}%`,
-            width: `${arrowWidth}%`,
-          }}
-          role="img"
-          aria-label="Follow highlighted lane"
-        >
-          <svg
-            className="direction-arrow block w-full"
-            viewBox="0 0 64 64"
-            style={{ transform: `perspective(160px) rotateX(52deg) rotate(${arrowAngle}deg)` }}
-            aria-hidden="true"
-          >
-            <path d="M32 53V15 M18 29 32 15 46 29" fill="none" stroke="#42ffae" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-      )}
 
       {offRoute && (
         <div className="absolute inset-x-0 top-0 bg-red-600/85 py-2 text-center text-sm font-semibold">
