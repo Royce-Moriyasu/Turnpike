@@ -15,6 +15,7 @@ interface Props {
   debug?: LaneDebugRow[] | null; // lane debug view: outline and label every detected lane
   horizonY: number; // the clip's camera (demo.camera.horizonY)
   vanishingX: number; // ...and where its lane lines meet across the image (demo.camera.vanishingPoint[0])
+  imageAspect: number; // the photos' width / height (demo.camera.imageSize): 16:9 dashcam, 4:3 phone
 }
 
 const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
@@ -22,7 +23,6 @@ const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
 // Show the road, not the sky: crop to just above the horizon (SR 70's camera looks down, so most of
 // its frame is sky). Polygons stay in full-image coordinates and the SVG viewBox crops them the same way.
 const cropTopFor = (horizonY: number) => Math.min(0.6, Math.max(0, horizonY - 0.355));
-const IMAGE_ASPECT = 2048 / 1152;
 
 const imgClass = "absolute inset-0 h-full w-full select-none object-cover object-bottom";
 
@@ -313,7 +313,7 @@ function useSmoothLane(next: Point[] | null): Point[] | null {
   return current;
 }
 
-export default function DriverView({ frame, nav, offRoute, overlay, showArrow, lanes, previousLane, untakenTurnSide, debug, horizonY, vanishingX }: Props) {
+export default function DriverView({ frame, nav, offRoute, overlay, showArrow, lanes, previousLane, untakenTurnSide, debug, horizonY, vanishingX, imageAspect }: Props) {
   const CROP_TOP = cropTopFor(horizonY);
   const navCount = nav?.lanes?.length ?? 0;
   // Only detected lanes are drawn: no lanes for this frame means no highlight (Mapbox guidance still shows).
@@ -338,7 +338,7 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
   return (
     <div
       className="relative overflow-hidden rounded-2xl bg-black ring-1 ring-white/10"
-      style={{ aspectRatio: IMAGE_ASPECT / (1 - CROP_TOP) }}
+      style={{ aspectRatio: imageAspect / (1 - CROP_TOP) }}
     >
       {frame.image ? (
         <FrameImages frame={frame} />

@@ -156,6 +156,9 @@ export default function LabelTool() {
   // Road crop: from a little above the clip's horizon (SR 70: 0.62).
   const horizonY = data.camera?.horizonY ?? DEFAULT_HORIZON_Y;
   const TOP = Math.max(0, horizonY - 0.155);
+  // the box takes the photos' shape (overlays below are drawn in IMG_W x IMG_H units, stretched to fit)
+  const size = data.camera?.imageSize;
+  const aspect = size ? size[0] / size[1] : IMG_W / IMG_H;
 
   const onImageClick = (e: MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
@@ -217,7 +220,7 @@ export default function LabelTool() {
 
       <div
         className="relative cursor-crosshair select-none overflow-hidden rounded-xl bg-black ring-1 ring-white/10"
-        style={{ aspectRatio: IMG_W / (IMG_H * (1 - TOP)) }}
+        style={{ aspectRatio: aspect / (1 - TOP) }}
         onClick={onImageClick}
       >
         {frame.image && (

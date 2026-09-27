@@ -218,6 +218,9 @@ export default function CvReview() {
   // Road crop: from a little above the clip's horizon (SR 70: 0.62), as in the labeling tool.
   const horizonY = data.camera?.horizonY ?? DEFAULT_HORIZON_Y;
   const TOP = Math.max(0, horizonY - 0.155);
+  // the box takes the photos' shape (overlays below are drawn in IMG_W x IMG_H units, stretched to fit)
+  const size = data.camera?.imageSize;
+  const aspect = size ? size[0] / size[1] : IMG_W / IMG_H;
 
   const frame = data.frames[index];
   const det = cv.frames[frame.id];
@@ -303,7 +306,7 @@ export default function CvReview() {
 
       <div
         className="relative overflow-hidden rounded-xl bg-black ring-1 ring-white/10"
-        style={{ aspectRatio: IMG_W / (IMG_H * (1 - TOP)) }}
+        style={{ aspectRatio: aspect / (1 - TOP) }}
       >
         {frame.image && (
           <img src={frame.image} alt="" className="absolute inset-0 h-full w-full object-cover object-bottom" />

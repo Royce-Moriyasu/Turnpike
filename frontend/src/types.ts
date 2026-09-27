@@ -81,5 +81,9 @@ export interface DemoRoute {
   attribution: string[];
   laneSources?: Record<string, { label: string; method: string | null }>; // in preference order
   clip?: { name: string; title: string };
-  camera?: { vanishingPoint: [number, number]; horizonY: number }; // from the clip's clip.json
+  camera?: {
+    vanishingPoint: [number, number]; // from the clip's clip.json
+    horizonY: number;
+    imageSize?: [number, number] | null; // the photos' [width, height]
+  };
 }
