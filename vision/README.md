@@ -24,6 +24,8 @@ See [`detected_lanes.example.json`](detected_lanes.example.json) for a full exam
       "boundaries": [            // painted lines, sorted LEFT -> RIGHT by x at the bottom row
         { "x": [...], "type": "solid|dashed", "color": "white|yellow", "confidence": 0.92 }
       ],
+      "drivable": [1.0, 0.97, 0.0],  // optional, one per lane: share of it that is drivable road (YOLOPv2);
+                                 // the app never counts or highlights a lane below 0.25 (lanes.ts DRIVABLE_MIN)
       "debug": { }               // optional, anything useful; ignored by the bake
     }
   }
