@@ -69,6 +69,36 @@ X_LIMIT = (-0.1, 1.1)         # report x only this far outside the frame (as det
 EXTRAPOLATE = 0.10            # report rows at most this far (of image height) past the detections
 
 
+def recover_bike_dividers(boundaries, cv_boundaries):
+    """Restore a solid bike-lane edge missed by the YOLOPv2 mask.
+
+    Require two adjacent, confident solid paint detections from the photo, with
+    exactly one already represented by a YOLOPv2 boundary. Their narrow spacing
+    is evidence of a separate bike lane rather than a new full-width road lane.
+    """
+    def same_line(a, b):
+        shared = [(x, y) for x, y in zip(a["x"], b["x"])
+                  if x is not None and y is not None]
+        return len(shared) >= 3 and max(abs(x - y) for x, y in shared) <= 0.025
+
+    result = list(boundaries)
+    for left, right in zip(cv_boundaries, cv_boundaries[1:]):
+        if any(b["type"] != "solid" or b.get("confidence", 0) < 0.5 for b in (left, right)):
+            continue
+        if left["x"][0] is None or right["x"][0] is None:
+            continue
+        bottom_gap = abs(left["x"][0] - right["x"][0])
+        top_gap = abs(left["x"][-1] - right["x"][-1]) if left["x"][-1] is not None and right["x"][-1] is not None else 0
+        if not (0.09 <= bottom_gap <= 0.25 and 0.035 <= top_gap <= 0.12):
+            continue
+        matches = [any(same_line(cv, b) for b in result) for cv in (left, right)]
+        if matches.count(True) != 1:
+            continue
+        missing = right if matches[0] else left
+        result.append(dict(missing))
+    return sorted(result, key=lambda b: next((x for x in reversed(b["x"]) if x is not None), math.inf))
+
+
 def stripes(row, w):
     """Centers of mask runs in one row, skipping runs too wide to be a single line."""
     edges = np.diff(np.concatenate(([0], row, [0])))
@@ -312,6 +342,8 @@ def main():
     if not clip.demo.exists():
         sys.exit(f"{clip.demo.relative_to(REPO)} not found: bake the clip first (bake/bake_route.py --clip {clip.name})")
     demo = json.loads(clip.demo.read_text(encoding="utf-8"))
+    cv_frames = (json.loads(clip.detected.read_text(encoding="utf-8")).get("frames", {})
+                 if clip.detected.exists() else {})
     route_key = args.route or demo.get("primaryRoute") or "north"
     frames = demo["frames"]
     if args.debug:
@@ -335,9 +367,20 @@ def main():
             continue
         result["imageSize"] = result["imageSize"] or [img.shape[1], img.shape[0]]
         entry, kept = process(img, (mask >= 128).astype(np.uint8) * 255, frame, route_key)
-        result["frames"][fid] = entry
         if args.debug:
             draw_debug(img, kept, entry, debug_dir / f"{i:03d}_{fid}.jpg")
+        repaired = recover_bike_dividers(entry["boundaries"],
+                                         cv_frames.get(fid, {}).get("boundaries", []))
+        if len(repaired) != len(entry["boundaries"]):
+            added = len(repaired) - len(entry["boundaries"])
+            entry["boundaries"] = repaired
+            entry["confidence"], reason = frame_confidence(repaired, (frame.get("nav") or {}).get(route_key))
+            entry["debug"]["recoveredBikeDividers"] = added
+            if reason:
+                entry["debug"]["reason"] = reason
+            else:
+                entry["debug"].pop("reason", None)
+        result["frames"][fid] = entry
         print(f"  [{i:2d}/{len(frames)}] {fid}  lines: {len(entry['boundaries'])}  "
               f"conf: {entry['confidence']:.2f}  {entry['debug'].get('reason', '')}")
 

@@ -1722,7 +1722,7 @@
       }
     },
     "182643754090879": {
-      "confidence": 0.0,
+      "confidence": 0.767,
       "boundaries": [
         {
           "x": [
@@ -1735,6 +1735,18 @@
           "type": "dashed",
           "color": "white",
           "confidence": 0.455
+        },
+        {
+          "x": [
+            0.426,
+            0.428,
+            0.43,
+            0.431,
+            0.432
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.767
         },
         {
           "x": [
@@ -1764,11 +1776,11 @@
       "debug": {
         "tracks": 3,
         "route": "north",
-        "reason": "lane width 0.65 at bottom is out of range"
+        "recoveredBikeDividers": 1
       }
     },
     "373417314306458": {
-      "confidence": 0.607,
+      "confidence": 0.699,
       "boundaries": [
         {
           "x": [
@@ -1793,6 +1805,18 @@
           "type": "solid",
           "color": "white",
           "confidence": 0.607
+        },
+        {
+          "x": [
+            0.475,
+            0.466,
+            0.456,
+            0.449,
+            0.443
+          ],
+          "type": "solid",
+          "color": "white",
+          "confidence": 0.699
         },
         {
           "x": [
@@ -1821,7 +1845,8 @@
       ],
       "debug": {
         "tracks": 4,
-        "route": "north"
+        "route": "north",
+        "recoveredBikeDividers": 1
       }
     },
     "379583843980480": {
