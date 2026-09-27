@@ -15,6 +15,7 @@ interface Props {
   debug?: LaneDebugRow[] | null; // lane debug view: outline and label every detected lane
   horizonY: number; // the clip's camera (demo.camera.horizonY)
   vanishingX: number; // ...and where its lane lines meet across the image (demo.camera.vanishingPoint[0])
+  maxHeight: string; // CSS length: the video fills the width, but is never taller than this
 }
 
 const toPoints = (poly: Point[]) => poly.map(([x, y]) => `${x},${y}`).join(" ");
@@ -313,7 +314,25 @@ function useSmoothLane(next: Point[] | null): Point[] | null {
   return current;
 }
 
-export default function DriverView({ frame, nav, offRoute, overlay, showArrow, lanes, previousLane, untakenTurnSide, debug, horizonY, vanishingX }: Props) {
+
+/**
+ * What the lane overlay is doing on this frame, for the camera panel's header: null in the Standard
+ * GPS view or without Mapbox lanes. Same rule DriverView uses to pick the highlight.
+ */
+export function laneStatus(
+  overlay: boolean, nav: NavState | null, lanes: ActiveLanes, horizonY: number,
+): { text: string; ok: boolean } | null {
+  const navCount = nav?.lanes?.length ?? 0;
+  if (!overlay || !nav || !navCount) return null;
+  if (!lanes.polygons) return { text: `No ${lanes.label} lanes detected`, ok: false };
+  const match = nav.preferredLane !== null ? laneTarget(nav, lanes.polygons, horizonY, lanes.drivable) : null;
+  if (match?.index == null) {
+    return { text: `No ${lanes.label} lane match${match?.reason ? `: ${match.reason}` : ""}`, ok: false };
+  }
+  return { text: `${lanes.label} lanes`, ok: true };
+}
+
+export default function DriverView({ frame, nav, offRoute, overlay, showArrow, lanes, previousLane, untakenTurnSide, debug, horizonY, vanishingX, maxHeight }: Props) {
   const CROP_TOP = cropTopFor(horizonY);
   const navCount = nav?.lanes?.length ?? 0;
   // Only detected lanes are drawn: no lanes for this frame means no highlight (Mapbox guidance still shows).
@@ -337,8 +356,12 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl bg-black ring-1 ring-white/10"
-      style={{ aspectRatio: IMAGE_ASPECT / (1 - CROP_TOP) }}
+      className="relative mx-auto overflow-hidden rounded-md bg-black"
+      // as wide as the panel, but no taller than maxHeight (keeps the image's shape so the overlay lines up)
+      style={{
+        aspectRatio: IMAGE_ASPECT / (1 - CROP_TOP),
+        width: `min(100%, ${maxHeight} * ${IMAGE_ASPECT / (1 - CROP_TOP)})`,
+      }}
     >
       {frame.image ? (
         <FrameImages frame={frame} />
@@ -432,15 +455,6 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
       {!overlay && (
         <div className="absolute left-3 top-3 rounded-md bg-black/60 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-white/80">
           Standard GPS
-        </div>
-      )}
-      {overlay && navCount > 0 && (
-        <div className="absolute bottom-2 right-3 rounded bg-black/60 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white/60">
-          {!lanes.polygons
-            ? `No ${lanes.label} lanes detected`
-            : target === null
-              ? `No ${lanes.label} lane match${match?.reason ? `: ${match.reason}` : ""}`
-              : `${lanes.label} lanes`}
         </div>
       )}
     </div>

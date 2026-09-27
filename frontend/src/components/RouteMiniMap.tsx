@@ -3,6 +3,8 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import type { DemoRoute, Frame } from "../types";
 import MiniMap from "./MiniMap";
+import Panel from "./Panel";
+import { Segmented } from "./ui";
 import {
   ALTERNATE_HIT_LAYER, MAP_STYLE, addRouteLayers, boundsOf, calloutElement, destinationElement,
   shareAlong, positionElement, routeLayerData, setRouteLayerData,
@@ -21,6 +23,7 @@ interface Props {
   routeKey: string;
   setRouteKey: (key: string) => void;
   frame: Frame;
+  className?: string; // on the panel, e.g. flex-1 to fill the column
 }
 
 /**
@@ -29,11 +32,11 @@ interface Props {
  * it falls back to the plain SVG route (MiniMap).
  */
 export default function RouteMiniMap(props: Props) {
-  if (!TOKEN) return <MiniMap data={props.data} routeKey={props.routeKey} frame={props.frame} />;
+  if (!TOKEN) return <MiniMap data={props.data} routeKey={props.routeKey} frame={props.frame} className={props.className} />;
   return <MapboxMiniMap {...props} token={TOKEN} />;
 }
 
-function MapboxMiniMap({ data, routeKey, setRouteKey, frame, token }: Props & { token: string }) {
+function MapboxMiniMap({ data, routeKey, setRouteKey, frame, className, token }: Props & { token: string }) {
   const container = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markers = useRef<mapboxgl.Marker[]>([]);
@@ -75,7 +78,11 @@ function MapboxMiniMap({ data, routeKey, setRouteKey, frame, token }: Props & { 
     position.current = new mapboxgl.Marker({ element: positionElement(), rotationAlignment: "map" })
       .setLngLat([frame.lng, frame.lat]).addTo(map);
     mapRef.current = map;
+    // the panel's height follows the page layout, so keep the canvas in step with it
+    const resize = new ResizeObserver(() => map.resize());
+    resize.observe(container.current);
     return () => {
+      resize.disconnect();
       map.remove();
       mapRef.current = null;
       position.current = null;
@@ -136,24 +143,21 @@ function MapboxMiniMap({ data, routeKey, setRouteKey, frame, token }: Props & { 
   }, [camera, active, frame.lng, frame.lat, frame.heading]);
 
   return (
-    <div className="rounded-2xl bg-surface p-3 ring-1 ring-white/10">
-      <div className="mb-2 flex items-center justify-between">
-        <div className="text-xs uppercase tracking-widest text-white/50">Route</div>
-        <div className="flex rounded-md bg-white/10 p-0.5 text-[11px]" role="group" aria-label="Map camera">
-          {(["overview", "follow"] as const).map((c) => (
-            <button
-              key={c}
-              type="button"
-              aria-pressed={camera === c}
-              onClick={() => setCamera(c)}
-              className={`rounded px-2 py-0.5 capitalize ${camera === c ? "bg-accent text-white" : "text-white/60 hover:text-white"}`}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div ref={container} className="route-minimap aspect-[4/3] w-full overflow-hidden rounded-xl" />
-    </div>
+    <Panel
+      title="Route"
+      className={className}
+      bodyClassName="p-0"
+      right={
+        <Segmented
+          size="sm"
+          ariaLabel="Map camera"
+          value={camera}
+          onChange={setCamera}
+          options={[{ value: "overview", label: "Overview" }, { value: "follow", label: "Follow" }]}
+        />
+      }
+    >
+      <div ref={container} className="route-minimap h-full min-h-48 w-full overflow-hidden rounded-b-lg" />
+    </Panel>
   );
 }

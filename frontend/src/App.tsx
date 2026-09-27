@@ -1,16 +1,25 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { ActiveLanes, DemoRoute } from "./types";
-import DriverView from "./components/DriverView";
-import NavCard from "./components/NavCard";
-import LaneGuidance from "./components/LaneGuidance";
+import DriverView, { laneStatus } from "./components/DriverView";
+import GuidancePanel from "./components/GuidancePanel";
+import Panel from "./components/Panel";
+import PlaybackBar from "./components/PlaybackBar";
+import Toolbar from "./components/Toolbar";
 import LaneDebug from "./components/LaneDebug";
 import { DEFAULT_HORIZON_Y, laneDebug, laneTarget } from "./lanes";
 import { demoUrl, loadClipIndex, openClip, pickClip, type ClipIndex } from "./clips";
+import { roadName } from "./lanes";
+import { Segmented } from "./components/ui";
 import RouteMiniMap from "./components/RouteMiniMap";
 import DataPanel from "./components/DataPanel";
-import Controls from "./components/Controls";
 
-const FRAME_MS = 700; // SR 70 was captured at ~1 frame/s; this plays at ~1.4x
+// Space around the video in the page layout (header, controls row, panel header, playback bar and the
+// top of the guidance panel), so the video grows into whatever height is left on screen.
+const VIDEO_RESERVED_PX = 330;
+// ...and in full screen, only the panel header and playback bar.
+const FULLSCREEN_RESERVED_PX = 110;
+
+const FRAME_MS = 700; // at 1x speed. SR 70 was captured at ~1 frame/s, so 1x plays it at ~1.4x real time
 
 export default function App() {
   const [clips, setClips] = useState<ClipIndex | null>(null);
@@ -20,6 +29,20 @@ export default function App() {
   const [index, setIndexRaw] = useState(0);
   const [routeKey, setRouteKey] = useState("north");
   const [playing, setPlaying] = useState(false);
+  const [speed, setSpeed] = useState(1); // playback speed multiplier (PlaybackBar)
+  const [loop, setLoop] = useState(false); // start over from the first frame at the end
+  const cameraRef = useRef<HTMLDivElement>(null);
+  const [fullscreen, setFullscreen] = useState(false);
+
+  useEffect(() => {
+    const onChange = () => setFullscreen(document.fullscreenElement === cameraRef.current && !!cameraRef.current);
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+  const toggleFullscreen = useCallback(() => {
+    if (document.fullscreenElement) void document.exitFullscreen();
+    else void cameraRef.current?.requestFullscreen();
+  }, []);
   const [lanesOn, setLanesOn] = useState(true); // false = "before": a standard GPS with no lane guidance
   const [arrowOn, setArrowOn] = useState(true);
   const [laneSource, setLaneSource] = useState<string | null>(null); // which lane geometry to draw (V cycles)
@@ -54,14 +77,15 @@ export default function App() {
     const t = setInterval(() => {
       setIndexRaw((i) => {
         if (i >= count - 1) {
+          if (loop) return 0;
           setPlaying(false);
           return i;
         }
         return i + 1;
       });
-    }, FRAME_MS);
+    }, FRAME_MS / speed);
     return () => clearInterval(t);
-  }, [playing, count]);
+  }, [playing, count, speed, loop]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -71,6 +95,7 @@ export default function App() {
         e.preventDefault();
         setPlaying((p) => !p);
       } else if (e.key.toLowerCase() === "g") setLanesOn((on) => !on);
+      else if (e.key.toLowerCase() === "f") toggleFullscreen();
       else if (e.key.toLowerCase() === "d") setDebug((on) => !on);
       else if (e.key.toLowerCase() === "v" && sourceKeys) {
         const keys = sourceKeys.split(",");
@@ -80,7 +105,7 @@ export default function App() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [index, setIndex, sourceKeys]);
+  }, [index, setIndex, sourceKeys, toggleFullscreen]);
 
   if (error) {
     return (
@@ -131,11 +156,14 @@ export default function App() {
       )?.[1]?.laneSide ?? null
     : null;
 
+  const status = laneStatus(lanesOn, nav, lanes, horizonY);
+  const headerLink = "flex h-7 items-center rounded-md border border-line bg-white/5 px-2.5 text-xs font-medium text-white/70 hover:bg-white/10 hover:text-white";
+
   return (
-    <div className="mx-auto max-w-7xl p-4 md:p-6">
-      <header className="mb-4 flex items-baseline justify-between">
-        <div className="flex items-baseline gap-4">
-          <h1 className="text-2xl font-bold tracking-tight">
+    <div className="mx-auto flex max-w-7xl flex-col gap-3 p-3 md:p-4">
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-xl font-bold tracking-tight">
             Turn<span className="text-accent">pike</span>
           </h1>
           {clips && clips.clips.length > 1 && (
@@ -143,118 +171,93 @@ export default function App() {
               value={clip ?? ""}
               onChange={(e) => openClip(e.target.value)}
               aria-label="Clip"
-              className="rounded-md bg-white/10 px-2 py-1 text-sm text-white/80"
+              className="h-7 rounded-md border border-line bg-white/5 px-2 text-xs font-medium text-white/80"
             >
               {clips.clips.map((c) => (
                 <option key={c.name} value={c.name} className="bg-surface">
-                  {c.title}
+                  {roadName(c.title)}
                 </option>
               ))}
             </select>
           )}
-        </div>
-        <span className="text-sm text-white/50">
-          Lane-level AR guidance from public road data
-          {import.meta.env.DEV && (
-            <>
-              <a href={`#label=${index + 1}`} className="ml-4 text-accent-soft hover:underline">
-                Label this frame →
-              </a>
-              <a href={`#cv=${index + 1}`} className="ml-4 text-accent-soft hover:underline">
-                CV review →
-              </a>
-            </>
-          )}
-        </span>
-      </header>
-
-      <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
-        <main className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            {Object.keys(sources).length > 0 ? (
-              <div className="flex items-center gap-2" role="group" aria-label="Lane geometry source (V)">
-                <span className="text-xs uppercase tracking-widest text-white/40">Lanes</span>
-                <div className="flex rounded-lg bg-white/5 p-1">
-                  {Object.entries(sources).map(([key, src]) => (
-                    <button
-                      key={key}
-                      onClick={() => setLaneSource(key)}
-                      aria-pressed={laneSource === key}
-                      title={`${src.method ?? src.label} · cycle with V`}
-                      className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-                        laneSource === key ? "bg-white/20 text-white" : "text-white/60 hover:text-white"
-                      }`}
-                    >
-                      {src.label}
-                    </button>
-                  ))}
-                </div>
-                <button
-                  onClick={() => setDebug((on) => !on)}
-                  aria-pressed={debug}
-                  title="Show every detected lane and how it was matched (D)"
-                  className={`rounded-lg px-3 py-1.5 text-sm font-medium ring-1 ${
-                    debug ? "bg-amber-400/20 text-amber-200 ring-amber-400/50" : "text-white/60 ring-white/10 hover:text-white"
-                  }`}
-                >
-                  Debug
-                </button>
-              </div>
-            ) : (
-              <span />
-            )}
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="flex rounded-lg bg-white/5 p-1" role="group" aria-label="Guidance mode (G)">
-                {[
-                  { on: false, label: "Standard GPS" },
-                  { on: true, label: "Turnpike lanes" },
-                ].map((m) => (
-                  <button
-                    key={m.label}
-                    onClick={() => setLanesOn(m.on)}
-                    aria-pressed={lanesOn === m.on}
-                    title="Toggle with G"
-                    className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-                      lanesOn === m.on ? "bg-accent text-white" : "text-white/70 hover:text-white"
-                    }`}
-                  >
-                    {m.label}
-                  </button>
-                ))}
-              </div>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={arrowOn}
-                onClick={() => setArrowOn((on) => !on)}
-                className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-sm font-medium text-white/80 hover:text-white"
-              >
-                Arrow
-                <span className={`relative h-5 w-9 rounded-full transition-colors ${arrowOn ? "bg-accent" : "bg-white/20"}`}>
-                  <span className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition-transform ${arrowOn ? "translate-x-4" : ""}`} />
-                </span>
-              </button>
-            </div>
-          </div>
-          <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} showArrow={arrowOn} lanes={lanes} previousLane={previousLane} untakenTurnSide={untakenTurnSide} debug={debugInfo?.rows ?? null} horizonY={horizonY} vanishingX={vanishingX} />
-          <NavCard nav={nav} />
-          {lanesOn && <LaneGuidance nav={nav} />}
-          {debug && <LaneDebug nav={nav} lanes={lanes} rows={debugInfo?.rows ?? []} reason={debugInfo?.reason ?? null} countFrom={debugInfo?.countFrom ?? null} />}
-          <Controls
-            data={data}
-            index={index}
-            setIndex={setIndex}
-            playing={playing}
-            setPlaying={setPlaying}
-            routeKey={routeKey}
-            setRouteKey={setRouteKey}
+          <Segmented
+            ariaLabel="Route"
+            value={routeKey}
+            onChange={setRouteKey}
+            options={Object.entries(data.routes).map(([key, r]) => ({ value: key, label: roadName(r.label) }))}
           />
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-white/50">Lane-level AR guidance from public road data</span>
+          {import.meta.env.DEV && (
+            <nav className="flex gap-2">
+              <a href={`#label=${index + 1}`} className={headerLink}>Label this frame</a>
+              <a href={`#cv=${index + 1}`} className={headerLink}>CV review</a>
+            </nav>
+          )}
+        </div>
+      </header>
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <main className="flex min-w-0 flex-col gap-3">
+          <Toolbar
+            data={data}
+            laneSource={laneSource}
+            setLaneSource={setLaneSource}
+            lanesOn={lanesOn}
+            setLanesOn={setLanesOn}
+            arrowOn={arrowOn}
+            setArrowOn={setArrowOn}
+            debug={debug}
+            setDebug={setDebug}
+          />
+          <div ref={cameraRef} className={fullscreen ? "flex h-full items-center bg-page p-3" : ""}>
+            <Panel
+              title="Camera"
+              className={fullscreen ? "w-full" : ""}
+              right={
+                <>
+                  {status ? (
+                    <span className={`value flex min-w-0 items-center gap-1.5 ${status.ok ? "text-white/60" : "text-amber-300"}`} title={status.text}>
+                      <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${status.ok ? "bg-emerald-400" : "bg-amber-400"}`} />
+                      <span className="truncate">{status.text}</span>
+                    </span>
+                  ) : (
+                    <span className="value text-white/40">{lanesOn ? "no lane data" : "standard GPS"}</span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={toggleFullscreen}
+                    title={fullscreen ? "Exit full screen (F or Esc)" : "Full screen (F)"}
+                    aria-label={fullscreen ? "Exit full screen" : "Full screen"}
+                    className="flex h-6 w-6 items-center justify-center rounded border border-line bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+                  >
+                    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
+                      <path d={fullscreen ? "M6 2v4H2M10 2v4h4M6 14v-4H2M10 14v-4h4" : "M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"} />
+                    </svg>
+                  </button>
+                </>
+              }
+              bodyClassName="flex flex-col gap-3 p-3"
+            >
+              <DriverView frame={frame} nav={nav} offRoute={offRoute} overlay={lanesOn} showArrow={arrowOn} lanes={lanes} previousLane={previousLane} untakenTurnSide={untakenTurnSide} debug={debugInfo?.rows ?? null} horizonY={horizonY} vanishingX={vanishingX}
+                maxHeight={`(100vh - ${fullscreen ? FULLSCREEN_RESERVED_PX : VIDEO_RESERVED_PX}px)`} />
+              <PlaybackBar index={index} count={count} setIndex={setIndex} playing={playing} setPlaying={setPlaying} speed={speed} setSpeed={setSpeed} loop={loop} setLoop={setLoop} />
+            </Panel>
+          </div>
+          <GuidancePanel nav={nav} showLanes={lanesOn} />
+          {debug && <LaneDebug nav={nav} lanes={lanes} rows={debugInfo?.rows ?? []} reason={debugInfo?.reason ?? null} countFrom={debugInfo?.countFrom ?? null} />}
         </main>
-        <aside className="space-y-4">
-          <RouteMiniMap data={data} routeKey={routeKey} setRouteKey={setRouteKey} frame={frame} />
-          <DataPanel data={data} frame={frame} nav={nav} lanes={lanes} />
+        <aside className="flex min-h-0 flex-col gap-3 lg:h-0 lg:min-h-full lg:pt-10">
+          <RouteMiniMap data={data} routeKey={routeKey} setRouteKey={setRouteKey} frame={frame} className="min-h-64 flex-1" />
+          <DataPanel frame={frame} nav={nav} lanes={lanes} className="min-h-64 flex-1" />
         </aside>
       </div>
+
+      <footer className="flex flex-wrap gap-x-4 gap-y-1 border-t border-line pt-2 text-[11px] text-white/40">
+        {data.attribution.map((a) => (
+          <span key={a}>{a}</span>
+        ))}
+      </footer>
     </div>
   );
 }
