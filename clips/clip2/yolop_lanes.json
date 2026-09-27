@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-27T00:23:27+00:00",
+  "generatedAt": "2026-09-27T03:01:32+00:00",
   "method": "yolopv2-mask-tracks-v1",
   "imageSize": [
     1920,
@@ -58,7 +58,11 @@
         "tracks": 4,
         "route": "right",
         "reason": "lane width 0.72 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0
+      ]
     },
     "1510645613397383": {
       "confidence": 0.0,
@@ -104,7 +108,11 @@
         "tracks": 4,
         "route": "right",
         "reason": "lane width 0.73 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0
+      ]
     },
     "1367328864825661": {
       "confidence": 0.156,
@@ -149,7 +157,11 @@
       "debug": {
         "tracks": 4,
         "route": "right"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0
+      ]
     },
     "1125693112335631": {
       "confidence": 0.0,
@@ -183,7 +195,10 @@
         "tracks": 2,
         "route": "right",
         "reason": "lane width 0.97 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        null
+      ]
     },
     "1224583429392562": {
       "confidence": 0.0,
@@ -192,7 +207,8 @@
         "tracks": 0,
         "route": "right",
         "reason": "no lines found"
-      }
+      },
+      "drivable": []
     },
     "1141191854624468": {
       "confidence": 0.0,
@@ -201,7 +217,8 @@
         "tracks": 1,
         "route": "right",
         "reason": "no lines found"
-      }
+      },
+      "drivable": []
     },
     "980756987517680": {
       "confidence": 0.0,
@@ -210,7 +227,8 @@
         "tracks": 1,
         "route": "right",
         "reason": "no lines found"
-      }
+      },
+      "drivable": []
     },
     "817975827244600": {
       "confidence": 0.0,
@@ -219,7 +237,8 @@
         "tracks": 2,
         "route": "right",
         "reason": "no lines found"
-      }
+      },
+      "drivable": []
     },
     "2264653194007449": {
       "confidence": 0.0,
@@ -265,7 +284,11 @@
         "tracks": 5,
         "route": "right",
         "reason": "lane width 0.61 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        0.0,
+        1.0
+      ]
     },
     "1113464287523557": {
       "confidence": 0.0,
@@ -323,7 +346,12 @@
         "tracks": 6,
         "route": "right",
         "reason": "lane width 0.07 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        0.0,
+        0.0,
+        1.0
+      ]
     },
     "2507209356321160": {
       "confidence": 0.0,
@@ -381,7 +409,12 @@
         "tracks": 5,
         "route": "right",
         "reason": "lane width 0.74 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        0.0,
+        1.0,
+        1.0
+      ]
     },
     "1303931864011923": {
       "confidence": 0.0,
@@ -427,7 +460,11 @@
         "tracks": 4,
         "route": "right",
         "reason": "lane width 0.72 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0
+      ]
     },
     "1594934021484679": {
       "confidence": 0.0,
@@ -473,7 +510,11 @@
         "tracks": 6,
         "route": "right",
         "reason": "lane width 0.70 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0
+      ]
     },
     "2146911855719786": {
       "confidence": 0.275,
@@ -542,7 +583,13 @@
       "debug": {
         "tracks": 6,
         "route": "right"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0,
+        0.93,
+        1.0
+      ]
     },
     "3081613288678883": {
       "confidence": 0.404,
@@ -611,7 +658,13 @@
       "debug": {
         "tracks": 7,
         "route": "right"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
     },
     "3679790072151659": {
       "confidence": 0.0,
@@ -705,7 +758,15 @@
         "tracks": 7,
         "route": "right",
         "reason": "lane width 0.05 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        null
+      ]
     },
     "1116476260071926": {
       "confidence": 0.351,
@@ -762,7 +823,12 @@
       "debug": {
         "tracks": 6,
         "route": "right"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0,
+        1.0
+      ]
     },
     "2242645109540722": {
       "confidence": 0.395,
@@ -819,7 +885,12 @@
       "debug": {
         "tracks": 5,
         "route": "right"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0,
+        1.0
+      ]
     },
     "4011448179160828": {
       "confidence": 0.336,
@@ -876,7 +947,12 @@
       "debug": {
         "tracks": 4,
         "route": "right"
-      }
+      },
+      "drivable": [
+        1.0,
+        1.0,
+        1.0
+      ]
     },
     "1123503549343244": {
       "confidence": 0.44,
@@ -945,7 +1021,13 @@
       "debug": {
         "tracks": 5,
         "route": "right"
-      }
+      },
+      "drivable": [
+        0.0,
+        1.0,
+        1.0,
+        1.0
+      ]
     },
     "820738367279393": {
       "confidence": 0.0,
@@ -1027,7 +1109,14 @@
         "tracks": 6,
         "route": "right",
         "reason": "lane width 0.13 at bottom is out of range"
-      }
+      },
+      "drivable": [
+        0.0,
+        1.0,
+        1.0,
+        null,
+        0.92
+      ]
     }
   }
 }

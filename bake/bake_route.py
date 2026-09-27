@@ -542,20 +542,27 @@ def synthetic_frames(primary: RouteModel) -> list[dict]:
     return frames
 
 
-def boundaries_to_polygons(frame: dict, rows: list[float]) -> list[list[list[float]]]:
-    """Lane i = the space between boundary i and i+1 (vision/README.md format), as a polygon."""
+def boundaries_to_lanes(frame: dict, rows: list[float]) -> list[tuple[list, float | None]]:
+    """Lane i = the space between boundary i and i+1 (vision/README.md format), as (polygon, share
+    of it that is drivable road, if the detector measured it: frame["drivable"], one per lane)."""
     def bottom_x(b):
         return next((x for x in b["x"] if x is not None), math.inf)
 
     lines = sorted(frame["boundaries"], key=bottom_x)
+    drivable = frame.get("drivable") or []
     lanes = []
-    for left, right in zip(lines, lines[1:]):
+    for k, (left, right) in enumerate(zip(lines, lines[1:])):
         both = [j for j, r in enumerate(rows) if left["x"][j] is not None and right["x"][j] is not None]
         if len(both) < 2:
             continue  # can't draw a lane from fewer than two shared rows
-        lanes.append([[left["x"][j], rows[j]] for j in both] +
-                     [[right["x"][j], rows[j]] for j in reversed(both)])
+        lanes.append(([[left["x"][j], rows[j]] for j in both] +
+                      [[right["x"][j], rows[j]] for j in reversed(both)],
+                      drivable[k] if k < len(drivable) else None))
     return lanes
+
+
+def boundaries_to_polygons(frame: dict, rows: list[float]) -> list[list[list[float]]]:
+    return [poly for poly, _ in boundaries_to_lanes(frame, rows)]
 
 
 def load_lane_polygons(path: Path) -> dict[str, list]:
@@ -578,7 +585,7 @@ def lane_source_files() -> dict[str, tuple[str, Path]]:
 
 
 def load_lane_sources() -> tuple[dict[str, dict], dict[str, dict]]:
-    """({source: {frame id: polygons}}, {source: {label, method, confidence by frame id}})."""
+    """({source: {frame id: polygons}}, {source: {label, method, confidence and drivable by frame id}})."""
     polygons, info = {}, {}
     for key, (label, path) in lane_source_files().items():
         if not path.exists():
@@ -586,8 +593,11 @@ def load_lane_sources() -> tuple[dict[str, dict], dict[str, dict]]:
         data = json.loads(path.read_text(encoding="utf-8"))
         polygons[key] = load_lane_polygons(path)
         frames = data.get("frames", {})
+        drivable = {fid: [d for _, d in boundaries_to_lanes(fr, data["rows"])]
+                    for fid, fr in frames.items() if "boundaries" in fr and fr.get("drivable")}
         info[key] = {"label": label, "method": data.get("method"),
-                     "confidence": {fid: fr.get("confidence") for fid, fr in frames.items()}}
+                     "confidence": {fid: fr.get("confidence") for fid, fr in frames.items()},
+                     "drivable": drivable}
     return polygons, info
 
 
@@ -649,7 +659,8 @@ def main() -> None:
         f["progressM"] = round(f.pop("s"), 1)
         # Every source's geometry, so the frontend can switch between them; lanePolygons is the
         # first source (in lane_source_files order) that has lanes for this frame.
-        f["laneSets"] = {k: {"polygons": polys.get(f["id"]), "confidence": lane_info[k]["confidence"].get(f["id"])}
+        f["laneSets"] = {k: {"polygons": polys.get(f["id"]), "confidence": lane_info[k]["confidence"].get(f["id"]),
+                             "drivable": lane_info[k]["drivable"].get(f["id"])}
                          for k, polys in lane_polys.items()}
         f["polygonSource"] = next((k for k, v in f["laneSets"].items() if v["polygons"]), None)
         f["lanePolygons"] = f["laneSets"][f["polygonSource"]]["polygons"] if f["polygonSource"] else None

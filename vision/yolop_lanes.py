@@ -15,8 +15,11 @@ detect_lanes merges or drops them. The mask is clean, so a direct approach works
   2. Fit x = poly(y) to each track (detect_lanes.robust_fit), joining collinear pieces (dashes).
   3. Solid/dashed and white/yellow come from the photo's paint; confidence uses the same formula
      as detect_lanes.py, so the sources are comparable.
+  4. Each lane's share of YOLOPv2's drivable area ("drivable", one per lane). The model marks only
+     the road we are on, so a "lane" across a median (the opposing roadway's lines, seen during a
+     turn) scores low and the frontend won't count or highlight it (lanes.ts).
 
-Reads clips/<clip>/_build/yolop/band/lane/ and writes clips/<clip>/yolop_lanes.json. The tracking band
+Reads clips/<clip>/_build/yolop/band/{lane,drivable}/ and writes clips/<clip>/yolop_lanes.json. The tracking band
 and vanishing point come from the clip's camera (clip.json camera.vanishingPoint).
 
 Usage (from the repo root; run vision/yolop_masks.py first):
@@ -67,6 +70,9 @@ MIN_SUPPORT = 0.25            # a line inside the frame there with less mask tha
 MIN_SUPPORT_ROWS = 5          # ...judged only if it is inside the frame on at least this many rows
 X_LIMIT = (-0.1, 1.1)         # report x only this far outside the frame (as detect_lanes.py)
 EXTRAPOLATE = 0.10            # report rows at most this far (of image height) past the detections
+DRIVABLE_ACROSS = (0.2, 0.35, 0.5, 0.65, 0.8)  # where across a lane to sample the drivable mask
+DRIVABLE_STEPS = 6            # samples between consecutive report rows
+DRIVABLE_MIN_SAMPLES = 8      # fewer samples inside the frame than this: unknown (None)
 
 
 def recover_bike_dividers(boundaries, cv_boundaries):
@@ -247,6 +253,30 @@ def sample(line, h, w):
     return xs
 
 
+def lane_drivable(boundaries, drivable, h, w):
+    """Share of each lane (left to right, as the bake pairs boundaries into lanes) that YOLOPv2 calls
+    drivable, sampled across the lane between the report rows where both its lines are known."""
+    def bottom_x(b):
+        return next((x for x in b["x"] if x is not None), math.inf)
+
+    lines = sorted(boundaries, key=bottom_x)
+    out = []
+    for left, right in zip(lines, lines[1:]):
+        both = [j for j, x in enumerate(left["x"]) if x is not None and right["x"][j] is not None]
+        hits = []
+        for a, b in zip(both, both[1:]):
+            for t in np.linspace(0, 1, DRIVABLE_STEPS, endpoint=False):
+                y = ROWS[a] + t * (ROWS[b] - ROWS[a])
+                xl = left["x"][a] + t * (left["x"][b] - left["x"][a])
+                xr = right["x"][a] + t * (right["x"][b] - right["x"][a])
+                for f in DRIVABLE_ACROSS:
+                    x = xl + f * (xr - xl)
+                    if 0 <= x < 1 and 0 <= y < 1:
+                        hits.append(drivable[int(y * h), int(x * w)] >= 128)
+        out.append(round(float(np.mean(hits)), 2) if len(hits) >= DRIVABLE_MIN_SAMPLES else None)
+    return out
+
+
 def frame_confidence(boundaries, nav):
     """Same idea as detect_lanes.process_frame: the target lane's weaker line x sanity x count."""
     if not boundaries:
@@ -264,7 +294,7 @@ def frame_confidence(boundaries, nav):
     return round(target * san * min(1.0, n / (len(lanes) + 1)), 3), why
 
 
-def process(img, mask, frame, route_key):
+def process(img, mask, drivable, frame, route_key):
     h, w = img.shape[:2]
     s = w / 2048
     white, yellow = dl.build_masks(img, s)
@@ -300,7 +330,10 @@ def process(img, mask, frame, route_key):
     debug = {"tracks": len(lines), "route": route_key}
     if reason:
         debug["reason"] = reason
-    return {"confidence": conf, "boundaries": boundaries, "debug": debug}, kept
+    entry = {"confidence": conf, "boundaries": boundaries, "debug": debug}
+    if drivable is not None:
+        entry["drivable"] = lane_drivable(boundaries, drivable, h, w)
+    return entry, kept
 
 
 def draw_debug(img, kept, entry, path):
@@ -337,6 +370,7 @@ def main():
     clip = Clip(args.clip)
     use_camera(clip)
     masks = clip.masks("band", "lane")
+    drivable_masks = clip.masks("band", "drivable")
     out = args.out or clip.yolop_lanes
     debug_dir = DEBUG / clip.name
     if not clip.demo.exists():
@@ -366,7 +400,8 @@ def main():
             print(f"  [{i:2d}/{len(frames)}] {fid}  SKIPPED ({'image' if img is None else 'mask'} not found)")
             continue
         result["imageSize"] = result["imageSize"] or [img.shape[1], img.shape[0]]
-        entry, kept = process(img, (mask >= 128).astype(np.uint8) * 255, frame, route_key)
+        drivable = cv2.imread(str(drivable_masks / f"{fid}.png"), cv2.IMREAD_GRAYSCALE)
+        entry, kept = process(img, (mask >= 128).astype(np.uint8) * 255, drivable, frame, route_key)
         if args.debug:
             draw_debug(img, kept, entry, debug_dir / f"{i:03d}_{fid}.jpg")
         repaired = recover_bike_dividers(entry["boundaries"],
@@ -376,6 +411,8 @@ def main():
             entry["boundaries"] = repaired
             entry["confidence"], reason = frame_confidence(repaired, (frame.get("nav") or {}).get(route_key))
             entry["debug"]["recoveredBikeDividers"] = added
+            if drivable is not None:  # one share per lane: the added line splits a lane in two
+                entry["drivable"] = lane_drivable(repaired, drivable, img.shape[0], img.shape[1])
             if reason:
                 entry["debug"]["reason"] = reason
             else:
