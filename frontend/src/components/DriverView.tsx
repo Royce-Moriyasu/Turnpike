@@ -75,6 +75,23 @@ function spanAt(poly: Point[], y: number): [number, number] | null {
   return xs.length >= 2 ? [Math.min(...xs), Math.max(...xs)] : null;
 }
 
+/**
+ * Run a lane down to the bottom of the image. Detections often stop short of it (the lines near the
+ * camera leave the frame or aren't found), which leaves a short highlight floating on the road.
+ * Lane polygons (bake) are the left edge bottom to top, then the right edge top to bottom; each edge
+ * continues straight along its lowest segment. Always adds the two points, so the point count stays
+ * the same from frame to frame (useSmoothLane only animates between equal counts).
+ */
+function extendToBottom(poly: Point[]): Point[] {
+  const half = poly.length / 2;
+  if (poly.length < 4 || !Number.isInteger(half)) return poly;
+  const extend = ([x0, y0]: Point, [x1, y1]: Point): Point =>
+    y0 >= 1 || y0 === y1 ? [x0, Math.max(y0, 1)] : [x0 + ((1 - y0) * (x0 - x1)) / (y0 - y1), 1];
+  const left = extend(poly[0], poly[1]);
+  const right = extend(poly[poly.length - 1], poly[poly.length - 2]);
+  return [left, ...poly, right];
+}
+
 /** Keep an untaken turn branch from widening the highlighted through lane. */
 function trimUntakenBranch(lane: Point[] | null, previous: Point[] | null, side: "left" | "right" | null): Point[] | null {
   if (!lane || !previous || !side) return lane;
@@ -205,7 +222,7 @@ export default function DriverView({ frame, nav, offRoute, overlay, showArrow, l
         </defs>
         {highlightedLane && (
             <polygon
-              points={toPoints(highlightedLane)}
+              points={toPoints(extendToBottom(highlightedLane))}
               fill="url(#lane-fill)"
               stroke="var(--color-accent-soft)"
               strokeWidth={2}
